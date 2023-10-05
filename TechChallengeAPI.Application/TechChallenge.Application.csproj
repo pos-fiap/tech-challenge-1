@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RCLocacoesAPI.Domain\RCLocacoes.Domain.csproj" />
+    <ProjectReference Include="..\TechChallengeAPI.Domain\TechChallenge.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

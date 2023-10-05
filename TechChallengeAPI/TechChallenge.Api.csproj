@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RCLocacoesAPI.Infra.Ioc\RCLocacoes.Infra.Ioc.csproj" />
+    <ProjectReference Include="..\TechChallengeAPI.Infra.Ioc\TechChallenge.Infra.Ioc.csproj" />
   </ItemGroup>
 
 </Project>

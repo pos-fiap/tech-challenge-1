@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TechChallengeAPI.Application\TechChallenge.Application.csproj" />
+    <ProjectReference Include="..\TechChallengeAPI.Domain\TechChallenge.Domain.csproj" />
+    <ProjectReference Include="..\TechChallengeAPI.Infra.Data\TechChallenge.Infra.Data.csproj" />
+  </ItemGroup>
+
+</Project>
