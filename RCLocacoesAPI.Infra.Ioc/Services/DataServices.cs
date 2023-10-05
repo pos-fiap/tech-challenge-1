@@ -10,7 +10,6 @@ namespace RCLocacoes.Infra.Ioc.Services
     {
         public static void RegisterDataServices(IServiceCollection services)
         {
-            services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }

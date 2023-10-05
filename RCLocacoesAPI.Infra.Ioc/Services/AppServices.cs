@@ -8,7 +8,6 @@ namespace RCLocacoes.Infra.Ioc.Services
     {
         public static void RegisterAppServices(IServiceCollection services)
         {
-            services.AddScoped<IAddressService, AddressService>();
             services.AddScoped<IUserService, UserService>();
         }
     }

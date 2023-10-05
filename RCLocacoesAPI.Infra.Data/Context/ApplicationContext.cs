@@ -8,17 +8,6 @@ namespace RCLocacoes.Infra.Data.Context
     {
         public ApplicationContext(DbContextOptions options) : base(options) { }
 
-        //public DbSet<Category> Categories { get; set; }
-        public DbSet<Address> Addresses { get; set; }
-        //public DbSet<Client> Clients { get; set; }
-        //public DbSet<ClientType> ClientTypes { get; set; }
-        //public DbSet<Local> Locals { get; set; }
-        //public DbSet<Login> Logins { get; set; }
-        //public DbSet<Order> Orders { get; set; }
-        //public DbSet<OrderProduct> OrderProducts { get; set; }
-        //public DbSet<Product> Products { get; set; }
-        //public DbSet<ProductCategory> ProductCategories { get; set; }
-        //public DbSet<Status> Statuses { get; set; }
         public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

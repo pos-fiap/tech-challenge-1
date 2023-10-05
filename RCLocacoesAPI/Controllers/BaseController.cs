@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using FluentValidation.Results;
-using RCLocacoes.Application.BaseResponse;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using RCLocacoes.Application.DTOs;
+﻿using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using RCLocacoes.Application.BaseResponse;
 
 namespace RCLocacoes.Api.Controllers
 {

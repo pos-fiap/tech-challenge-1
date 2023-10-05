@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
-using RCLocacoes.Application.Mappings;
 
 namespace RCLocacoes.Infra.Ioc.Services
 {
@@ -10,7 +9,7 @@ namespace RCLocacoes.Infra.Ioc.Services
         {
             MapperConfiguration mapperConfiguration = new MapperConfiguration(configuration =>
             {
-                configuration.AddProfile<AddressProfile>();
+
             });
         }
     }

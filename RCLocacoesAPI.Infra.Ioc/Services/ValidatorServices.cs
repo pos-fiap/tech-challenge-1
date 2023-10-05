@@ -9,7 +9,6 @@ namespace RCLocacoes.Infra.Ioc.Services
     {
         public static void RegisterValidatorServices(IServiceCollection services)
         {
-            services.AddScoped<IValidator<AddressDto>, AddressValidator>();
             services.AddScoped<IValidator<UserDto>, UserValidator>();
         }
     }
