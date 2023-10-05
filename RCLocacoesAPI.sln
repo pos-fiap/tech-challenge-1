@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCLocacoes.Api", "RCLocacoesAPI\RCLocacoes.Api.csproj", "{7F6B8C05-9551-438B-BAB3-D06083EEAFC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCLocacoes.Application", "RCLocacoesAPI.Application\RCLocacoes.Application.csproj", "{466447C5-6F68-49CF-98E9-200442689A7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCLocacoes.Domain", "RCLocacoesAPI.Domain\RCLocacoes.Domain.csproj", "{117D9E0E-A2E5-43C7-911C-217E22FE9D17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCLocacoes.Infra.Data", "RCLocacoesAPI.Infra.Data\RCLocacoes.Infra.Data.csproj", "{DF780543-321D-4880-845C-C47B9B5B26B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCLocacoes.Infra.Ioc", "RCLocacoesAPI.Infra.Ioc\RCLocacoes.Infra.Ioc.csproj", "{677D6324-2977-43DD-9FE5-480B6963E326}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7F6B8C05-9551-438B-BAB3-D06083EEAFC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F6B8C05-9551-438B-BAB3-D06083EEAFC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F6B8C05-9551-438B-BAB3-D06083EEAFC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F6B8C05-9551-438B-BAB3-D06083EEAFC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{466447C5-6F68-49CF-98E9-200442689A7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{466447C5-6F68-49CF-98E9-200442689A7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{466447C5-6F68-49CF-98E9-200442689A7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{466447C5-6F68-49CF-98E9-200442689A7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{117D9E0E-A2E5-43C7-911C-217E22FE9D17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{117D9E0E-A2E5-43C7-911C-217E22FE9D17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{117D9E0E-A2E5-43C7-911C-217E22FE9D17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{117D9E0E-A2E5-43C7-911C-217E22FE9D17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF780543-321D-4880-845C-C47B9B5B26B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF780543-321D-4880-845C-C47B9B5B26B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF780543-321D-4880-845C-C47B9B5B26B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF780543-321D-4880-845C-C47B9B5B26B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{677D6324-2977-43DD-9FE5-480B6963E326}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{677D6324-2977-43DD-9FE5-480B6963E326}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{677D6324-2977-43DD-9FE5-480B6963E326}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{677D6324-2977-43DD-9FE5-480B6963E326}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4D0E1797-BA99-433B-B9D8-1E11157AC21D}
+	EndGlobalSection
+EndGlobal

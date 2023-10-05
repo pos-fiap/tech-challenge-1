@@ -1,0 +1,63 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="EntitiesConfiguration\CategoryMap\**" />
+	  <Compile Remove="EntitiesConfiguration\ClientMap\**" />
+	  <Compile Remove="EntitiesConfiguration\ClientTypeMap\**" />
+	  <Compile Remove="EntitiesConfiguration\LocalMap\**" />
+	  <Compile Remove="EntitiesConfiguration\LoginMap\**" />
+	  <Compile Remove="EntitiesConfiguration\OrderMap\**" />
+	  <Compile Remove="EntitiesConfiguration\OrderProductMap\**" />
+	  <Compile Remove="EntitiesConfiguration\ProductCategoryMap\**" />
+	  <Compile Remove="EntitiesConfiguration\ProductMap\**" />
+	  <Compile Remove="EntitiesConfiguration\StatusMap\**" />
+	  <EmbeddedResource Remove="EntitiesConfiguration\CategoryMap\**" />
+	  <EmbeddedResource Remove="EntitiesConfiguration\ClientMap\**" />
+	  <EmbeddedResource Remove="EntitiesConfiguration\ClientTypeMap\**" />
+	  <EmbeddedResource Remove="EntitiesConfiguration\LocalMap\**" />
+	  <EmbeddedResource Remove="EntitiesConfiguration\LoginMap\**" />
+	  <EmbeddedResource Remove="EntitiesConfiguration\OrderMap\**" />
+	  <EmbeddedResource Remove="EntitiesConfiguration\OrderProductMap\**" />
+	  <EmbeddedResource Remove="EntitiesConfiguration\ProductCategoryMap\**" />
+	  <EmbeddedResource Remove="EntitiesConfiguration\ProductMap\**" />
+	  <EmbeddedResource Remove="EntitiesConfiguration\StatusMap\**" />
+	  <None Remove="EntitiesConfiguration\CategoryMap\**" />
+	  <None Remove="EntitiesConfiguration\ClientMap\**" />
+	  <None Remove="EntitiesConfiguration\ClientTypeMap\**" />
+	  <None Remove="EntitiesConfiguration\LocalMap\**" />
+	  <None Remove="EntitiesConfiguration\LoginMap\**" />
+	  <None Remove="EntitiesConfiguration\OrderMap\**" />
+	  <None Remove="EntitiesConfiguration\OrderProductMap\**" />
+	  <None Remove="EntitiesConfiguration\ProductCategoryMap\**" />
+	  <None Remove="EntitiesConfiguration\ProductMap\**" />
+	  <None Remove="EntitiesConfiguration\StatusMap\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.3">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.3" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.3">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\RCLocacoesAPI.Domain\RCLocacoes.Domain.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Migrations\" />
+	</ItemGroup>
+
+</Project>
