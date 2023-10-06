@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using TechChallenge.Application.BaseResponse;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;
+using TechChallenge.Application.Utils;
 using TechChallenge.Domain.Entities;
 using TechChallenge.Domain.Interfaces;
 
@@ -12,31 +14,65 @@ namespace TechChallenge.Application.Services
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IValidator<UserDto> _userDtoValidator;
 
-        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, IMapper mapper, IValidator<UserDto> userDtoValidator)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _userDtoValidator = userDtoValidator;
         }
 
-        public async Task<User> GetUser(int Id)
+        public async Task<BaseOutput<List<User>>> GetAllUsers()
         {
-            return await _userRepository.GetAsync(Id);
+            BaseOutput<List<User>> response = new();
+
+            IEnumerable<User> users = await _userRepository.GetAsync();
+
+            response.IsSuccessful = true;
+            response.Response = users.ToList();
+
+            return response;
         }
 
-        public async Task<User> GetUser(UserDto userDto)
+        public async Task<BaseOutput<User>> GetUser(int Id)
+        {
+            User user = await _userRepository.GetAsync(Id);
+
+            BaseOutput<User> response = new();
+
+            response.IsSuccessful = true;
+            response.Response = user;
+
+            return response;
+        }
+
+        public async Task<BaseOutput<User>> GetUser(UserDto userDto)
         {
             IEnumerable<User> users = await _userRepository.GetAsync(x => x.Username == userDto.Username, true);
 
-            return users?.FirstOrDefault() ?? new User();
+            BaseOutput<User> response = new()
+            {
+                IsSuccessful = users.Any(),
+                Response = users?.FirstOrDefault() ?? new User()
+            };
+
+            return response;
         }
 
         public async Task<BaseOutput<int>> RegisterUser(UserDto userDto)
         {
-            var response = new BaseOutput<int>();
+            BaseOutput<int> response = new();
 
-            var userMapped = _mapper.Map<User>(userDto);
+            ValidationUtil.ValidateClass(userDto, _userDtoValidator, response);
+
+            if (response.Errors.Any())
+            {
+                return response;
+            }
+
+            User userMapped = _mapper.Map<User>(userDto);
             await _userRepository.AddAsync(userMapped);
             await _unitOfWork.CommitAsync();
 
@@ -46,9 +82,64 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<bool> VerifyUser(UserDto userDto)
+        public async Task<BaseOutput<User>> UpdateUser(UserDto userDto)
         {
-            return await _userRepository.ExistsAsync(x => x.Username == userDto.Username);
+            BaseOutput<User> response = new();
+
+            ValidationUtil.ValidateClass(userDto, _userDtoValidator, response);
+
+            if (response.Errors.Any())
+            {
+                return response;
+            }
+
+            User userMapped = _mapper.Map<User>(userDto);
+
+            if (!await VerifyUser(userMapped.Id))
+            {
+                response.IsSuccessful = false;
+                response.AddError("Not Found");
+            }
+
+            _userRepository.Update(userMapped);
+            await _unitOfWork.CommitAsync();
+
+            response.Response = userMapped;
+            response.IsSuccessful = true;
+
+            return response;
+        }
+
+        public async Task<BaseOutput<bool>> DeleteUser(int Id)
+        {
+            BaseOutput<bool> response = new();
+
+            User user = new() { Id = Id };
+
+            if (!await VerifyUser(user.Id))
+            {
+                response.IsSuccessful = false;
+                response.Response = false;
+                response.AddError("Not Found");
+            }
+
+            _userRepository.Delete(user);
+            await _unitOfWork.CommitAsync();
+
+            response.Response = true;
+            response.IsSuccessful = true;
+
+            return response;
+        }
+
+
+        public async Task<bool> VerifyUser(string username)
+        {
+            return await _userRepository.ExistsAsync(x => x.Username == username);
+        }
+        public async Task<bool> VerifyUser(int Id)
+        {
+            return await _userRepository.ExistsAsync(x => x.Id == Id);
         }
     }
 }

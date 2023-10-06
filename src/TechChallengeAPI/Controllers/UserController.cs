@@ -1,43 +1,85 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+using System.Net;
+using TechChallenge.Application.BaseResponse;
+using TechChallenge.Application.DTOs;
+using TechChallenge.Application.Interfaces;
+using TechChallenge.Domain.Entities;
 
 namespace TechChallenge.Api.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : BaseController
     {
-        // GET: api/<UserController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IUserService _userService;
+
+        public UserController(IUserService userService)
         {
-            return new string[] { "value1", "value2" };
+            _userService = userService;
         }
 
-        // GET api/<UserController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("all")]
+        [ProducesResponseType(typeof(BaseOutput<List<User>>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(BaseOutput<List<User>>), (int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> GetAll()
         {
-            return "value";
+            try
+            {
+                return CustomResponse(await _userService.GetAllUsers());
+            }
+            catch (Exception ex)
+            {
+                return InternalErrorResponse(ex);
+            }
         }
 
-        // POST api/<UserController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("register")]
+        //[HttpPost("register"), Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> RegisterUser([FromBody] UserDto userDto)
         {
+            try
+            {
+                return ModelState.IsValid ? CustomResponse(await _userService.RegisterUser(userDto)) : CustomResponse(ModelState);
+            }
+            catch (Exception ex)
+            {
+                return InternalErrorResponse(ex);
+            }
         }
 
-        // PUT api/<UserController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("update")]
+        //[HttpDelete("delete"), Authorize]
+        [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> DeleteUser([FromBody] UserDto userDto)
         {
+            try
+            {
+                return ModelState.IsValid ? CustomResponse(await _userService.UpdateUser(userDto)) : CustomResponse(ModelState);
+            }
+            catch (Exception ex)
+            {
+                return InternalErrorResponse(ex);
+            }
         }
 
-        // DELETE api/<UserController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("delete")]
+        //[HttpDelete("delete"), Authorize]
+        [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> DeleteUser([FromQuery, NotNull, Range(0, int.MaxValue)] int Id)
         {
+            try
+            {
+                return ModelState.IsValid ? CustomResponse(await _userService.DeleteUser(Id)) : CustomResponse(ModelState);
+            }
+            catch (Exception ex)
+            {
+                return InternalErrorResponse(ex);
+            }
         }
     }
 }
