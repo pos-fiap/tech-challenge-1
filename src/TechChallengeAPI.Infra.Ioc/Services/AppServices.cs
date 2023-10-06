@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using RCLocacoes.Application.Interfaces;
-using RCLocacoes.Application.Services;
+using TechChallenge.Application.Interfaces;
+using TechChallenge.Application.Services;
 
-namespace RCLocacoes.Infra.Ioc.Services
+namespace TechChallenge.Infra.Ioc.Services
 {
     public static class AppServices
     {

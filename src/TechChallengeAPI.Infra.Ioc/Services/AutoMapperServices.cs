@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace RCLocacoes.Infra.Ioc.Services
+namespace TechChallenge.Infra.Ioc.Services
 {
     public static class AutoMapperServices
     {

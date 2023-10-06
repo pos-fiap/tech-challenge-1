@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using RCLocacoes.Application.DTOs;
+using TechChallenge.Application.DTOs;
 
-namespace RCLocacoes.Application.Validator
+namespace TechChallenge.Application.Validator
 {
     public class UserValidator : AbstractValidator<UserDto>
     {

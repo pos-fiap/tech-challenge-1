@@ -1,6 +1,6 @@
-﻿using RCLocacoes.Domain.Enums;
+﻿using TechChallenge.Domain.Enums;
 
-namespace RCLocacoes.Domain.Entities
+namespace TechChallenge.Domain.Entities
 {
     public class User : BaseModel
     {

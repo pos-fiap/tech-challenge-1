@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RCLocacoes.Domain.Entities;
-using RCLocacoes.Infra.Data.Context;
 using System.Linq.Expressions;
+using TechChallenge.Domain.Entities;
+using TechChallenge.Domain.Interfaces;
+using TechChallenge.Infra.Data.Context;
 
-namespace RCLocacoes.Infra.Data.Repositories
+namespace TechChallenge.Infra.Data.Repositories
 {
     public abstract class BaseRepository<TEntity> : IDisposable, IBaseRepository<TEntity> where TEntity : BaseModel
     {

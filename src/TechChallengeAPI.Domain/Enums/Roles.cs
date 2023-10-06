@@ -1,4 +1,4 @@
-﻿namespace RCLocacoes.Domain.Enums
+﻿namespace TechChallenge.Domain.Enums
 {
     public enum Roles
     {
