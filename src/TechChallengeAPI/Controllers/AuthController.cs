@@ -38,7 +38,7 @@ namespace TechChallenge.Api.Controllers
                     return ValidatorErrorResponse(validationResult.Errors);
                 }
 
-                var userExists = await _userService.VerifyUser(userDto);
+                var userExists = await _userService.VerifyUser(userDto.Username);
 
                 if (userExists)
                 {
@@ -75,19 +75,19 @@ namespace TechChallenge.Api.Controllers
                     return ValidatorErrorResponse(validationResult.Errors);
                 }
 
-                User user = await _userService.GetUser(userDto);
+                BaseOutput<User> user = await _userService.GetUser(userDto);
 
-                if (user.Username != userDto.Username)
+                if (user.Response.Username != userDto.Username)
                 {
                     return BadRequestResponse("Incorrect User or Password");
                 }
 
-                if (!BCrypt.Net.BCrypt.Verify(userDto.Password, user.PasswordHash))
+                if (!BCrypt.Net.BCrypt.Verify(userDto.Password, user.Response.PasswordHash))
                 {
                     return BadRequestResponse("Incorrect User or Password");
                 }
 
-                string token = CreateToken(user);
+                string token = CreateToken(user.Response);
 
                 return Ok(token);
             }

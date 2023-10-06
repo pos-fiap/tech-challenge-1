@@ -6,10 +6,15 @@ namespace TechChallenge.Application.Interfaces
 {
     public interface IUserService
     {
-        Task<User> GetUser(int Id);
-        Task<User> GetUser(UserDto userDto);
+        Task<BaseOutput<List<User>>> GetAllUsers();
+        Task<BaseOutput<User>> GetUser(int Id);
+        Task<BaseOutput<User>> GetUser(UserDto userDto);
         Task<BaseOutput<int>> RegisterUser(UserDto userDto);
-        Task<bool> VerifyUser(UserDto userDto);
+        Task<BaseOutput<User>> UpdateUser(UserDto userDto);
+        Task<bool> VerifyUser(string username);
+        Task<bool> VerifyUser(int Id);
+        Task<BaseOutput<bool>> DeleteUser(int Id);
+
 
     }
 }
