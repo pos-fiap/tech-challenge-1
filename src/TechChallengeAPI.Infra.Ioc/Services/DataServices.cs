@@ -10,6 +10,7 @@ namespace TechChallenge.Infra.Ioc.Services
         public static void RegisterDataServices(IServiceCollection services)
         {
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }
