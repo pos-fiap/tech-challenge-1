@@ -1,23 +1,29 @@
 ﻿using AutoMapper;
-using RCLocacoes.Application.BaseResponse;
-using RCLocacoes.Application.DTOs;
-using RCLocacoes.Application.Interfaces;
-using RCLocacoes.Domain.Entities;
-using RCLocacoes.Domain.Interfaces;
+using FluentValidation;
+using FluentValidation.Results;
+using System.ComponentModel.DataAnnotations;
+using TechChallenge.Application.BaseResponse;
+using TechChallenge.Application.DTOs;
+using TechChallenge.Application.Interfaces;
+using TechChallenge.Application.Models;
+using TechChallenge.Domain.Entities;
+using TechChallenge.Domain.Interfaces;
 
-namespace RCLocacoes.Application.Services
+namespace TechChallenge.Application.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IValidator<LoginDto> _validator;
 
-        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, IMapper mapper, IValidator<LoginDto> validator)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _validator = validator;
         }
 
         public async Task<User> GetUser(int Id)
@@ -25,11 +31,21 @@ namespace RCLocacoes.Application.Services
             return await _userRepository.GetAsync(Id);
         }
 
-        public async Task<User> GetUser(UserDto userDto)
+        public async Task<BaseOutput<User>> GetUserByLogin(LoginDto loginDto)
         {
-            IEnumerable<User> users = await _userRepository.GetAsync(x => x.Username == userDto.Username, true);
+            var response = new BaseOutput<User>();
 
-            return users?.FirstOrDefault() ?? new User();
+            var validationResult = _validator.Validate(loginDto);
+            if (!validationResult.IsValid)
+            {
+                validationResult.Errors.ForEach(x => response.AddError(x.ErrorMessage));
+                return response;
+            }
+
+            IEnumerable<User> users = await _userRepository.GetAsync(x => x.Username == loginDto.Username, true);
+
+            response.Response = users.FirstOrDefault() ?? new User();
+            return response;
         }
 
         public async Task<BaseOutput<int>> RegisterUser(UserDto userDto)
@@ -49,6 +65,19 @@ namespace RCLocacoes.Application.Services
         public async Task<bool> VerifyUser(UserDto userDto)
         {
             return await _userRepository.ExistsAsync(x => x.Username == userDto.Username);
+        }
+
+        public async Task UpdateUserRefreshToken(User user, RefreshTokenModel tokenModel)
+        {
+            user.RefreshToken = tokenModel.RefreshToken;
+            user.RefreshTokenExpiryDate = tokenModel.ExpirationDate;
+            _userRepository.Update(user);
+            await _unitOfWork.CommitAsync();
+        }
+
+        public Task<User> GetUserByUsername(string username)
+        {
+            return _userRepository.GetSingleAsync(x => x.Username == username, true);
         }
     }
 }

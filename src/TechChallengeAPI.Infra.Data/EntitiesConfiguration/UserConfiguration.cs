@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using RCLocacoes.Domain.Entities;
+using TechChallenge.Domain.Entities;
 
-namespace RCLocacoes.Infra.Data.EntitiesConfiguration
+namespace TechChallenge.Infra.Data.EntitiesConfiguration
 {
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {

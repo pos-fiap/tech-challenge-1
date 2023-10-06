@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using RCLocacoes.Infra.Data.Context;
-using RCLocacoes.Infra.Ioc;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
+using TechChallenge.Infra.Data.Context;
+using TechChallenge.Infra.Ioc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,7 +39,7 @@ builder.Services.AddAuthentication().AddJwtBearer(options =>
         ValidateAudience = false,
         ValidateIssuer = false,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                builder.Configuration.GetSection("AppSettings:Token").Value!))
+                builder.Configuration.GetSection("Jwt:Key").Value!))
     };
 });
 

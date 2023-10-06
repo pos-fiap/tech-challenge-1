@@ -1,7 +1,7 @@
-﻿using RCLocacoes.Domain.Interfaces;
-using RCLocacoes.Infra.Data.Context;
+﻿using TechChallenge.Domain.Interfaces;
+using TechChallenge.Infra.Data.Context;
 
-namespace RCLocacoes.Infra.Data
+namespace TechChallenge.Infra.Data
 {
     public class UnitOfWork : IUnitOfWork
     {

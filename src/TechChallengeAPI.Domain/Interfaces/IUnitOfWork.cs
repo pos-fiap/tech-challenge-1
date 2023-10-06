@@ -1,4 +1,4 @@
-﻿namespace RCLocacoes.Domain.Interfaces
+﻿namespace TechChallenge.Domain.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {

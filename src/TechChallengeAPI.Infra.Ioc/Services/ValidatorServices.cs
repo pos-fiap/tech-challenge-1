@@ -1,15 +1,16 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using RCLocacoes.Application.DTOs;
-using RCLocacoes.Application.Validator;
+using TechChallenge.Application.DTOs;
+using TechChallenge.Application.Validator;
 
-namespace RCLocacoes.Infra.Ioc.Services
+namespace TechChallenge.Infra.Ioc.Services
 {
     public static class ValidatorServices
     {
         public static void RegisterValidatorServices(IServiceCollection services)
         {
             services.AddScoped<IValidator<UserDto>, UserValidator>();
+            services.AddScoped<IValidator<LoginDto>, LoginValidator>();
         }
     }
 }

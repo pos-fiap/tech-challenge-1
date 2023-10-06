@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using RCLocacoes.Infra.Ioc.Services;
+using TechChallenge.Infra.Ioc.Services;
 
-namespace RCLocacoes.Infra.Ioc
+namespace TechChallenge.Infra.Ioc
 {
     public static class InjectorBootStrapper
     {

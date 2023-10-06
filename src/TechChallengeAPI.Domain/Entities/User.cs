@@ -1,6 +1,6 @@
-﻿using RCLocacoes.Domain.Enums;
+﻿using TechChallenge.Domain.Enums;
 
-namespace RCLocacoes.Domain.Entities
+namespace TechChallenge.Domain.Entities
 {
     public class User : BaseModel
     {
@@ -8,5 +8,8 @@ namespace RCLocacoes.Domain.Entities
         public string Username { get; set; } = string.Empty;
         public string PasswordHash { get; set; } = string.Empty;
         public Roles Role { get; set; } = Roles.User;
+        public string RefreshToken { get; set; } = string.Empty;
+        public DateTime RefreshTokenExpiryDate { get; set; }
+
     }
 }

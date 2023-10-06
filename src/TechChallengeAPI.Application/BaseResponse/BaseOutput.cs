@@ -1,4 +1,4 @@
-﻿namespace RCLocacoes.Application.BaseResponse
+﻿namespace TechChallenge.Application.BaseResponse
 {
     public class BaseOutput<T> : Response
     {

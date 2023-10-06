@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
+using TechChallenge.Domain.Entities;
 
-namespace RCLocacoes.Domain.Entities
+namespace TechChallenge.Domain.Interfaces
 {
     public interface IBaseRepository<TEntity> where TEntity : BaseModel
     {
