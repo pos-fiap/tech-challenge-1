@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using RCLocacoes.Application.BaseResponse;
-using RCLocacoes.Application.DTOs;
-using RCLocacoes.Application.Interfaces;
-using RCLocacoes.Domain.Entities;
-using RCLocacoes.Domain.Interfaces;
+using TechChallenge.Application.BaseResponse;
+using TechChallenge.Application.DTOs;
+using TechChallenge.Application.Interfaces;
+using TechChallenge.Domain.Entities;
+using TechChallenge.Domain.Interfaces;
 
-namespace RCLocacoes.Application.Services
+namespace TechChallenge.Application.Services
 {
     public class UserService : IUserService
     {

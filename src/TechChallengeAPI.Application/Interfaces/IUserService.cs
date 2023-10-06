@@ -1,8 +1,8 @@
-﻿using RCLocacoes.Application.BaseResponse;
-using RCLocacoes.Application.DTOs;
-using RCLocacoes.Domain.Entities;
+﻿using TechChallenge.Application.BaseResponse;
+using TechChallenge.Application.DTOs;
+using TechChallenge.Domain.Entities;
 
-namespace RCLocacoes.Application.Interfaces
+namespace TechChallenge.Application.Interfaces
 {
     public interface IUserService
     {

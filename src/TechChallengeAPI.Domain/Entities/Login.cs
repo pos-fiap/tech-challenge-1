@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RCLocacoes.Domain.Entities
+namespace TechChallenge.Domain.Entities
 {
     public class Login : BaseModel
     {

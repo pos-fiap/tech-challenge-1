@@ -1,9 +1,9 @@
 ﻿using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using RCLocacoes.Application.BaseResponse;
+using TechChallenge.Application.BaseResponse;
 
-namespace RCLocacoes.Api.Controllers
+namespace TechChallenge.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

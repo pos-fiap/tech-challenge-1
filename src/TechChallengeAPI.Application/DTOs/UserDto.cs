@@ -1,6 +1,6 @@
-﻿using RCLocacoes.Domain.Enums;
+﻿using TechChallenge.Domain.Enums;
 
-namespace RCLocacoes.Application.DTOs
+namespace TechChallenge.Application.DTOs
 {
     public class UserDto
     {

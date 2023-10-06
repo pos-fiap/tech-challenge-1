@@ -1,10 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using RCLocacoes.Domain.Entities;
-using RCLocacoes.Domain.Interfaces;
-using RCLocacoes.Infra.Data;
-using RCLocacoes.Infra.Data.Repositories;
+using TechChallenge.Domain.Interfaces;
+using TechChallenge.Infra.Data;
+using TechChallenge.Infra.Data.Repositories;
 
-namespace RCLocacoes.Infra.Ioc.Services
+namespace TechChallenge.Infra.Ioc.Services
 {
     public static class DataServices
     {

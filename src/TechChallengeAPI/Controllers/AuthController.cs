@@ -2,16 +2,16 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using RCLocacoes.Application.BaseResponse;
-using RCLocacoes.Application.DTOs;
-using RCLocacoes.Application.Interfaces;
-using RCLocacoes.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
+using TechChallenge.Application.BaseResponse;
+using TechChallenge.Application.DTOs;
+using TechChallenge.Application.Interfaces;
+using TechChallenge.Domain.Entities;
 
-namespace RCLocacoes.Api.Controllers
+namespace TechChallenge.Api.Controllers
 {
     public class AuthController : BaseController
     {

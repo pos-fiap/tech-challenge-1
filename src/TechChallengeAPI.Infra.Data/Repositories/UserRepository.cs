@@ -1,7 +1,8 @@
-﻿using RCLocacoes.Domain.Entities;
-using RCLocacoes.Infra.Data.Context;
+﻿using TechChallenge.Domain.Entities;
+using TechChallenge.Domain.Interfaces;
+using TechChallenge.Infra.Data.Context;
 
-namespace RCLocacoes.Infra.Data.Repositories
+namespace TechChallenge.Infra.Data.Repositories
 {
     public class UserRepository : BaseRepository<User>, IUserRepository
     {

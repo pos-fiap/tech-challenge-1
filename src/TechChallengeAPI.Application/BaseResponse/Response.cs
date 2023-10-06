@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace RCLocacoes.Application.BaseResponse
+namespace TechChallenge.Application.BaseResponse
 {
     public class Response
     {

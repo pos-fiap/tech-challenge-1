@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
-using RCLocacoes.Application.BaseResponse;
+using TechChallenge.Application.BaseResponse;
 
-namespace RCLocacoes.Application.Utils
+namespace TechChallenge.Application.Utils
 {
     public static class ValidationUtil
     {

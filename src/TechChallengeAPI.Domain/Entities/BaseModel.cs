@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace RCLocacoes.Domain.Entities
+namespace TechChallenge.Domain.Entities
 {
     [DataContract]
     public class BaseModel

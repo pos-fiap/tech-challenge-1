@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RCLocacoes.Domain.Entities;
 using System.Reflection;
+using TechChallenge.Domain.Entities;
 
-namespace RCLocacoes.Infra.Data.Context
+namespace TechChallenge.Infra.Data.Context
 {
     public class ApplicationContext : DbContext
     {

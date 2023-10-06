@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace RCLocacoes.Infra.Ioc
+namespace TechChallenge.Infra.Ioc
 {
     public static class DependencyInjection
     {

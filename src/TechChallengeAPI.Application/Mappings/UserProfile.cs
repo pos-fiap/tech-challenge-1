@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using RCLocacoes.Application.DTOs;
-using RCLocacoes.Domain.Entities;
+using TechChallenge.Application.DTOs;
+using TechChallenge.Domain.Entities;
 
-namespace RCLocacoes.Application.Mappings
+namespace TechChallenge.Application.Mappings
 {
     public class UserProfile : Profile
     {

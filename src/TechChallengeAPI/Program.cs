@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using RCLocacoes.Infra.Data.Context;
-using RCLocacoes.Infra.Ioc;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
+using TechChallenge.Infra.Data.Context;
+using TechChallenge.Infra.Ioc;
 
 var builder = WebApplication.CreateBuilder(args);
 
