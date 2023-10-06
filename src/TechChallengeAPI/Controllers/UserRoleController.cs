@@ -56,10 +56,6 @@ namespace TechChallenge.Api.Controllers
                     return ValidatorErrorResponse(validationResult.Errors);
                 }
 
-                //TODO: Usar UserService para validar a existência do Usuário
-                //TODO: Usar RoleService para validar a existência da Role
-
-
                 return Ok(await _userRoleService.UnassignRoleToUser(userRoleDto));
 
             }
@@ -75,8 +71,6 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                //TODO: Usar UserService para validar a existência do Usuário
-
                 return Ok(await _userRoleService.GetRolesByUser(id));
             }
             catch (Exception ex)
