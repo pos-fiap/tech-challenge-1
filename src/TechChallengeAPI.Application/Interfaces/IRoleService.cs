@@ -6,9 +6,15 @@ namespace TechChallenge.Application.Interfaces
 {
     public interface IRoleService
     {
-        Task<Role> GetRole(int Id);
+        Task<BaseOutput<List<Role>>> GetAllRoles();
+        Task<BaseOutput<Role>> GetRoleById(int Id);
+        Task<BaseOutput<Role>> GetRole(RoleDto roleDto);
         Task<BaseOutput<int>> RegisterRole(RoleDto roleDto);
-        Task<bool> VerifyRole(RoleDto roleDto);
+        Task<BaseOutput<Role>> UpdateRole(RoleDto roleDto);
+        Task<List<int>> VerifyListRole(List<int> ListId);
+        Task<bool> VerifyRole(string rolename);
+        Task<bool> VerifyRole(int Id);
+        Task<BaseOutput<bool>> DeleteRole(int Id);
 
     }
 }
