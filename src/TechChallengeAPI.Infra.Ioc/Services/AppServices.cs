@@ -10,6 +10,7 @@ namespace TechChallenge.Infra.Ioc.Services
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRoleService, UserRoleService>();
+            services.AddScoped<IAuthService, AuthService>();
         }
     }
 }
