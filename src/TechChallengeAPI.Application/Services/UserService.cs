@@ -3,16 +3,8 @@ using FluentValidation;
 using TechChallenge.Application.BaseResponse;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;
-using TechChallenge.Application.Utils;
-using TechChallenge.Domain.Entities;
-using TechChallenge.Domain.Interfaces;
-using FluentValidation;
-using FluentValidation.Results;
-using System.ComponentModel.DataAnnotations;
-using TechChallenge.Application.BaseResponse;
-using TechChallenge.Application.DTOs;
-using TechChallenge.Application.Interfaces;
 using TechChallenge.Application.Models;
+using TechChallenge.Application.Utils;
 using TechChallenge.Domain.Entities;
 using TechChallenge.Domain.Interfaces;
 
@@ -62,7 +54,7 @@ namespace TechChallenge.Application.Services
         {
             var response = new BaseOutput<User>();
 
-            var validationResult = _validator.Validate(loginDto);
+            var validationResult = _loginDtoValidator.Validate(loginDto);
             if (!validationResult.IsValid)
             {
                 validationResult.Errors.ForEach(x => response.AddError(x.ErrorMessage));
@@ -75,35 +67,6 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<User>> GetUserByLogin(LoginDto loginDto)
-        {
-            var response = new BaseOutput<User>();
-
-            var validationResult = _validator.Validate(loginDto);
-            if (!validationResult.IsValid)
-            {
-                validationResult.Errors.ForEach(x => response.AddError(x.ErrorMessage));
-                return response;
-            }
-
-            IEnumerable<User> users = await _userRepository.GetAsync(x => x.Username == loginDto.Username, true);
-
-            response.Response = users.FirstOrDefault() ?? new User();
-            return response;
-        }
-
-        public async Task<BaseOutput<User>> GetUser(int Id)
-        {
-            User user = await _userRepository.GetAsync(Id);
-
-            BaseOutput<User> response = new();
-
-            response.IsSuccessful = true;
-            response.Response = user;
-
-            return response;
-        }
-        
 
         public async Task<BaseOutput<User>> GetUser(UserDto userDto)
         {
@@ -211,5 +174,7 @@ namespace TechChallenge.Application.Services
         {
             return _userRepository.GetSingleAsync(x => x.Username == username, true);
         }
+
+       
     }
 }

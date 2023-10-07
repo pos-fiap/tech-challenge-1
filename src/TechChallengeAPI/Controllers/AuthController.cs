@@ -2,12 +2,6 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using System.Security.Claims;
-using System.Text;
-using TechChallenge.Application.BaseResponse;
-using TechChallenge.Application.DTOs;
-using TechChallenge.Application.Interfaces;
-using TechChallenge.Domain.Entities;
 using TechChallenge.Application.BaseResponse;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;
