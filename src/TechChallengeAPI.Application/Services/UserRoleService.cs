@@ -84,37 +84,6 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<int>> UnassignRoleToUser(UserRoleDto userRoleDto)
-        {
-            var response = new BaseOutput<int>();
-
-            ValidationUtil.ValidateClass(userRoleDto, _validator, response);
-
-            if (!await _userRepository.ExistsAsync(exp => exp.Id == userRoleDto.UserId))
-            {
-                response.AddError("Id de usuário não econtrado!");
-            }
-
-            if (response.Errors.Any())
-            {
-                return response;
-            }
-
-            //TODO: ACRESCENTAR VALIDAÇÃO DE EXISTÊNCIA DO ID DA ROLE
-
-            var actualRole = await _userRoleRepository.GetAsync(x => x.UserId == userRoleDto.UserId, true);
-
-            var userRoleMapped = _mapper.Map<IEnumerable<UserRole>>(userRoleDto).ToList();
-
-            var deletedRoles = actualRole.ToList().Intersect(userRoleMapped);
-
-            await _userRoleRepository.AddAsync(userRoleMapped.ToList());
-
-            await _unitOfWork.CommitAsync();
-
-            return response;
-        }
-
         private async void AddIncludedRoles(IEnumerable<UserRole> userRoles)
         {
             await _userRoleRepository.AddAsync(userRoles.ToList());

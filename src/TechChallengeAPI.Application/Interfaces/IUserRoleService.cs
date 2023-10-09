@@ -8,7 +8,6 @@ namespace TechChallenge.Application.Interfaces
     {
         Task<BaseOutput<UserRole>> GetRolesByUser(int user);
         Task<BaseOutput<int>> AssignRoleToUser(UserRoleDto userRoleDto);
-        Task<BaseOutput<int>> UnassignRoleToUser(UserRoleDto userRoleDto);
 
     }
 }

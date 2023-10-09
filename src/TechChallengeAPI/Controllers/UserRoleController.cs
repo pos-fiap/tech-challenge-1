@@ -35,21 +35,6 @@ namespace TechChallenge.Api.Controllers
 
         }
 
-        [HttpPut("UnassignRoleUser")]
-        public async Task<IActionResult> UnassignRoleToUser(UserRoleDto userRoleDto)
-        {
-            try
-            {
-                return ModelState.IsValid ? Ok(await _userRoleService.UnassignRoleToUser(userRoleDto)) : CustomResponse(ModelState);
-
-            }
-            catch (Exception ex)
-            {
-                return InternalErrorResponse(ex);
-            }
-
-        }
-
         [HttpGet("GetRolesByUser")]
         public async Task<IActionResult> GetRolesByUser(int id)
         {
