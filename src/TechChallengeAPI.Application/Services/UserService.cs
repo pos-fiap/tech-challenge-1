@@ -33,7 +33,6 @@ namespace TechChallenge.Application.Services
 
             IEnumerable<User> users = await _userRepository.GetAsync();
 
-            response.IsSuccessful = true;
             response.Response = users.ToList();
 
             return response;
@@ -44,7 +43,6 @@ namespace TechChallenge.Application.Services
 
             BaseOutput<User> response = new();
 
-            response.IsSuccessful = true;
             response.Response = user;
 
             return response;
@@ -97,7 +95,6 @@ namespace TechChallenge.Application.Services
             await _unitOfWork.CommitAsync();
 
             response.Response = userMapped.Id;
-            response.IsSuccessful = true;
 
             return response;
         }
@@ -117,7 +114,6 @@ namespace TechChallenge.Application.Services
 
             if (!await VerifyUser(userMapped.Id))
             {
-                response.IsSuccessful = false;
                 response.AddError("Not Found");
             }
 
@@ -125,7 +121,6 @@ namespace TechChallenge.Application.Services
             await _unitOfWork.CommitAsync();
 
             response.Response = userMapped;
-            response.IsSuccessful = true;
 
             return response;
         }
@@ -138,7 +133,6 @@ namespace TechChallenge.Application.Services
 
             if (!await VerifyUser(user.Id))
             {
-                response.IsSuccessful = false;
                 response.Response = false;
                 response.AddError("Not Found");
             }
@@ -147,7 +141,6 @@ namespace TechChallenge.Application.Services
             await _unitOfWork.CommitAsync();
 
             response.Response = true;
-            response.IsSuccessful = true;
 
             return response;
         }

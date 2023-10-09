@@ -11,6 +11,7 @@ namespace TechChallenge.Infra.Ioc.Services
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }

@@ -9,13 +9,10 @@ namespace TechChallenge.Api.Controllers
     public class UserRoleController : BaseController
     {
         private readonly IUserRoleService _userRoleService;
-        private readonly IValidator<UserRoleDto> _validator;
-
-        public UserRoleController(IUserRoleService userRoleService,
-                                  IValidator<UserRoleDto> validator)
+       
+        public UserRoleController(IUserRoleService userRoleService)
         {
             _userRoleService = userRoleService;
-            _validator = validator;
         }
 
 
@@ -24,39 +21,11 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                ValidationResult validationResult = _validator.Validate(userRoleDto);
-
-                if (!validationResult.IsValid)
-                {
-                    return ValidatorErrorResponse(validationResult.Errors);
-                }
 
                 //TODO: Usar UserService para validar a existência do Usuário
                 //TODO: Usar RoleService para validar a existência da Role
 
-                return Ok(await _userRoleService.AssignRoleToUser(userRoleDto));
-
-            }
-            catch (Exception ex)
-            {
-                return InternalErrorResponse(ex);
-            }
-
-        }
-
-        [HttpPut("UnassignRoleUser")]
-        public async Task<IActionResult> UnassignRoleToUser(UserRoleDto userRoleDto)
-        {
-            try
-            {
-                ValidationResult validationResult = _validator.Validate(userRoleDto);
-
-                if (!validationResult.IsValid)
-                {
-                    return ValidatorErrorResponse(validationResult.Errors);
-                }
-
-                return Ok(await _userRoleService.UnassignRoleToUser(userRoleDto));
+                return ModelState.IsValid ? Ok(await _userRoleService.AssignRoleToUser(userRoleDto)) : CustomResponse(ModelState);
 
             }
             catch (Exception ex)
@@ -71,7 +40,7 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                return Ok(await _userRoleService.GetRolesByUser(id));
+                return ModelState.IsValid ? Ok(await _userRoleService.GetRolesByUser(id)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
