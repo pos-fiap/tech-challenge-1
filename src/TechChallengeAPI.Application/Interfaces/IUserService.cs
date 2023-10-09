@@ -1,5 +1,6 @@
 ﻿using TechChallenge.Application.BaseResponse;
 using TechChallenge.Application.DTOs;
+using TechChallenge.Application.Models;
 using TechChallenge.Domain.Entities;
 
 namespace TechChallenge.Application.Interfaces
@@ -15,6 +16,9 @@ namespace TechChallenge.Application.Interfaces
         Task<bool> VerifyUser(int Id);
         Task<BaseOutput<bool>> DeleteUser(int Id);
 
+        Task<User> GetUserByUsername(string username);
+        Task<BaseOutput<User>> GetUserByLogin(LoginDto userDto);
+        Task UpdateUserRefreshToken(User user, RefreshTokenModel tokenModel);
 
     }
 }

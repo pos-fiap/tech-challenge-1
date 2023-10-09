@@ -3,6 +3,7 @@ using FluentValidation;
 using TechChallenge.Application.BaseResponse;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;
+using TechChallenge.Application.Models;
 using TechChallenge.Application.Utils;
 using TechChallenge.Domain.Entities;
 using TechChallenge.Domain.Interfaces;
@@ -14,14 +15,16 @@ namespace TechChallenge.Application.Services
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IValidator<LoginDto> _loginDtoValidator;
         private readonly IValidator<UserDto> _userDtoValidator;
 
-        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, IMapper mapper, IValidator<UserDto> userDtoValidator)
+        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, IMapper mapper, IValidator<UserDto> userDtoValidator, IValidator<LoginDto> loginDtoValidator)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _userDtoValidator = userDtoValidator;
+            _loginDtoValidator = loginDtoValidator;
         }
 
         public async Task<BaseOutput<List<User>>> GetAllUsers()
@@ -34,7 +37,6 @@ namespace TechChallenge.Application.Services
 
             return response;
         }
-
         public async Task<BaseOutput<User>> GetUser(int Id)
         {
             User user = await _userRepository.GetAsync(Id);
@@ -45,6 +47,24 @@ namespace TechChallenge.Application.Services
 
             return response;
         }
+
+        public async Task<BaseOutput<User>> GetUserByLogin(LoginDto loginDto)
+        {
+            var response = new BaseOutput<User>();
+
+            var validationResult = _loginDtoValidator.Validate(loginDto);
+            if (!validationResult.IsValid)
+            {
+                validationResult.Errors.ForEach(x => response.AddError(x.ErrorMessage));
+                return response;
+            }
+
+            IEnumerable<User> users = await _userRepository.GetAsync(x => x.Username == loginDto.Username, true);
+
+            response.Response = users.FirstOrDefault() ?? new User();
+            return response;
+        }
+
 
         public async Task<BaseOutput<User>> GetUser(UserDto userDto)
         {
@@ -134,5 +154,20 @@ namespace TechChallenge.Application.Services
         {
             return await _userRepository.ExistsAsync(x => x.Id == Id);
         }
+
+        public async Task UpdateUserRefreshToken(User user, RefreshTokenModel tokenModel)
+        {
+            user.RefreshToken = tokenModel.RefreshToken;
+            user.RefreshTokenExpiryDate = tokenModel.ExpirationDate;
+            _userRepository.Update(user);
+            await _unitOfWork.CommitAsync();
+        }
+
+        public Task<User> GetUserByUsername(string username)
+        {
+            return _userRepository.GetSingleAsync(x => x.Username == username, true);
+        }
+
+       
     }
 }
