@@ -8,7 +8,7 @@ namespace TechChallenge.Application.Validator
         public UserRoleValidator()
         {
             RuleFor(p => p.UserId).NotNull().WithMessage("UserId is a required field");
-            RuleFor(p => p.RoleIds).NotNull().WithMessage("RoleIds is a required field");
+            RuleFor(p => p.Roles).NotNull().WithMessage("RoleIds is a required field");
         }
     }
 }

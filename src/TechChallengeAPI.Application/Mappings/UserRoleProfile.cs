@@ -8,22 +8,24 @@ namespace TechChallenge.Application.Mappings
     {
         public UserRoleProfile()
         {
+            CreateMap<UserRoleDto, UserRole>().ForMember(d => d.UserId, opt => opt.MapFrom(s => s.UserId)).ForMember(d => d.UserId, opt => opt.MapFrom(s => s.UserId));
+            CreateMap<Role, UserRole>().ForMember(d => d.RoleId, opt => opt.MapFrom(s => s.Id)).ForMember(d => d.Id, opt => opt.Ignore());
+
             CreateMap<UserRoleDto, IEnumerable<UserRole>>().ConvertUsing<GetFromRoleIds>();
         }
     }
-    public class GetFromRoleIds :
-             ITypeConverter<UserRoleDto, IEnumerable<UserRole>>
+    public class GetFromRoleIds : ITypeConverter<UserRoleDto, IEnumerable<UserRole>>
     {
-        IEnumerable<UserRole> ITypeConverter<UserRoleDto, IEnumerable<UserRole>>.Convert
-            (UserRoleDto source, IEnumerable<UserRole> destination, ResolutionContext context)
+        public IEnumerable<UserRole> Convert(UserRoleDto source, IEnumerable<UserRole> destination, ResolutionContext context)
         {
-            /*first mapp from People, then from Team*/
-            foreach (var model in source.RoleIds.Select
-                    (e => context.Mapper.Map<UserRole>(e)))
+
+            foreach (var model in source.Roles.Select (e => context.Mapper.Map<UserRole>(e)))
             {
                 context.Mapper.Map(source, model);
                 yield return model;
             }
+
+
         }
     }
 }

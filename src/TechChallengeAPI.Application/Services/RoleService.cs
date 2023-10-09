@@ -80,6 +80,7 @@ namespace TechChallenge.Application.Services
         public async Task<BaseOutput<int>> RegisterRole(RoleDto roleDto)
         {
             BaseOutput<int> response = new();
+            DateTime now = DateTime.UtcNow;
 
             ValidationUtil.ValidateClass(roleDto, _roleDtoValidator, response);
 
@@ -89,11 +90,14 @@ namespace TechChallenge.Application.Services
             }
 
             Role roleMapped = _mapper.Map<Role>(roleDto);
+
+            roleMapped.CreateDate = now;
+            roleMapped.AlterDate = now;
+
             await _roleRepository.AddAsync(roleMapped);
             await _unitOfWork.CommitAsync();
 
             response.Response = roleMapped.Id;
-            response.IsSuccessful = true;
 
             return response;
         }
@@ -110,10 +114,10 @@ namespace TechChallenge.Application.Services
             }
 
             Role roleMapped = _mapper.Map<Role>(roleDto);
+            roleMapped.AlterDate = DateTime.UtcNow;
 
             if (!await VerifyRole(roleMapped.Id))
             {
-                response.IsSuccessful = false;
                 response.AddError("Not Found");
             }
 
@@ -134,8 +138,6 @@ namespace TechChallenge.Application.Services
 
             if (!await VerifyRole(role.Id))
             {
-                response.IsSuccessful = false;
-                response.Response = false;
                 response.AddError("Not Found");
             }
 

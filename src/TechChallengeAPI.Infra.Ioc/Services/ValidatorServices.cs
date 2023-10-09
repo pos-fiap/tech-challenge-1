@@ -11,6 +11,7 @@ namespace TechChallenge.Infra.Ioc.Services
         {
             services.AddScoped<IValidator<UserDto>, UserValidator>();
             services.AddScoped<IValidator<UserRoleDto>, UserRoleValidator>();
+            services.AddScoped<IValidator<RoleDto>, RoleValidator>();
         }
     }
 }

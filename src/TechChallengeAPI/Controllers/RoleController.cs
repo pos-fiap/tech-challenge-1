@@ -67,7 +67,7 @@ namespace TechChallenge.Api.Controllers
         [HttpPut("updateRole")]
         [ProducesResponseType(typeof(BaseOutput<Role>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<Role>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> DeleteRole([FromBody] RoleDto roleDto)
+        public async Task<IActionResult> UpdateRole([FromBody] RoleDto roleDto)
         {
             try
             {

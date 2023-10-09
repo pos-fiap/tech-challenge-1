@@ -8,7 +8,9 @@ namespace TechChallenge.Infra.Data.Context
     {
         public ApplicationContext(DbContextOptions options) : base(options) { }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<UserRole> UserRole { get; set; }
+        public DbSet<Role> Role { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
