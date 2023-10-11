@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 string connectionString = builder.Configuration.GetConnectionString("Default")!;
 
-builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connectionString).UseLazyLoadingProxies());
 
 builder.Services.AddControllers();
 

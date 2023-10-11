@@ -7,9 +7,8 @@ namespace TechChallenge.Application.Validator
     {
         public ValetValidator()
         {
-            RuleFor(p => p.CPF).NotNull().WithMessage("CPF is a required field");
-            RuleFor(p => p.Name).NotNull().WithMessage("Name is a required field");
-            RuleFor(p => p.BirthDate).NotNull().WithMessage("BirthDate is a required field");
+            RuleFor(p => p.CNH).NotNull().WithMessage("CNH is a required field");
+            RuleFor(p => p.CNHExpiration).NotNull().WithMessage("CNH Expiration is a required field");
         }
     }
 }

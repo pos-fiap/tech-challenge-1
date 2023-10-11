@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using System;
 using TechChallenge.Application.BaseResponse;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;
@@ -13,14 +14,21 @@ namespace TechChallenge.Application.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IPersonRepository _personRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IValidator<LoginDto> _loginDtoValidator;
         private readonly IValidator<UserDto> _userDtoValidator;
 
-        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, IMapper mapper, IValidator<UserDto> userDtoValidator, IValidator<LoginDto> loginDtoValidator)
+        public UserService(IUserRepository userRepository,
+                           IPersonRepository personRepository,
+                           IUnitOfWork unitOfWork, 
+                           IMapper mapper, 
+                           IValidator<UserDto> userDtoValidator, 
+                           IValidator<LoginDto> loginDtoValidator)
         {
             _userRepository = userRepository;
+            _personRepository = personRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _userDtoValidator = userDtoValidator;
@@ -81,14 +89,23 @@ namespace TechChallenge.Application.Services
 
         public async Task<BaseOutput<int>> RegisterUser(UserDto userDto)
         {
+
             BaseOutput<int> response = new();
 
             ValidationUtil.ValidateClass(userDto, _userDtoValidator, response);
+
+            var person = _personRepository.GetPersonByDocument(userDto.PersonalInformations.Document);
+
+            if (person.Any())
+            {
+                response.AddError($"There is an active person with the document provided (Name: {person.First().Name}), please reuse it to register.");
+            }
 
             if (response.Errors.Any())
             {
                 return response;
             }
+
 
             User userMapped = _mapper.Map<User>(userDto);
             await _userRepository.AddAsync(userMapped);
@@ -104,6 +121,14 @@ namespace TechChallenge.Application.Services
             BaseOutput<User> response = new();
 
             ValidationUtil.ValidateClass(userDto, _userDtoValidator, response);
+
+            var person = _personRepository.GetPersonByDocument(userDto.PersonalInformations.Document);
+
+            if (person.Any())
+            {
+                response.AddError($"There is an active person with the document provided (Name: {person.First().Name}), please reuse it to register.");
+            }
+
 
             if (response.Errors.Any())
             {
@@ -168,6 +193,6 @@ namespace TechChallenge.Application.Services
             return _userRepository.GetSingleAsync(x => x.Username == username, true);
         }
 
-       
+
     }
 }
