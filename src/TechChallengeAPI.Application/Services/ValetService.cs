@@ -34,7 +34,7 @@ namespace TechChallenge.Application.Interfaces
 
             if (valet is null)
             {
-                response.AddError("Id de carro não econtrado!");
+                response.AddError("Car not found!");
             }
 
             if (response.Errors.Any())
