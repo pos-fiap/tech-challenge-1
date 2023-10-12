@@ -1,8 +1,8 @@
 ﻿using TechChallenge.Domain.Entities;
+using TechChallenge.Domain.Interfaces;
 using TechChallenge.Infra.Data.Context;
-using TechChallenge.Infra.Data.Repositories;
 
-namespace TechChallenge.Application.Interfaces
+namespace TechChallenge.Infra.Data.Repositories
 {
     public class ValetRepository : BaseRepository<Valet>, IValetRepository
     {

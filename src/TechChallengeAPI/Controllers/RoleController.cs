@@ -19,7 +19,7 @@ namespace TechChallenge.Api.Controllers
             _roleService = roleService;
         }
 
-        [HttpGet("allRole")]
+        [HttpGet]
         [ProducesResponseType(typeof(BaseOutput<List<Role>>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<List<Role>>), (int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetAll()
@@ -34,7 +34,22 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpGet("verifyLisId")]
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(BaseOutput<Role>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(BaseOutput<Role>), (int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> Get([FromQuery, NotNull, Range(0, int.MaxValue)] int Id)
+        {
+            try
+            {
+                return CustomResponse(await _roleService.GetRole(Id));
+            }
+            catch (Exception ex)
+            {
+                return InternalErrorResponse(ex);
+            }
+        }
+
+        [HttpGet("verifyListId")]
         [ProducesResponseType(typeof(BaseOutput<List<Role>>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<List<Role>>), (int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> VerifyListRole(List<int> Ids)
@@ -49,7 +64,7 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpPost("AddRole")]        
+        [HttpPost]
         [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> RegisterRole([FromBody] RoleDto roleDto)
@@ -64,7 +79,7 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpPut("updateRole")]
+        [HttpPut]
         [ProducesResponseType(typeof(BaseOutput<Role>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<Role>), (int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> UpdateRole([FromBody] RoleDto roleDto)
@@ -79,7 +94,7 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpDelete("deleteRole")]
+        [HttpDelete("{id}")]
         [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> DeleteRole([FromQuery, NotNull, Range(0, int.MaxValue)] int Id)

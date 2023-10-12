@@ -33,7 +33,7 @@ namespace TechChallenge.Application.Services
         public async Task<BaseOutput<int>> AssignRoleToUser(UserRoleDto userRoleDto)
         {
 
-            var response = new BaseOutput<int>();
+            BaseOutput<int> response = new();
 
             ValidationUtil.ValidateClass(userRoleDto, _validator, response);
 
@@ -49,18 +49,17 @@ namespace TechChallenge.Application.Services
 
             //TODO: ACRESCENTAR VALIDAÇÃO DE EXISTÊNCIA DO ID DA ROLE
 
-            var actualRole = await _userRoleRepository.GetAsync(x => x.UserId == userRoleDto.UserId, true);
+            IEnumerable<UserRole> actualRole = await _userRoleRepository.GetAsync(x => x.UserId == userRoleDto.UserId, true);
 
-            var userRoleMapped = _mapper.Map<IEnumerable<UserRole>>(userRoleDto).ToList();
+            List<UserRole> userRoleMapped = _mapper.Map<IEnumerable<UserRole>>(userRoleDto).ToList();
 
-            var includedRoles = userRoleMapped.Where(x => !actualRole.Select(y => y.RoleId).Contains(x.RoleId));
+            IEnumerable<UserRole> includedRoles = userRoleMapped.Where(x => !actualRole.Select(y => y.RoleId).Contains(x.RoleId));
 
-            var deletedRoles = actualRole.Where(x => !userRoleMapped.Select(y => y.RoleId).Contains(x.RoleId));
+            IEnumerable<UserRole> deletedRoles = actualRole.Where(x => !userRoleMapped.Select(y => y.RoleId).Contains(x.RoleId));
 
             if (deletedRoles.Any()) RemoveDeletedRoles(deletedRoles);
 
             if (includedRoles.Any()) AddIncludedRoles(includedRoles);
-
 
             await _unitOfWork.CommitAsync();
 
@@ -71,7 +70,7 @@ namespace TechChallenge.Application.Services
 
         public async Task<BaseOutput<UserRole>> GetRolesByUser(int user)
         {
-            var response = new BaseOutput<UserRole>();
+            BaseOutput<UserRole> response = new();
 
             if (!await _userRepository.ExistsAsync(exp => exp.Id == user))
             {

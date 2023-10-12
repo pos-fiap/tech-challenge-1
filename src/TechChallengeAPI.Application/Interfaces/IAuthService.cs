@@ -9,9 +9,7 @@ namespace TechChallenge.Application.Interfaces
     {
         string GenerateJwtToken(User user);
         RefreshTokenModel GenerateRefreshToken();
-
         BaseOutput<string> ValidateLogin(User user, LoginDto loginDto);
-
         Task<BaseOutput<TokenDto>> RefreshExpiratedTokenAsync(TokenDto tokenDto);
 
     }

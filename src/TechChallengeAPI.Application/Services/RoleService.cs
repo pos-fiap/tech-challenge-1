@@ -36,32 +36,30 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<Role>> GetRoleById(int Id)
+        public async Task<BaseOutput<Role>> GetRole(int Id)
         {
             Role role = await _roleRepository.GetAsync(Id);
 
-            BaseOutput<Role> response = new();
-
-            response.IsSuccessful = true;
-            response.Response = role;
+            BaseOutput<Role> response = new()
+            {
+                IsSuccessful = true,
+                Response = role
+            };
 
             return response;
         }
 
         public async Task<List<int>> VerifyListRole(List<int> ListId)
         {
-       
-            var listNoId = new List<int>();
+            List<int> listNoId = new();
             foreach (int Id in ListId)
             {
-              
                 if (!await VerifyRole(Id))
                 {
                     listNoId.Add(Id);
                 }
             }
             return listNoId;
-           
         }
 
         public async Task<BaseOutput<Role>> GetRole(RoleDto roleDto)

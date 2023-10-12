@@ -9,6 +9,9 @@ namespace TechChallenge.Infra.Ioc.Services
         public static void RegisterAppServices(IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICarService, CarService>();
+            services.AddScoped<IParkingService, ParkingService>();
+            services.AddScoped<IValetService, ValetService>();
             services.AddScoped<IUserRoleService, UserRoleService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<ICustomerService, CustomerService>();

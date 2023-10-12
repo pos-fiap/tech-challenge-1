@@ -31,7 +31,7 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _valetService.GetValetById(id)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _valetService.GetValet(id)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
