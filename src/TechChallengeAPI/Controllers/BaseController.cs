@@ -11,21 +11,21 @@ namespace TechChallenge.Api.Controllers
     {
         protected IActionResult InternalErrorResponse(Exception ex)
         {
-            var response = new BaseOutput<string>();
+            BaseOutput<string> response = new();
             response.AddError(ex.Message);
             return StatusCode(500, response);
         }
 
         protected IActionResult BadRequestResponse(string msg)
         {
-            var response = new BaseOutput<string>();
+            BaseOutput<string> response = new();
             response.AddError(msg);
             return StatusCode(400, response);
         }
 
         protected IActionResult ValidatorErrorResponse(List<ValidationFailure> errors)
         {
-            var response = new BaseOutput<string>();
+            BaseOutput<string> response = new();
             errors.ForEach(error =>
             {
                 response.AddError(error.ErrorMessage);
@@ -45,13 +45,14 @@ namespace TechChallenge.Api.Controllers
 
         protected ActionResult CustomResponse(ModelStateDictionary modelState)
         {
-            var response = new BaseOutput<bool>();
-
-            response.IsSuccessful = false;
-
-            foreach (var state in modelState)
+            BaseOutput<bool> response = new()
             {
-                foreach (var error in state.Value.Errors)
+                IsSuccessful = false
+            };
+
+            foreach (KeyValuePair<string, ModelStateEntry> state in modelState)
+            {
+                foreach (ModelError error in state.Value.Errors)
                 {
                     response.AddError(error.ErrorMessage);
                 }

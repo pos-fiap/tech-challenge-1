@@ -33,28 +33,28 @@ namespace TechChallenge.Application.Services
                 new Claim(ClaimTypes.Role, user.Role.ToString())
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("Jwt:Key").Value!));
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("Jwt:Key").Value!));
 
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            SigningCredentials credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
-            var token = new JwtSecurityToken(
+            JwtSecurityToken token = new JwtSecurityToken(
                 claims: claims,
                 expires: DateTime.Now.AddDays(1),
                 signingCredentials: credentials
             );
 
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+            string jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;
         }
 
         public RefreshTokenModel GenerateRefreshToken()
         {
-            var randomNumber = new byte[64];
-            using var rng = RandomNumberGenerator.Create();
+            byte[] randomNumber = new byte[64];
+            using RandomNumberGenerator rng = RandomNumberGenerator.Create();
             rng.GetBytes(randomNumber);
 
-            var refreshToken = new RefreshTokenModel
+            RefreshTokenModel refreshToken = new()
             {
                 RefreshToken = Convert.ToBase64String(randomNumber),
                 ExpirationDate = DateTime.UtcNow.AddSeconds(10)
@@ -64,7 +64,7 @@ namespace TechChallenge.Application.Services
 
         public async Task<BaseOutput<TokenDto>> RefreshExpiratedTokenAsync(TokenDto tokenDto)
         {
-            var response = new BaseOutput<TokenDto>();
+            BaseOutput<TokenDto> response = new BaseOutput<TokenDto>();
 
             if (tokenDto == null)
             {
@@ -75,9 +75,9 @@ namespace TechChallenge.Application.Services
             string accessToken = tokenDto!.Token;
             string refreshToken = tokenDto.RefreshToken;
 
-            var principal = GetPrincipalFromExpiredToken(accessToken);
-            var username = principal.Identity?.Name ?? string.Empty; 
-            var user = await _userService.GetUserByUsername(username);
+            ClaimsPrincipal principal = GetPrincipalFromExpiredToken(accessToken);
+            string username = principal.Identity?.Name ?? string.Empty;
+            User user = await _userService.GetUser(username);
 
             if (user == null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryDate >= DateTime.Now)
             {
@@ -85,12 +85,12 @@ namespace TechChallenge.Application.Services
                 return response;
             }
 
-            var newAccessToken = GenerateJwtToken(user);
-            var newRefreshToken = GenerateRefreshToken();
+            string newAccessToken = GenerateJwtToken(user);
+            RefreshTokenModel newRefreshToken = GenerateRefreshToken();
 
             await _userService.UpdateUserRefreshToken(user, newRefreshToken);
 
-            var token = new TokenDto
+            TokenDto token = new TokenDto
             {
                 Token = newAccessToken,
                 RefreshToken = newRefreshToken.RefreshToken
@@ -102,7 +102,7 @@ namespace TechChallenge.Application.Services
 
         public BaseOutput<string> ValidateLogin(User user, LoginDto loginDto)
         {
-            var response = new BaseOutput<string>
+            BaseOutput<string> response = new BaseOutput<string>
             {
                 IsSuccessful = true
             };
@@ -119,7 +119,7 @@ namespace TechChallenge.Application.Services
 
         private ClaimsPrincipal GetPrincipalFromExpiredToken(string expiredToken)
         {
-            var tokenValidationParameters = new TokenValidationParameters
+            TokenValidationParameters tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateAudience = false,
                 ValidateIssuer = false,
@@ -127,12 +127,11 @@ namespace TechChallenge.Application.Services
                 ValidateLifetime = false
             };
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            SecurityToken securityToken;
-            
-            var principal = tokenHandler.ValidateToken(expiredToken, tokenValidationParameters, out securityToken);
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
 
-            var jwtSecurityToken = securityToken as JwtSecurityToken;
+            ClaimsPrincipal principal = tokenHandler.ValidateToken(expiredToken, tokenValidationParameters, out SecurityToken securityToken);
+
+            JwtSecurityToken? jwtSecurityToken = securityToken as JwtSecurityToken;
 
             if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha512Signature, StringComparison.InvariantCultureIgnoreCase))
             {

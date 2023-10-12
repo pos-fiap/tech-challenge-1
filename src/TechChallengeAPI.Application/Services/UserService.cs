@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using FluentValidation.Results;
 using TechChallenge.Application.BaseResponse;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;
@@ -39,20 +40,20 @@ namespace TechChallenge.Application.Services
         }
         public async Task<BaseOutput<User>> GetUser(int Id)
         {
-            User user = await _userRepository.GetAsync(Id);
-
-            BaseOutput<User> response = new();
-
-            response.Response = user;
+            BaseOutput<User> response = new()
+            {
+                Response = await _userRepository.GetAsync(Id)
+            };
 
             return response;
         }
 
-        public async Task<BaseOutput<User>> GetUserByLogin(LoginDto loginDto)
+        public async Task<BaseOutput<User>> GetUser(LoginDto loginDto)
         {
-            var response = new BaseOutput<User>();
+            BaseOutput<User> response = new();
 
-            var validationResult = _loginDtoValidator.Validate(loginDto);
+            ValidationResult validationResult = _loginDtoValidator.Validate(loginDto);
+
             if (!validationResult.IsValid)
             {
                 validationResult.Errors.ForEach(x => response.AddError(x.ErrorMessage));
@@ -62,6 +63,7 @@ namespace TechChallenge.Application.Services
             IEnumerable<User> users = await _userRepository.GetAsync(x => x.Username == loginDto.Username, true);
 
             response.Response = users.FirstOrDefault() ?? new User();
+
             return response;
         }
 
@@ -163,11 +165,11 @@ namespace TechChallenge.Application.Services
             await _unitOfWork.CommitAsync();
         }
 
-        public Task<User> GetUserByUsername(string username)
+        public Task<User> GetUser(string username)
         {
             return _userRepository.GetSingleAsync(x => x.Username == username, true);
         }
 
-       
+
     }
 }

@@ -31,7 +31,7 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _carService.GetCarById(id)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _carService.GetCar(id)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
