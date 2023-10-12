@@ -11,6 +11,10 @@ namespace TechChallenge.Infra.Ioc.Services
         public static void RegisterDataServices(IServiceCollection services)
         {
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICarRepository, CarRepository>();
+            services.AddScoped<ICostumerRepository, CostumerRepository>();
+            services.AddScoped<IParkingRepository, ParkingRepository>();
+            services.AddScoped<IValetRepository, ValetRepository>();
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
