@@ -5,6 +5,8 @@ using System.Net;
 using TechChallenge.Application.BaseResponse;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;
+using TechChallenge.Application.Models;
+using TechChallenge.Domain.Entities;
 
 namespace TechChallenge.Api.Controllers
 {
@@ -33,7 +35,7 @@ namespace TechChallenge.Api.Controllers
                     return ValidatorErrorResponse(validationResult.Errors);
                 }
 
-                var userExists = await _userService.VerifyUser(userDto.Username);
+                bool userExists = await _userService.VerifyUser(userDto.Username);
 
                 if (userExists)
                 {
@@ -63,24 +65,24 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                var userResponse = await _userService.GetUserByLogin(loginDto);
+                BaseOutput<User> userResponse = await _userService.GetUser(loginDto);
                 if (!userResponse.IsSuccessful)
                 {
                     return CustomResponse(userResponse);
                 }
 
-                var validateResponse = _authService.ValidateLogin(userResponse.Response, loginDto);
-                if(!validateResponse.IsSuccessful)
+                BaseOutput<string> validateResponse = _authService.ValidateLogin(userResponse.Response, loginDto);
+                if (!validateResponse.IsSuccessful)
                 {
                     return CustomResponse(validateResponse);
                 }
 
                 string token = _authService.GenerateJwtToken(userResponse.Response);
-                var refreshToken = _authService.GenerateRefreshToken();
+                RefreshTokenModel refreshToken = _authService.GenerateRefreshToken();
 
                 await _userService.UpdateUserRefreshToken(userResponse.Response, refreshToken);
 
-                var tokenDto = new TokenDto
+                TokenDto tokenDto = new()
                 {
                     Token = token,
                     RefreshToken = refreshToken.RefreshToken
@@ -95,20 +97,20 @@ namespace TechChallenge.Api.Controllers
         }
 
 
-        [HttpPost]
-        [Route("refresh")]
+        [HttpPost("refresh")]
         public async Task<IActionResult> RefreshTokenAsync(TokenDto tokenDto)
         {
             try
             {
-                var response = await _authService.RefreshExpiratedTokenAsync(tokenDto);
-                if(!response.IsSuccessful)
+                BaseOutput<TokenDto> response = await _authService.RefreshExpiratedTokenAsync(tokenDto);
+
+                if (!response.IsSuccessful)
                 {
                     return CustomResponse(response);
                 }
 
                 return Ok(response.Response);
-                
+
             }
             catch (Exception ex)
             {
@@ -116,7 +118,7 @@ namespace TechChallenge.Api.Controllers
             }
 
 
-           
+
         }
 
     }

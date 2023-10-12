@@ -28,9 +28,9 @@ namespace TechChallenge.Application.Interfaces
 
         public async Task<BaseOutput<bool>> Delete(int id)
         {
-            var response = new BaseOutput<bool>();
+            BaseOutput<bool> response = new();
 
-            var valet = await _valetRepository.GetSingleAsync(exp => exp.Id == id, true);
+            Valet? valet = await _valetRepository.GetSingleAsync(exp => exp.Id == id, true);
 
             if (valet is null)
             {
@@ -42,7 +42,7 @@ namespace TechChallenge.Application.Interfaces
                 return response;
             }
 
-            var valetMapped = _mapper.Map<Valet>(valet);
+            Valet valetMapped = _mapper.Map<Valet>(valet);
 
             _valetRepository.Delete(valetMapped);
 
@@ -57,18 +57,19 @@ namespace TechChallenge.Application.Interfaces
 
         }
 
-        public async Task<BaseOutput<Valet>> GetValetById(int id)
+        public async Task<BaseOutput<Valet>> GetValet(int id)
         {
-            var response = new BaseOutput<Valet>();
-
-            response.Response = await _valetRepository.GetAsync(id);
+            BaseOutput<Valet> response = new()
+            {
+                Response = await _valetRepository.GetAsync(id)
+            };
 
             return response;
         }
 
         public async Task<BaseOutput<int>> Register(ValetDto valet)
         {
-            var response = new BaseOutput<int>();
+            BaseOutput<int> response = new();
 
             ValidationUtil.ValidateClass(valet, _validator, response);
 
@@ -77,7 +78,7 @@ namespace TechChallenge.Application.Interfaces
                 return response;
             }
 
-            var valetMapped = _mapper.Map<Valet>(valet);;
+            Valet valetMapped = _mapper.Map<Valet>(valet); ;
 
             await _valetRepository.AddAsync(valetMapped);
 
@@ -90,7 +91,7 @@ namespace TechChallenge.Application.Interfaces
 
         public async Task<BaseOutput<bool>> Update(ValetDto valet)
         {
-            var response = new BaseOutput<bool>();
+            BaseOutput<bool> response = new();
 
             ValidationUtil.ValidateClass(valet, _validator, response);
 
@@ -99,7 +100,7 @@ namespace TechChallenge.Application.Interfaces
                 return response;
             }
 
-            var valetMapped = _mapper.Map<Valet>(valet);;
+            Valet valetMapped = _mapper.Map<Valet>(valet); ;
 
             _valetRepository.Update(valetMapped);
 

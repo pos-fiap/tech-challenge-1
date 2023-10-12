@@ -19,7 +19,7 @@ namespace TechChallenge.Api.Controllers
             _userService = userService;
         }
 
-        [HttpGet("all")]
+        [HttpGet]
         [ProducesResponseType(typeof(BaseOutput<List<User>>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<List<User>>), (int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetAll()
@@ -34,7 +34,22 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpPost("register")]
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(BaseOutput<List<User>>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(BaseOutput<List<User>>), (int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> Get(int id)
+        {
+            try
+            {
+                return CustomResponse(await _userService.GetUser(id));
+            }
+            catch (Exception ex)
+            {
+                return InternalErrorResponse(ex);
+            }
+        }
+
+        [HttpPost]
         //[HttpPost("register"), Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.InternalServerError)]
@@ -50,7 +65,7 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpPut("update")]
+        [HttpPut]
         //[HttpDelete("delete"), Authorize]
         [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.InternalServerError)]
@@ -66,7 +81,7 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpDelete("delete")]
+        [HttpDelete("{id}")]
         //[HttpDelete("delete"), Authorize]
         [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.InternalServerError)]
