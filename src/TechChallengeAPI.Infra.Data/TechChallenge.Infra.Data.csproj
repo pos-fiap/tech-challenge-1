@@ -8,8 +8,8 @@
 
 	<ItemGroup>
 	  <Compile Remove="EntitiesConfiguration\CategoryMap\**" />
-	  <Compile Remove="EntitiesConfiguration\ClientMap\**" />
-	  <Compile Remove="EntitiesConfiguration\ClientTypeMap\**" />
+	  <Compile Remove="EntitiesConfiguration\CostumerMap\**" />
+	  <Compile Remove="EntitiesConfiguration\CostumerTypeMap\**" />
 	  <Compile Remove="EntitiesConfiguration\LocalMap\**" />
 	  <Compile Remove="EntitiesConfiguration\LoginMap\**" />
 	  <Compile Remove="EntitiesConfiguration\OrderMap\**" />
@@ -18,8 +18,8 @@
 	  <Compile Remove="EntitiesConfiguration\ProductMap\**" />
 	  <Compile Remove="EntitiesConfiguration\StatusMap\**" />
 	  <EmbeddedResource Remove="EntitiesConfiguration\CategoryMap\**" />
-	  <EmbeddedResource Remove="EntitiesConfiguration\ClientMap\**" />
-	  <EmbeddedResource Remove="EntitiesConfiguration\ClientTypeMap\**" />
+	  <EmbeddedResource Remove="EntitiesConfiguration\CostumerMap\**" />
+	  <EmbeddedResource Remove="EntitiesConfiguration\CostumerTypeMap\**" />
 	  <EmbeddedResource Remove="EntitiesConfiguration\LocalMap\**" />
 	  <EmbeddedResource Remove="EntitiesConfiguration\LoginMap\**" />
 	  <EmbeddedResource Remove="EntitiesConfiguration\OrderMap\**" />
@@ -28,8 +28,8 @@
 	  <EmbeddedResource Remove="EntitiesConfiguration\ProductMap\**" />
 	  <EmbeddedResource Remove="EntitiesConfiguration\StatusMap\**" />
 	  <None Remove="EntitiesConfiguration\CategoryMap\**" />
-	  <None Remove="EntitiesConfiguration\ClientMap\**" />
-	  <None Remove="EntitiesConfiguration\ClientTypeMap\**" />
+	  <None Remove="EntitiesConfiguration\CostumerMap\**" />
+	  <None Remove="EntitiesConfiguration\CostumerTypeMap\**" />
 	  <None Remove="EntitiesConfiguration\LocalMap\**" />
 	  <None Remove="EntitiesConfiguration\LoginMap\**" />
 	  <None Remove="EntitiesConfiguration\OrderMap\**" />

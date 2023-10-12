@@ -9,9 +9,9 @@ using TechChallenge.Domain.Entities;
 
 namespace TechChallenge.Application.Validator
 {
-    public class ClientValidator : AbstractValidator<ClientDto>
+    public class CostumerValidator : AbstractValidator<CostumerDto>
     {
-        public ClientValidator()
+        public CostumerValidator()
         {
             RuleFor(p => p.PersonalInformations.Status).NotNull().WithMessage("Status is a required field");
             RuleFor(p => p.PersonalInformations.Name).NotNull().WithMessage("Name is a required field");

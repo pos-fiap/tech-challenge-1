@@ -1,19 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
-using RCLocacoes.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TechChallenge.Domain.Entities;
 
-namespace RCLocacoes.Infra.Data.Entity.ClientMap
+namespace TechChallenge.Infra.Data.EntitiesConfiguration.ClientMap
 {
-    public class ClientMap : IEntityTypeConfiguration<Domain.Entities.Client>
+    public class CostumerMap : IEntityTypeConfiguration<Costumer>
     {
-        public void Configure(EntityTypeBuilder<Client> builder)
+        public void Configure(EntityTypeBuilder<Costumer> builder)
         {
-            builder.ToTable("Client");
+            builder.ToTable("Costumer");
             builder.HasKey(p => p.Id);
         }
     }

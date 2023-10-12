@@ -9,15 +9,15 @@ using TechChallenge.Domain.Interfaces;
 
 namespace TechChallenge.Application.Services
 {
-    public class ClientService : IClientService
+    public class CostumerService : ICostumerService
     {
-        private readonly IClientRepository _clientRepository;
+        private readonly ICostumerRepository _clientRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IValidator<ClientDto> _validator;
+        private readonly IValidator<CostumerDto> _validator;
 
-        public ClientService(IClientRepository clientRepository,
-                          IValidator<ClientDto> validator,
+        public CostumerService(ICostumerRepository clientRepository,
+                          IValidator<CostumerDto> validator,
                           IUnitOfWork unitOfWork,
                           IMapper mapper)
         {
@@ -44,7 +44,7 @@ namespace TechChallenge.Application.Services
                 return response;
             }
 
-            var clientMapped = _mapper.Map<Client>(client);
+            var clientMapped = _mapper.Map<Costumer>(client);
 
             _clientRepository.Delete(clientMapped);
 
@@ -53,14 +53,14 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<IList<Client>>> GetClient()
+        public async Task<BaseOutput<IList<Costumer>>> GetCostumer()
         {
-            return new BaseOutput<IList<Client>>((await _clientRepository.GetAsync()).ToList());
+            return new BaseOutput<IList<Costumer>>((await _clientRepository.GetAsync()).ToList());
         }
 
-        public async Task<BaseOutput<Client>> GetIdClientById(int id)
+        public async Task<BaseOutput<Costumer>> GetIdCostumer(int id)
         {
-            var response = new BaseOutput<Client>();
+            var response = new BaseOutput<Costumer>();
 
             response.Response = await _clientRepository.GetAsync(id);
 
@@ -68,7 +68,7 @@ namespace TechChallenge.Application.Services
         }
 
  
-        public async Task<BaseOutput<int>> Register(ClientDto client)
+        public async Task<BaseOutput<int>> Register(CostumerDto client)
         {
             var response = new BaseOutput<int>();
 
@@ -79,7 +79,7 @@ namespace TechChallenge.Application.Services
                 return response;
             }
 
-            var clientMapped = _mapper.Map<Client>(client);
+            var clientMapped = _mapper.Map<Costumer>(client);
 
             await _clientRepository.AddAsync(clientMapped);
 
@@ -90,7 +90,7 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<bool>> Update(ClientDto client)
+        public async Task<BaseOutput<bool>> Update(CostumerDto client)
         {
             var response = new BaseOutput<bool>();
 
@@ -101,7 +101,7 @@ namespace TechChallenge.Application.Services
                 return response;
             }
 
-            var clientMapped = _mapper.Map<Client>(client);
+            var clientMapped = _mapper.Map<Costumer>(client);
 
             _clientRepository.Update(clientMapped);
 

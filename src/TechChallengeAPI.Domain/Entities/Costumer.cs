@@ -1,6 +1,6 @@
 ﻿namespace TechChallenge.Domain.Entities
 {
-    public class Client : BaseModel
+    public class Costumer : BaseModel
     {
         public int Id { get; set; }
         public int PersonId { get; set; }
