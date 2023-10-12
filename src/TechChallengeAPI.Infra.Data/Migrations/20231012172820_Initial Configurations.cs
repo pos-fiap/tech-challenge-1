@@ -56,7 +56,7 @@ namespace TechChallenge.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Client",
+                name: "Customer",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -65,9 +65,9 @@ namespace TechChallenge.Infra.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Client", x => x.Id);
+                    table.PrimaryKey("PK_Customer", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Client_Person_PersonId",
+                        name: "FK_Customer_Person_PersonId",
                         column: x => x.PersonId,
                         principalTable: "Person",
                         principalColumn: "Id",
@@ -119,8 +119,8 @@ namespace TechChallenge.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Client_PersonId",
-                table: "Client",
+                name: "IX_Customer_PersonId",
+                table: "Customer",
                 column: "PersonId");
 
             migrationBuilder.CreateIndex(
@@ -138,7 +138,7 @@ namespace TechChallenge.Infra.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Client");
+                name: "Customer");
 
             migrationBuilder.DropTable(
                 name: "Role");

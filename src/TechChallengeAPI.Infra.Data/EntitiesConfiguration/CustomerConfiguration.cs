@@ -6,11 +6,11 @@ using TechChallenge.Domain.Entities;
 
 namespace TechChallenge.Infra.Data.EntitiesConfiguration
 {
-    internal class ClientConfiguration : IEntityTypeConfiguration<Client>
+    internal class CustomerConfiguration : IEntityTypeConfiguration<Customer>
     {
-        public void Configure(EntityTypeBuilder<Client> builder)
+        public void Configure(EntityTypeBuilder<Customer> builder)
         {
-            builder.ToTable("Client");
+            builder.ToTable("Customer");
         }
     }
 }

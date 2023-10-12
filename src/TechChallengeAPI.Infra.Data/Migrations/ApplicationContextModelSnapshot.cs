@@ -17,12 +17,15 @@ namespace TechChallenge.Infra.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.3")
+                .HasAnnotation("ProductVersion", "7.0.12")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TechChallenge.Domain.Entities.Client", b =>
+            modelBuilder.Entity("TechChallenge.Domain.Entities.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -37,7 +40,7 @@ namespace TechChallenge.Infra.Data.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("Client", (string)null);
+                    b.ToTable("Customer", (string)null);
                 });
 
             modelBuilder.Entity("TechChallenge.Domain.Entities.Person", b =>
@@ -174,7 +177,7 @@ namespace TechChallenge.Infra.Data.Migrations
                     b.ToTable("Valet", (string)null);
                 });
 
-            modelBuilder.Entity("TechChallenge.Domain.Entities.Client", b =>
+            modelBuilder.Entity("TechChallenge.Domain.Entities.Customer", b =>
                 {
                     b.HasOne("TechChallenge.Domain.Entities.Person", "Person")
                         .WithMany()

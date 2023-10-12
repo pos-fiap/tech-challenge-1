@@ -67,7 +67,7 @@ namespace TechChallenge.Application.Services
 
             if (tokenDto == null)
             {
-                response.AddError("Invalid client request");
+                response.AddError("Invalid Customer request");
                 return response;
             }
 
@@ -80,7 +80,7 @@ namespace TechChallenge.Application.Services
 
             if (user == null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryDate >= DateTime.Now)
             {
-                response.AddError("Invalid client request");
+                response.AddError("Invalid Customer request");
                 return response;
             }
 
