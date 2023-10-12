@@ -3,7 +3,7 @@ using TechChallenge.Application.DTOs;
 
 namespace TechChallenge.Application.Validator
 {
-    internal class ParkingValidator : AbstractValidator<ParkingDto>
+    public class ParkingValidator : AbstractValidator<ParkingDto>
     {
         public ParkingValidator()
         {

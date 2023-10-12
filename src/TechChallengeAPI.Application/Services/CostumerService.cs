@@ -30,9 +30,9 @@ namespace TechChallenge.Application.Services
 
         public async Task<BaseOutput<bool>> Delete(int id)
         {
-            var response = new BaseOutput<bool>();
+            BaseOutput<bool> response = new();
 
-            var client = await _clientRepository.GetSingleAsync(exp => exp.Id == id, true);
+            Costumer client = await _clientRepository.GetSingleAsync(exp => exp.Id == id, true);
 
             if (client is null)
             {
@@ -44,7 +44,7 @@ namespace TechChallenge.Application.Services
                 return response;
             }
 
-            var clientMapped = _mapper.Map<Costumer>(client);
+            Costumer clientMapped = _mapper.Map<Costumer>(client);
 
             _clientRepository.Delete(clientMapped);
 
@@ -60,7 +60,7 @@ namespace TechChallenge.Application.Services
 
         public async Task<BaseOutput<Costumer>> GetIdCostumer(int id)
         {
-            var response = new BaseOutput<Costumer>();
+            BaseOutput<Costumer> response = new();
 
             response.Response = await _clientRepository.GetAsync(id);
 
@@ -70,7 +70,7 @@ namespace TechChallenge.Application.Services
  
         public async Task<BaseOutput<int>> Register(CostumerDto client)
         {
-            var response = new BaseOutput<int>();
+            BaseOutput<int> response = new();
 
             ValidationUtil.ValidateClass(client, _validator, response);
 
@@ -79,7 +79,7 @@ namespace TechChallenge.Application.Services
                 return response;
             }
 
-            var clientMapped = _mapper.Map<Costumer>(client);
+            Costumer clientMapped = _mapper.Map<Costumer>(client);
 
             await _clientRepository.AddAsync(clientMapped);
 
@@ -92,7 +92,7 @@ namespace TechChallenge.Application.Services
 
         public async Task<BaseOutput<bool>> Update(CostumerDto client)
         {
-            var response = new BaseOutput<bool>();
+            BaseOutput<bool> response = new();
 
             ValidationUtil.ValidateClass(client, _validator, response);
 
@@ -101,7 +101,7 @@ namespace TechChallenge.Application.Services
                 return response;
             }
 
-            var clientMapped = _mapper.Map<Costumer>(client);
+            Costumer clientMapped = _mapper.Map<Costumer>(client);
 
             _clientRepository.Update(clientMapped);
 

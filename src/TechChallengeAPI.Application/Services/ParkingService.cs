@@ -29,9 +29,9 @@ namespace TechChallenge.Application.Services
 
         public async Task<BaseOutput<bool>> Delete(int id)
         {
-            var response = new BaseOutput<bool>();
+            BaseOutput<bool> response = new();
 
-            var parking = await _parkingRepository.GetSingleAsync(exp => exp.Id == id, true);
+            Parking parking = await _parkingRepository.GetSingleAsync(exp => exp.Id == id, true);
 
             if (parking is null)
             {
@@ -43,7 +43,7 @@ namespace TechChallenge.Application.Services
                 return response;
             }
 
-            var parkingMapped = _mapper.Map<Parking>(parking);
+            Parking parkingMapped = _mapper.Map<Parking>(parking);
 
             _parkingRepository.Delete(parkingMapped);
 
@@ -60,7 +60,7 @@ namespace TechChallenge.Application.Services
 
         public async Task<BaseOutput<Parking>> GetParking(int id)
         {
-            var response = new BaseOutput<Parking>();
+            BaseOutput<Parking> response = new();
 
             response.Response = await _parkingRepository.GetAsync(id);
 
@@ -69,7 +69,7 @@ namespace TechChallenge.Application.Services
 
         public async Task<BaseOutput<int>> Register(ParkingDto parking)
         {
-            var response = new BaseOutput<int>();
+            BaseOutput<int> response = new();
 
             ValidationUtil.ValidateClass(parking, _validator, response);
 
@@ -78,7 +78,7 @@ namespace TechChallenge.Application.Services
                 return response;
             }
 
-            var parkingMapped = _mapper.Map<Parking>(parking); ;
+            Parking parkingMapped = _mapper.Map<Parking>(parking);
 
             await _parkingRepository.AddAsync(parkingMapped);
 
@@ -89,7 +89,7 @@ namespace TechChallenge.Application.Services
 
         public async Task<BaseOutput<bool>> Update(ParkingDto parking)
         {
-            var parkingMapped = _mapper.Map<Parking>(parking); ;
+            Parking parkingMapped = _mapper.Map<Parking>(parking);
 
             _parkingRepository.Update(parkingMapped);
 

@@ -29,9 +29,9 @@ namespace TechChallenge.Application.Services
 
         public async Task<BaseOutput<bool>> Delete(int id)
         {
-            var response = new BaseOutput<bool>();
+            BaseOutput<bool> response = new();
 
-            var car = await _carRepository.GetSingleAsync(exp => exp.Id == id, true);
+            Car car = await _carRepository.GetSingleAsync(exp => exp.Id == id, true);
 
             if (car is null)
             {
@@ -43,7 +43,7 @@ namespace TechChallenge.Application.Services
                 return response;
             }
 
-            var carMapped = _mapper.Map<Car>(car);
+            Car carMapped = _mapper.Map<Car>(car);
 
             _carRepository.Delete(carMapped);
 
@@ -59,16 +59,17 @@ namespace TechChallenge.Application.Services
 
         public async Task<BaseOutput<Car>> GetCar(int id)
         {
-            var response = new BaseOutput<Car>();
-
-            response.Response = await _carRepository.GetAsync(id);
+            BaseOutput<Car> response = new BaseOutput<Car>
+            {
+                Response = await _carRepository.GetAsync(id)
+            };
 
             return response;
         }
 
         public async Task<BaseOutput<int>> Register(CarDto car)
         {
-            var response = new BaseOutput<int>();
+            BaseOutput<int> response = new();
 
             ValidationUtil.ValidateClass(car, _validator, response);
 
@@ -77,7 +78,7 @@ namespace TechChallenge.Application.Services
                 return response;
             }
 
-            var carMapped = _mapper.Map<Car>(car);
+            Car carMapped = _mapper.Map<Car>(car);
 
             await _carRepository.AddAsync(carMapped);
 
@@ -90,7 +91,7 @@ namespace TechChallenge.Application.Services
 
         public async Task<BaseOutput<bool>> Update(CarDto car)
         {
-            var response = new BaseOutput<bool>();
+            BaseOutput<bool> response = new();
 
             ValidationUtil.ValidateClass(car, _validator, response);
 
@@ -99,7 +100,7 @@ namespace TechChallenge.Application.Services
                 return response;
             }
 
-            var carMapped = _mapper.Map<Car>(car);
+            Car carMapped = _mapper.Map<Car>(car);
 
             _carRepository.Update(carMapped);
 

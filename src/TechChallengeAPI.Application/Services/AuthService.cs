@@ -32,9 +32,9 @@ namespace TechChallenge.Application.Services
                 new Claim(ClaimTypes.Name, user.Username)
             };
 
-            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("Jwt:Key").Value!));
+            SymmetricSecurityKey key = new(Encoding.UTF8.GetBytes(_configuration.GetSection("Jwt:Key").Value!));
 
-            SigningCredentials credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            SigningCredentials credentials = new(key, SecurityAlgorithms.HmacSha512Signature);
 
             JwtSecurityToken token = new JwtSecurityToken(
                 claims: claims,
@@ -101,7 +101,7 @@ namespace TechChallenge.Application.Services
 
         public BaseOutput<string> ValidateLogin(User user, LoginDto loginDto)
         {
-            BaseOutput<string> response = new BaseOutput<string>
+            BaseOutput<string> response = new()
             {
                 IsSuccessful = true
             };
@@ -118,7 +118,7 @@ namespace TechChallenge.Application.Services
 
         private ClaimsPrincipal GetPrincipalFromExpiredToken(string expiredToken)
         {
-            TokenValidationParameters tokenValidationParameters = new TokenValidationParameters
+            TokenValidationParameters tokenValidationParameters = new()
             {
                 ValidateAudience = false,
                 ValidateIssuer = false,

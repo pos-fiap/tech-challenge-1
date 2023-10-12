@@ -48,16 +48,17 @@ namespace TechChallenge.Application.Services
         {
             User user = await _userRepository.GetAsync(Id);
 
-            BaseOutput<User> response = new();
-
-            response.Response = user;
+            BaseOutput<User> response = new()
+            {
+                Response = user
+            };
 
             return response;
         }
 
         public async Task<BaseOutput<User>> GetUser(LoginDto loginDto)
         {
-            var response = new BaseOutput<User>();
+            BaseOutput<User> response = new();
 
             var validationResult = _loginDtoValidator.Validate(loginDto);
             if (!validationResult.IsValid)
