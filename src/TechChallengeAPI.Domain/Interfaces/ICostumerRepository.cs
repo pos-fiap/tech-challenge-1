@@ -7,7 +7,7 @@ using TechChallenge.Domain.Entities;
 
 namespace TechChallenge.Domain.Interfaces
 {
-    public interface ICostumerRepository : IBaseRepository<Costumer>
+    public interface ICustomerRepository : IBaseRepository<Customer>
     {
     }
 }

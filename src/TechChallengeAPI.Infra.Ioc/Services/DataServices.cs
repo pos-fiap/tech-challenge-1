@@ -12,7 +12,7 @@ namespace TechChallenge.Infra.Ioc.Services
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICarRepository, CarRepository>();
-            services.AddScoped<ICostumerRepository, CostumerRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IParkingRepository, ParkingRepository>();
             services.AddScoped<IValetRepository, ValetRepository>();
             services.AddScoped<IPersonRepository, PersonRepository>();

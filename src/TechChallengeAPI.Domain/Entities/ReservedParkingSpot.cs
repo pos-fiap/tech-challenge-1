@@ -10,7 +10,7 @@ namespace TechChallenge.Domain.Entities
     public class ReservedParkingSpot : BaseModel
     {
         public int Id { get; set; }
-        public int CostumerVehicleId { get; set; }
+        public int CustomerVehicleId { get; set; }
         public DateTime Entrance { get; set; }
         public DateTime Exit { get; set; }
         public int TimeParked { get; set; }

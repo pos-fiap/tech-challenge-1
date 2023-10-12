@@ -8,8 +8,6 @@
 
 	<ItemGroup>
 	  <Compile Remove="EntitiesConfiguration\CategoryMap\**" />
-	  <Compile Remove="EntitiesConfiguration\CustomerMap\**" />
-	  <Compile Remove="EntitiesConfiguration\CustomerTypeMap\**" />
 	  <Compile Remove="EntitiesConfiguration\LocalMap\**" />
 	  <Compile Remove="EntitiesConfiguration\LoginMap\**" />
 	  <Compile Remove="EntitiesConfiguration\OrderMap\**" />

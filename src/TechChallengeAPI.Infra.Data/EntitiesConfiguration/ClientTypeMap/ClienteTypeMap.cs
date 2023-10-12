@@ -1,10 +1,10 @@
 ﻿namespace TechChallenge.Infra.Data.EntitiesConfiguration.ClientTypeMap
 {
-    //public class CostumerTypeMap : IEntityTypeConfiguration<CostumerType>
+    //public class CustomerTypeMap : IEntityTypeConfiguration<CustomerType>
     //{
-    //    public void Configure(EntityTypeBuilder<CostumerType> builder)
+    //    public void Configure(EntityTypeBuilder<CustomerType> builder)
     //    {
-    //        builder.ToTable("CostumerType");
+    //        builder.ToTable("CustomerType");
     //        builder.HasKey(p => p.Id);
     //    }
     //}

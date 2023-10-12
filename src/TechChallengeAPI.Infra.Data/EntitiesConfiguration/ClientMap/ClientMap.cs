@@ -4,11 +4,11 @@ using TechChallenge.Domain.Entities;
 
 namespace TechChallenge.Infra.Data.EntitiesConfiguration.ClientMap
 {
-    public class CostumerMap : IEntityTypeConfiguration<Costumer>
+    public class CustomerMap : IEntityTypeConfiguration<Customer>
     {
-        public void Configure(EntityTypeBuilder<Costumer> builder)
+        public void Configure(EntityTypeBuilder<Customer> builder)
         {
-            builder.ToTable("Costumer");
+            builder.ToTable("Customer");
             builder.HasKey(p => p.Id);
         }
     }
