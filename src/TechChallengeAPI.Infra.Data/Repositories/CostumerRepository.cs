@@ -4,9 +4,9 @@ using TechChallenge.Infra.Data.Context;
 
 namespace TechChallenge.Infra.Data.Repositories
 {
-    public class ClientRepository : BaseRepository<Client>, IClientRepository
+    public class CostumerRepository : BaseRepository<Costumer>, ICostumerRepository
     {
-        public ClientRepository(ApplicationContext contexto) : base(contexto)
+        public CostumerRepository(ApplicationContext contexto) : base(contexto)
         {
         }
     }

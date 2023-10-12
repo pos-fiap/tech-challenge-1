@@ -2,11 +2,12 @@
 using FluentValidation;
 using TechChallenge.Application.BaseResponse;
 using TechChallenge.Application.DTOs;
+using TechChallenge.Application.Interfaces;
 using TechChallenge.Application.Utils;
 using TechChallenge.Domain.Entities;
 using TechChallenge.Domain.Interfaces;
 
-namespace TechChallenge.Application.Interfaces
+namespace TechChallenge.Application.Services
 {
     public class ParkingService : IParkingService
     {
@@ -28,9 +29,9 @@ namespace TechChallenge.Application.Interfaces
 
         public async Task<BaseOutput<bool>> Delete(int id)
         {
-            BaseOutput<bool> response = new();
+            var response = new BaseOutput<bool>();
 
-            Parking? parking = await _parkingRepository.GetSingleAsync(exp => exp.Id == id, true);
+            var parking = await _parkingRepository.GetSingleAsync(exp => exp.Id == id, true);
 
             if (parking is null)
             {
@@ -42,7 +43,7 @@ namespace TechChallenge.Application.Interfaces
                 return response;
             }
 
-            Parking parkingMapped = _mapper.Map<Parking>(parking);
+            var parkingMapped = _mapper.Map<Parking>(parking);
 
             _parkingRepository.Delete(parkingMapped);
 
@@ -54,21 +55,21 @@ namespace TechChallenge.Application.Interfaces
         public async Task<BaseOutput<IList<Parking>>> GetParking()
         {
             return new BaseOutput<IList<Parking>>((await _parkingRepository.GetAsync()).ToList());
+
         }
 
         public async Task<BaseOutput<Parking>> GetParking(int id)
         {
-            BaseOutput<Parking> response = new()
-            {
-                Response = await _parkingRepository.GetAsync(id)
-            };
+            var response = new BaseOutput<Parking>();
+
+            response.Response = await _parkingRepository.GetAsync(id);
 
             return response;
         }
 
         public async Task<BaseOutput<int>> Register(ParkingDto parking)
         {
-            BaseOutput<int> response = new();
+            var response = new BaseOutput<int>();
 
             ValidationUtil.ValidateClass(parking, _validator, response);
 
@@ -77,7 +78,7 @@ namespace TechChallenge.Application.Interfaces
                 return response;
             }
 
-            Parking parkingMapped = _mapper.Map<Parking>(parking); ;
+            var parkingMapped = _mapper.Map<Parking>(parking); ;
 
             await _parkingRepository.AddAsync(parkingMapped);
 
@@ -88,7 +89,7 @@ namespace TechChallenge.Application.Interfaces
 
         public async Task<BaseOutput<bool>> Update(ParkingDto parking)
         {
-            Parking parkingMapped = _mapper.Map<Parking>(parking); ;
+            var parkingMapped = _mapper.Map<Parking>(parking); ;
 
             _parkingRepository.Update(parkingMapped);
 

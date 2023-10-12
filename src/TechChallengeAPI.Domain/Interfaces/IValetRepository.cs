@@ -1,7 +1,6 @@
 ﻿using TechChallenge.Domain.Entities;
-using TechChallenge.Domain.Interfaces;
 
-namespace TechChallenge.Application.Interfaces
+namespace TechChallenge.Domain.Interfaces
 {
     public interface IValetRepository : IBaseRepository<Valet>
     {
