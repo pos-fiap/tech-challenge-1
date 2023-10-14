@@ -4,9 +4,9 @@ using TechChallenge.Infra.Data.Context;
 
 namespace TechChallenge.Infra.Data.Repositories
 {
-    public class CarRepository : BaseRepository<Car>, ICarRepository
+    public class CustomerVehicleRepository : BaseRepository<CustomerVehicle>, ICustomerVehicleRepository
     {
-        public CarRepository(ApplicationContext contexto) : base(contexto)
+        public CustomerVehicleRepository(ApplicationContext contexto) : base(contexto)
         {
         }
     }

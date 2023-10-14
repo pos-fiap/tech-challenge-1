@@ -8,8 +8,8 @@ namespace TechChallenge.Application.Interfaces
     {
         Task<BaseOutput<IList<Valet>>> GetValet();
         Task<BaseOutput<Valet>> GetValet(int id);
-        Task<BaseOutput<int>> Register(ValetDto car);
-        Task<BaseOutput<bool>> Update(ValetDto car);
+        Task<BaseOutput<int>> Register(ValetDto vehicle);
+        Task<BaseOutput<bool>> Update(ValetDto vehicle);
         Task<BaseOutput<bool>> Delete(int id);
     }
 }

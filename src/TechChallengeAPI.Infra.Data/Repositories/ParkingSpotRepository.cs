@@ -4,9 +4,9 @@ using TechChallenge.Infra.Data.Context;
 
 namespace TechChallenge.Infra.Data.Repositories
 {
-    public class ParkingRepository : BaseRepository<Parking>, IParkingRepository
+    public class ParkingSpotRepository : BaseRepository<ParkingSpot>, IParkingSpotRepository
     {
-        public ParkingRepository(ApplicationContext contexto) : base(contexto)
+        public ParkingSpotRepository(ApplicationContext contexto) : base(contexto)
         {
         }
     }

@@ -4,13 +4,13 @@ using TechChallenge.Application.Interfaces;
 
 namespace TechChallenge.Api.Controllers
 {
-    public class CarController : BaseController
+    public class ParkingSpotController : BaseController
     {
-        private readonly ICarService _carService;
+        private readonly IParkingSpotService _parkingSpotService;
 
-        public CarController(ICarService carService)
+        public ParkingSpotController(IParkingSpotService parkingSpotService)
         {
-            _carService = carService;
+            _parkingSpotService = parkingSpotService;
         }
 
         [HttpGet]
@@ -18,7 +18,7 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _carService.GetCar()) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _parkingSpotService.GetParking()) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -31,7 +31,7 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _carService.GetCar(id)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _parkingSpotService.GetParking(id)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -41,11 +41,11 @@ namespace TechChallenge.Api.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Post(CarDto car)
+        public async Task<IActionResult> Post(ParkingSpotDto parking)
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _carService.Register(car)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _parkingSpotService.Register(parking)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -55,11 +55,11 @@ namespace TechChallenge.Api.Controllers
 
 
         [HttpPut]
-        public async Task<IActionResult> Put(CarDto car)
+        public async Task<IActionResult> Put(ParkingSpotDto parking)
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _carService.Update(car)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _parkingSpotService.Update(parking)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -72,7 +72,7 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _carService.Delete(id)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _parkingSpotService.Delete(id)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {

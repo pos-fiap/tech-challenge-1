@@ -13,7 +13,10 @@ namespace TechChallenge.Infra.Data.Context
         public DbSet<Role> Role { get; set; }
         public DbSet<Person> Person { get; set; }
         public DbSet<Customer> Customer { get; set; }
-        public DbSet<Valet> Valet { get; set; }
+        public DbSet<CustomerVehicle> CustomerVehicle { get; set; }
+        public DbSet<Vehicle> Vehicle { get; set; }
+        public DbSet<Reservation> Reservation { get; set; }
+        public DbSet<ParkingSpot> ParkingSpot { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

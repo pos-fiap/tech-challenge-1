@@ -1,8 +1,8 @@
-﻿using TechChallenge.Domain.Enums;
+﻿using TechChallenge.Domain.Entities;
 
-namespace TechChallenge.Domain.Entities
+namespace TechChallenge.Application.DTOs
 {
-    public class CustomerVehicle : BaseModel
+    public class CustomerVehicleDto
     {
         public int Id { get; set; }
         public int PersonId { get; set; }

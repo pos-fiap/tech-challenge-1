@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;
+using TechChallenge.Domain.Entities;
 
 namespace TechChallenge.Api.Controllers
 {
-    public class ParkingController : BaseController
+    public class CustomerVehicleController : BaseController
     {
-        private readonly IParkingService _parkingService;
+        private readonly ICustomerVehicleService _customerVehicleService;
 
-        public ParkingController(IParkingService parkingService)
+        public CustomerVehicleController(ICustomerVehicleService customerVehicleService)
         {
-            _parkingService = parkingService;
+            _customerVehicleService = customerVehicleService;
         }
 
         [HttpGet]
@@ -18,7 +19,7 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _parkingService.GetParking()) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _customerVehicleService.GetCustomerVehicle()) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -31,7 +32,7 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _parkingService.GetParking(id)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _customerVehicleService.GetCustomerVehicle(id)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -41,11 +42,11 @@ namespace TechChallenge.Api.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Post(ParkingDto parking)
+        public async Task<IActionResult> Post(CustomerVehicleDto customerVehicle)
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _parkingService.Register(parking)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _customerVehicleService.Register(customerVehicle)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -55,11 +56,11 @@ namespace TechChallenge.Api.Controllers
 
 
         [HttpPut]
-        public async Task<IActionResult> Put(ParkingDto parking)
+        public async Task<IActionResult> Put(CustomerVehicleDto customerVehicle)
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _parkingService.Update(parking)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _customerVehicleService.Update(customerVehicle)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -72,7 +73,7 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _parkingService.Delete(id)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _customerVehicleService.Delete(id)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {

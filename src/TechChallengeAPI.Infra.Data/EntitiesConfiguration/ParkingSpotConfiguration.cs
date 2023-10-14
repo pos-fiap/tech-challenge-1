@@ -5,11 +5,11 @@ using TechChallenge.Domain.Entities;
 namespace TechChallenge.Infra.Data.EntitiesConfiguration
 {
 
-    public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
+    public class ParkingSpotConfiguration : IEntityTypeConfiguration<ParkingSpot>
     {
-        public void Configure(EntityTypeBuilder<Customer> builder)
+        public void Configure(EntityTypeBuilder<ParkingSpot> builder)
         {
-            builder.ToTable("Customer");
+            builder.ToTable("ParkingSpot");
         }
     }
 }
