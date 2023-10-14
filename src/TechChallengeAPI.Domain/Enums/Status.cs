@@ -1,4 +1,4 @@
-﻿namespace TechChallenge.Domain.Entities
+﻿namespace TechChallenge.Domain.Enums
 {
     public enum Status
     {

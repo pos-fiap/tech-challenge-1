@@ -2,7 +2,7 @@
 
 namespace TechChallenge.Domain.Interfaces
 {
-    public interface ICarRepository : IBaseRepository<Car>
+    public interface IVehicleRepository : IBaseRepository<Vehicle>
     {
     }
 }

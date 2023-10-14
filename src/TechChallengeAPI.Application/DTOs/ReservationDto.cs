@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using TechChallenge.Domain.Entities;
 
-namespace TechChallenge.Domain.Entities
+namespace TechChallenge.Application.DTOs
 {
-    public class ReservedParkingSpot : BaseModel
+    public class ReservationDto
     {
         public int Id { get; set; }
+        public int ParkingSpotId { get; set; }
         public int CustomerVehicleId { get; set; }
         public DateTime Entrance { get; set; }
         public DateTime Exit { get; set; }

@@ -35,7 +35,7 @@ namespace TechChallenge.Application.Services
 
             if (valet is null)
             {
-                response.AddError("Car not found!");
+                response.AddError("Vehicle not found!");
             }
 
             if (response.Errors.Any())

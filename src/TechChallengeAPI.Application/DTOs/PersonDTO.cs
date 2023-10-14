@@ -1,4 +1,4 @@
-﻿using TechChallenge.Domain.Entities;
+﻿using TechChallenge.Domain.Enums;
 
 namespace TechChallenge.Application.DTOs
 {

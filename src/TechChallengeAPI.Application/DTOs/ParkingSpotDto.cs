@@ -1,6 +1,6 @@
-﻿namespace TechChallenge.Domain.Entities
+﻿namespace TechChallenge.Application.DTOs
 {
-    public class ParkingSpot : BaseModel
+    public class ParkingSpotDto
     {
         public int Id { get; set; }
         public required string Description { get; set; }

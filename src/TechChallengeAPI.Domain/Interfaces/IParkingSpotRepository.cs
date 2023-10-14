@@ -2,7 +2,7 @@
 
 namespace TechChallenge.Domain.Interfaces
 {
-    public interface IParkingRepository : IBaseRepository<Parking>
+    public interface IParkingSpotRepository : IBaseRepository<ParkingSpot>
     {
     }
 }

@@ -9,20 +9,20 @@ using TechChallenge.Domain.Interfaces;
 
 namespace TechChallenge.Application.Services
 {
-    public class ParkingService : IParkingService
+    public class ParkingSpotService : IParkingSpotService
     {
-        private readonly IParkingRepository _parkingRepository;
+        private readonly IParkingSpotRepository _parkingSpotRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IValidator<ParkingDto> _validator;
+        private readonly IValidator<ParkingSpotDto> _validator;
 
-        public ParkingService(IParkingRepository parkingRepository,
-                              IValidator<ParkingDto> validator,
+        public ParkingSpotService(IParkingSpotRepository parkingRepository,
+                              IValidator<ParkingSpotDto> validator,
                               IUnitOfWork unitOfWork,
                               IMapper mapper)
         {
             _validator = validator;
-            _parkingRepository = parkingRepository;
+            _parkingSpotRepository = parkingRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
@@ -31,11 +31,11 @@ namespace TechChallenge.Application.Services
         {
             BaseOutput<bool> response = new();
 
-            Parking parking = await _parkingRepository.GetSingleAsync(exp => exp.Id == id, true);
+            ParkingSpot parking = await _parkingSpotRepository.GetSingleAsync(exp => exp.Id == id, true);
 
             if (parking is null)
             {
-                response.AddError("Id de carro não econtrado!");
+                response.AddError("Id de vehiclero não econtrado!");
             }
 
             if (response.Errors.Any())
@@ -43,31 +43,32 @@ namespace TechChallenge.Application.Services
                 return response;
             }
 
-            Parking parkingMapped = _mapper.Map<Parking>(parking);
+            ParkingSpot parkingMapped = _mapper.Map<ParkingSpot>(parking);
 
-            _parkingRepository.Delete(parkingMapped);
+            _parkingSpotRepository.Delete(parkingMapped);
 
             await _unitOfWork.CommitAsync();
 
             return response;
         }
 
-        public async Task<BaseOutput<IList<Parking>>> GetParking()
+        public async Task<BaseOutput<IList<ParkingSpot>>> GetParking()
         {
-            return new BaseOutput<IList<Parking>>((await _parkingRepository.GetAsync()).ToList());
+            return new BaseOutput<IList<ParkingSpot>>((await _parkingSpotRepository.GetAsync()).ToList());
 
         }
 
-        public async Task<BaseOutput<Parking>> GetParking(int id)
+        public async Task<BaseOutput<ParkingSpot>> GetParking(int id)
         {
-            BaseOutput<Parking> response = new();
-
-            response.Response = await _parkingRepository.GetAsync(id);
+            BaseOutput<ParkingSpot> response = new()
+            {
+                Response = await _parkingSpotRepository.GetAsync(id)
+            };
 
             return response;
         }
 
-        public async Task<BaseOutput<int>> Register(ParkingDto parking)
+        public async Task<BaseOutput<int>> Register(ParkingSpotDto parking)
         {
             BaseOutput<int> response = new();
 
@@ -78,20 +79,20 @@ namespace TechChallenge.Application.Services
                 return response;
             }
 
-            Parking parkingMapped = _mapper.Map<Parking>(parking);
+            ParkingSpot parkingMapped = _mapper.Map<ParkingSpot>(parking);
 
-            await _parkingRepository.AddAsync(parkingMapped);
+            await _parkingSpotRepository.AddAsync(parkingMapped);
 
             await _unitOfWork.CommitAsync();
 
             return new BaseOutput<int>(parking.Id);
         }
 
-        public async Task<BaseOutput<bool>> Update(ParkingDto parking)
+        public async Task<BaseOutput<bool>> Update(ParkingSpotDto parking)
         {
-            Parking parkingMapped = _mapper.Map<Parking>(parking);
+            ParkingSpot parkingMapped = _mapper.Map<ParkingSpot>(parking);
 
-            _parkingRepository.Update(parkingMapped);
+            _parkingSpotRepository.Update(parkingMapped);
 
             await _unitOfWork.CommitAsync();
 

@@ -1,4 +1,6 @@
-﻿namespace TechChallenge.Domain.Entities
+﻿using TechChallenge.Domain.Enums;
+
+namespace TechChallenge.Domain.Entities
 {
     public class Person : BaseModel
     {
