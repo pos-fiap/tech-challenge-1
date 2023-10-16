@@ -35,7 +35,7 @@ namespace TechChallenge.Application.Services
 
             if (parking is null)
             {
-                response.AddError("Id de vehiclero não econtrado!");
+                response.AddError("Not Found!");
             }
 
             if (response.Errors.Any())
@@ -46,7 +46,6 @@ namespace TechChallenge.Application.Services
             ParkingSpot parkingMapped = _mapper.Map<ParkingSpot>(parking);
 
             _parkingSpotRepository.Delete(parkingMapped);
-
             await _unitOfWork.CommitAsync();
 
             return response;
@@ -82,21 +81,40 @@ namespace TechChallenge.Application.Services
             ParkingSpot parkingMapped = _mapper.Map<ParkingSpot>(parking);
 
             await _parkingSpotRepository.AddAsync(parkingMapped);
-
             await _unitOfWork.CommitAsync();
 
-            return new BaseOutput<int>(parking.Id);
+            response.Response = parking.Id;
+
+            return response;
         }
 
         public async Task<BaseOutput<bool>> Update(ParkingSpotDto parking)
         {
+            BaseOutput<bool> response = new();
+
             ParkingSpot parkingMapped = _mapper.Map<ParkingSpot>(parking);
 
-            _parkingSpotRepository.Update(parkingMapped);
+            if (!await VerifyParkingSpot(parkingMapped.Id))
+            {
+                response.AddError("Not Found!");
+            }
 
+            if (response.Errors.Any())
+            {
+                return response;
+            }
+
+            _parkingSpotRepository.Update(parkingMapped);
             await _unitOfWork.CommitAsync();
 
-            return new BaseOutput<bool>();
+            response.Response = true;
+
+            return response;
+        }
+
+        public async Task<bool> VerifyParkingSpot(int Id)
+        {
+            return await _parkingSpotRepository.ExistsAsync(x => x.Id == Id);
         }
     }
 }

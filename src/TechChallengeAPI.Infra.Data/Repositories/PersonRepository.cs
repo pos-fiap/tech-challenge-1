@@ -8,13 +8,13 @@ namespace TechChallenge.Infra.Data.Repositories
 {
     public class PersonRepository : BaseRepository<Person>, IPersonRepository
     {
-        public PersonRepository(ApplicationContext contexto) : base(contexto)
+        public PersonRepository(ApplicationContext context) : base(context)
         {
         }
 
         public IList<Person> GetPersonByDocument(string document)
         {
-            return contexto.Person
+            return context.Person
                     .Where(x => x.Document == document && x.Status == Status.Active)
                     .ToList();
         }

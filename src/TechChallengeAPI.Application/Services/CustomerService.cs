@@ -12,6 +12,7 @@ namespace TechChallenge.Application.Services
     public class CustomerService : ICustomerService
     {
         private readonly ICustomerRepository _customerRepository;
+        private readonly IPersonRepository _personRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IValidator<CustomerDto> _validator;
@@ -30,13 +31,13 @@ namespace TechChallenge.Application.Services
 
         public async Task<BaseOutput<bool>> Delete(int id)
         {
-            var response = new BaseOutput<bool>();
+            BaseOutput<bool> response = new();
 
-            var Customer = await _customerRepository.GetSingleAsync(exp => exp.Id == id, true);
+            Customer customer = await _customerRepository.GetSingleAsync(exp => exp.Id == id, true);
 
-            if (Customer is null)
+            if (customer is null)
             {
-                response.AddError("Id de Customerro não econtrado!");
+                response.AddError("Costumer not found!");
             }
 
             if (response.Errors.Any())
@@ -44,7 +45,7 @@ namespace TechChallenge.Application.Services
                 return response;
             }
 
-            var CustomerMapped = _mapper.Map<Customer>(Customer);
+            Customer CustomerMapped = _mapper.Map<Customer>(customer);
 
             _customerRepository.Delete(CustomerMapped);
 
@@ -60,54 +61,79 @@ namespace TechChallenge.Application.Services
 
         public async Task<BaseOutput<Customer>> GetIdCustomerById(int id)
         {
-            var response = new BaseOutput<Customer>();
-
-            response.Response = await _customerRepository.GetAsync(id);
+            BaseOutput<Customer> response = new()
+            {
+                Response = await _customerRepository.GetAsync(id)
+            };
 
             return response;
         }
 
- 
-        public async Task<BaseOutput<int>> Register(CustomerDto Customer)
-        {
-            var response = new BaseOutput<int>();
 
-            ValidationUtil.ValidateClass(Customer, _validator, response);
+        public async Task<BaseOutput<int>> Register(CustomerDto customer)
+        {
+            BaseOutput<int> response = new();
+
+            ValidationUtil.ValidateClass(customer, _validator, response);
+
+            IList<Person> person = _personRepository.GetPersonByDocument(customer.PersonalInformations.Document);
+
+            if (person.Any())
+            {
+                response.AddError($"There is an active person with the document provided (Name: {person.First().Name}), please reuse it to register.");
+            }
 
             if (response.Errors.Any())
             {
                 return response;
             }
 
-            var CustomerMapped = _mapper.Map<Customer>(Customer);
+            Customer CustomerMapped = _mapper.Map<Customer>(customer);
 
             await _customerRepository.AddAsync(CustomerMapped);
-
             await _unitOfWork.CommitAsync();
 
-            response.Response = Customer.Id;
+            response.Response = customer.Id;
 
             return response;
         }
 
-        public async Task<BaseOutput<bool>> Update(CustomerDto Customer)
+        public async Task<BaseOutput<bool>> Update(CustomerDto customer)
         {
-            var response = new BaseOutput<bool>();
+            BaseOutput<bool> response = new();
 
-            ValidationUtil.ValidateClass(Customer, _validator, response);
+            ValidationUtil.ValidateClass(customer, _validator, response);
+
+            IList<Person> person = _personRepository.GetPersonByDocument(customer.PersonalInformations.Document);
+
+            if (person.Any())
+            {
+                response.AddError($"There is an active person with the document provided (Name: {person.First().Name}), please reuse it to register.");
+            }
+
+            Customer CustomerMapped = _mapper.Map<Customer>(customer);
+
+            if (!await VerifyUser(CustomerMapped.Id))
+            {
+                response.AddError("Not Found!");
+            }
 
             if (response.Errors.Any())
             {
                 return response;
             }
 
-            var CustomerMapped = _mapper.Map<Customer>(Customer);
-
             _customerRepository.Update(CustomerMapped);
-
             await _unitOfWork.CommitAsync();
 
-            return new BaseOutput<bool>();
+            response.Response = false;
+
+            return response;
+        }
+
+        public async Task<bool> VerifyUser(int Id)
+        {
+            return await _customerRepository.ExistsAsync(x => x.Id == Id);
         }
 
     }

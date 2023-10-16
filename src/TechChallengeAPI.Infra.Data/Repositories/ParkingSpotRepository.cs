@@ -6,7 +6,7 @@ namespace TechChallenge.Infra.Data.Repositories
 {
     public class ParkingSpotRepository : BaseRepository<ParkingSpot>, IParkingSpotRepository
     {
-        public ParkingSpotRepository(ApplicationContext contexto) : base(contexto)
+        public ParkingSpotRepository(ApplicationContext context) : base(context)
         {
         }
     }

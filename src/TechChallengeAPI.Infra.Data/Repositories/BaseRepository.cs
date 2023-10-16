@@ -8,19 +8,19 @@ namespace TechChallenge.Infra.Data.Repositories
 {
     public abstract class BaseRepository<TEntity> : IDisposable, IBaseRepository<TEntity> where TEntity : BaseModel
     {
-        protected readonly ApplicationContext contexto;
+        protected readonly ApplicationContext context;
         protected readonly DbSet<TEntity> dbSet;
 
-        protected BaseRepository(ApplicationContext contexto)
+        protected BaseRepository(ApplicationContext context)
         {
-            this.contexto = contexto;
-            dbSet = contexto.Set<TEntity>();
+            this.context = context;
+            dbSet = context.Set<TEntity>();
         }
 
         public virtual void Add(TEntity obj)
         {
             dbSet.Add(obj);
-            contexto.SaveChangesAsync();
+            context.SaveChangesAsync();
         }
         public virtual IQueryable<TEntity> List()
         {

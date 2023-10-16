@@ -94,7 +94,7 @@ namespace TechChallenge.Application.Services
 
             ValidationUtil.ValidateClass(userDto, _userDtoValidator, response);
 
-            var person = _personRepository.GetPersonByDocument(userDto.PersonalInformations.Document);
+            IList<Person> person = _personRepository.GetPersonByDocument(userDto.PersonalInformations.Document);
 
             if (person.Any())
             {
@@ -109,6 +109,7 @@ namespace TechChallenge.Application.Services
             userDto.Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
 
             User userMapped = _mapper.Map<User>(userDto);
+
             await _userRepository.AddAsync(userMapped);
             await _unitOfWork.CommitAsync();
 
@@ -123,24 +124,25 @@ namespace TechChallenge.Application.Services
 
             ValidationUtil.ValidateClass(userDto, _userDtoValidator, response);
 
-            var person = _personRepository.GetPersonByDocument(userDto.PersonalInformations.Document);
+            //TODO: Criar verificação para a alteração de documento
+
+            IList<Person> person = _personRepository.GetPersonByDocument(userDto.PersonalInformations.Document);
 
             if (person.Any())
             {
                 response.AddError($"There is an active person with the document provided (Name: {person.First().Name}), please reuse it to register.");
             }
 
-
-            if (response.Errors.Any())
-            {
-                return response;
-            }
-
             User userMapped = _mapper.Map<User>(userDto);
 
             if (!await VerifyUser(userMapped.Id))
             {
-                response.AddError("Not Found");
+                response.AddError("Not Found!");
+            }
+
+            if (response.Errors.Any())
+            {
+                return response;
             }
 
             _userRepository.Update(userMapped);
@@ -159,7 +161,6 @@ namespace TechChallenge.Application.Services
 
             if (!await VerifyUser(user.Id))
             {
-                response.Response = false;
                 response.AddError("Not Found");
             }
 
@@ -171,11 +172,11 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-
         public async Task<bool> VerifyUser(string username)
         {
             return await _userRepository.ExistsAsync(x => x.Username == username);
         }
+
         public async Task<bool> VerifyUser(int Id)
         {
             return await _userRepository.ExistsAsync(x => x.Id == Id);
@@ -193,7 +194,6 @@ namespace TechChallenge.Application.Services
         {
             return _userRepository.GetSingleAsync(x => x.Username == username, true);
         }
-
 
     }
 }

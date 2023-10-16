@@ -12,16 +12,19 @@ namespace TechChallenge.Application.Services
     public class ValetService : IValetService
     {
         private readonly IValetRepository _valetRepository;
+        private readonly IPersonRepository _personRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IValidator<ValetDto> _validator;
 
         public ValetService(IValetRepository valetRepository,
+                            IPersonRepository personRepository,
                             IValidator<ValetDto> validator,
                             IUnitOfWork unitOfWork,
                             IMapper mapper)
         {
             _validator = validator;
+            _personRepository = personRepository;
             _valetRepository = valetRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -35,7 +38,7 @@ namespace TechChallenge.Application.Services
 
             if (valet is null)
             {
-                response.AddError("Vehicle not found!");
+                response.AddError("Valet not found!");
             }
 
             if (response.Errors.Any())
@@ -46,7 +49,6 @@ namespace TechChallenge.Application.Services
             Valet valetMapped = _mapper.Map<Valet>(valet);
 
             _valetRepository.Delete(valetMapped);
-
             await _unitOfWork.CommitAsync();
 
             return response;
@@ -74,15 +76,28 @@ namespace TechChallenge.Application.Services
 
             ValidationUtil.ValidateClass(valet, _validator, response);
 
+            IList<Person> person = _personRepository.GetPersonByDocument(valet.PersonalInformations.Document);
+
+            if (person.Any())
+            {
+                response.AddError($"There is an active person with the document provided (Name: {person.First().Name}), please reuse it to register.");
+            }
+
+            IEnumerable<Valet> dbValets = await _valetRepository.GetAsync(x => x.CNH == valet.CNH, true);
+
+            if (dbValets.Any())
+            {
+                response.AddError($"There is an valet with the CNH provided.");
+            }
+
             if (response.Errors.Any())
             {
                 return response;
             }
 
-            var valetMapped = _mapper.Map<Valet>(valet);
+            Valet valetMapped = _mapper.Map<Valet>(valet);
 
             await _valetRepository.AddAsync(valetMapped);
-
             await _unitOfWork.CommitAsync();
 
             response.Response = valet.Id;
@@ -96,18 +111,35 @@ namespace TechChallenge.Application.Services
 
             ValidationUtil.ValidateClass(valet, _validator, response);
 
+            IList<Person> person = _personRepository.GetPersonByDocument(valet.PersonalInformations.Document);
+
+            if (person.Any())
+            {
+                response.AddError($"There is an active person with the document provided (Name: {person.First().Name}), please reuse it to register.");
+            }
+
+            Valet valetMapped = _mapper.Map<Valet>(valet);
+
+            if (!await VerifyUser(valetMapped.Id))
+            {
+                response.AddError("Not Found");
+            }
+
             if (response.Errors.Any())
             {
                 return response;
             }
 
-            Valet valetMapped = _mapper.Map<Valet>(valet);
-
             _valetRepository.Update(valetMapped);
-
             await _unitOfWork.CommitAsync();
 
+            response.Response = true;
+
             return response;
+        }
+        public async Task<bool> VerifyUser(int Id)
+        {
+            return await _valetRepository.ExistsAsync(x => x.Id == Id);
         }
     }
 }

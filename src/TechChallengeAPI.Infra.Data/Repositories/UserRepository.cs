@@ -7,7 +7,7 @@ namespace TechChallenge.Infra.Data.Repositories
 {
     public class UserRepository : BaseRepository<User>, IUserRepository
     {
-        public UserRepository(ApplicationContext contexto) : base(contexto)
+        public UserRepository(ApplicationContext context) : base(context)
         {
         }
     }
