@@ -106,6 +106,7 @@ namespace TechChallenge.Application.Services
                 return response;
             }
 
+            userDto.Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
 
             User userMapped = _mapper.Map<User>(userDto);
             await _userRepository.AddAsync(userMapped);

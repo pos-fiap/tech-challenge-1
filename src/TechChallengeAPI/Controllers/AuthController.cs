@@ -21,43 +21,6 @@ namespace TechChallenge.Api.Controllers
             _authService = authService;
         }
 
-        [HttpPost("register")]
-        [ProducesResponseType(typeof(BaseOutput<int>), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(BaseOutput<int>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> Register([FromBody] UserDto userDto, [FromServices] IValidator<UserDto> validator)
-        {
-            try
-            {
-                ValidationResult validationResult = validator.Validate(userDto);
-
-                if (!validationResult.IsValid)
-                {
-                    return ValidatorErrorResponse(validationResult.Errors);
-                }
-
-                bool userExists = await _userService.VerifyUser(userDto.Username);
-
-                if (userExists)
-                {
-                    return BadRequestResponse("Erro ao cadastrar este e-mail!");
-                }
-
-                string passwordHash = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
-
-                userDto.Password = passwordHash;
-
-                BaseOutput<int> id = await _userService.RegisterUser(userDto);
-
-                return Ok(id);
-            }
-            catch (Exception ex)
-            {
-
-                return InternalErrorResponse(ex);
-            }
-
-        }
-
         [HttpPost("login")]
         [ProducesResponseType(typeof(BaseOutput<TokenDto>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<string>), (int)HttpStatusCode.InternalServerError)]
