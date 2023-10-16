@@ -34,7 +34,7 @@ namespace TechChallenge.Application.Services
 
             SymmetricSecurityKey key = new(Encoding.UTF8.GetBytes(_configuration.GetSection("Jwt:Key").Value!));
 
-            SigningCredentials credentials = new(key, SecurityAlgorithms.HmacSha512Signature);
+            SigningCredentials credentials = new(key, SecurityAlgorithms.HmacSha256);
 
             JwtSecurityToken token = new JwtSecurityToken(
                 claims: claims,
@@ -132,7 +132,7 @@ namespace TechChallenge.Application.Services
 
             JwtSecurityToken? jwtSecurityToken = securityToken as JwtSecurityToken;
 
-            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha512Signature, StringComparison.InvariantCultureIgnoreCase))
+            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
             {
                 throw new SecurityTokenException("Invalid token");
             }
