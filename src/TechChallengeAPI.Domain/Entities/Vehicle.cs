@@ -10,6 +10,5 @@ namespace TechChallenge.Domain.Entities
         public string LicensePlate { get; set; }
         public VehicleType VehicleType { get; set; }
         public string? Notes { get; set; }
-        public virtual ICollection<ParkingSpot>? ParkingLots { get; set; }
     }
 }

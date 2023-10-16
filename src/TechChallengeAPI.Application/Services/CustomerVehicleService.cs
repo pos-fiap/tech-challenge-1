@@ -35,7 +35,7 @@ namespace TechChallenge.Application.Services
 
             if (customerVehicle is null)
             {
-                response.AddError("Id de customerVehiclero não econtrado!");
+                response.AddError("Not Found!");
             }
 
             if (response.Errors.Any())
@@ -46,7 +46,6 @@ namespace TechChallenge.Application.Services
             CustomerVehicle customerVehicleMapped = _mapper.Map<CustomerVehicle>(customerVehicle);
 
             _customerVehicleRepository.Delete(customerVehicleMapped);
-
             await _unitOfWork.CommitAsync();
 
             return response;
@@ -73,6 +72,13 @@ namespace TechChallenge.Application.Services
 
             ValidationUtil.ValidateClass(customerVehicle, _validator, response);
 
+            IEnumerable<CustomerVehicle> dbCustomerVehicle = await _customerVehicleRepository.GetAsync(x => (x.CustomerId == customerVehicle.CustomerId || x.PersonId == customerVehicle.PersonId) && x.VehicleId == customerVehicle.VehicleId, true);
+
+            if (dbCustomerVehicle.Any())
+            {
+                response.AddError($"This Customer/Person already have a connection with this Vehicle");
+            }
+
             if (response.Errors.Any())
             {
                 return response;
@@ -81,7 +87,6 @@ namespace TechChallenge.Application.Services
             CustomerVehicle customerVehicleMapped = _mapper.Map<CustomerVehicle>(customerVehicle);
 
             await _customerVehicleRepository.AddAsync(customerVehicleMapped);
-
             await _unitOfWork.CommitAsync();
 
             response.Response = customerVehicle.Id;
@@ -95,18 +100,29 @@ namespace TechChallenge.Application.Services
 
             ValidationUtil.ValidateClass(customerVehicle, _validator, response);
 
+            CustomerVehicle customerVehicleMapped = _mapper.Map<CustomerVehicle>(customerVehicle);
+
+            if (!await VerifyCustomerVehicle(customerVehicleMapped.Id))
+            {
+                response.AddError("Not Found!");
+            }
+
             if (response.Errors.Any())
             {
                 return response;
             }
 
-            CustomerVehicle customerVehicleMapped = _mapper.Map<CustomerVehicle>(customerVehicle);
-
             _customerVehicleRepository.Update(customerVehicleMapped);
-
             await _unitOfWork.CommitAsync();
 
-            return new BaseOutput<bool>();
+            response.Response = true;
+
+            return response;
+        }
+
+        public async Task<bool> VerifyCustomerVehicle(int Id)
+        {
+            return await _customerVehicleRepository.ExistsAsync(x => x.Id == Id);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace TechChallenge.Infra.Data.Repositories
 {
     public class VehicleRepository : BaseRepository<Vehicle>, IVehicleRepository
     {
-        public VehicleRepository(ApplicationContext contexto) : base(contexto)
+        public VehicleRepository(ApplicationContext context) : base(context)
         {
         }
     }

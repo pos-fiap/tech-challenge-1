@@ -35,7 +35,7 @@ namespace TechChallenge.Application.Services
 
             if (vehicle is null)
             {
-                response.AddError("Id de vehiclero não econtrado!");
+                response.AddError("Vehicle not found!");
             }
 
             if (response.Errors.Any())
@@ -59,7 +59,7 @@ namespace TechChallenge.Application.Services
 
         public async Task<BaseOutput<Vehicle>> GetVehicle(int id)
         {
-            BaseOutput<Vehicle> response = new BaseOutput<Vehicle>
+            BaseOutput<Vehicle> response = new()
             {
                 Response = await _vehicleRepository.GetAsync(id)
             };
@@ -72,6 +72,13 @@ namespace TechChallenge.Application.Services
             BaseOutput<int> response = new();
 
             ValidationUtil.ValidateClass(vehicle, _validator, response);
+
+            IEnumerable<Vehicle> dbVehicles = await _vehicleRepository.GetAsync(x => x.LicensePlate == vehicle.LicensePlate, true);
+
+            if (dbVehicles.Any())
+            {
+                response.AddError($"There is already a registered vehicle with the inputted license plate.");
+            }
 
             if (response.Errors.Any())
             {
@@ -95,18 +102,29 @@ namespace TechChallenge.Application.Services
 
             ValidationUtil.ValidateClass(vehicle, _validator, response);
 
+            Vehicle vehicleMapped = _mapper.Map<Vehicle>(vehicle);
+
+            if (!await VerifyUser(vehicleMapped.Id))
+            {
+                response.AddError("Not Found");
+            }
+
             if (response.Errors.Any())
             {
                 return response;
             }
 
-            Vehicle vehicleMapped = _mapper.Map<Vehicle>(vehicle);
-
             _vehicleRepository.Update(vehicleMapped);
-
             await _unitOfWork.CommitAsync();
 
-            return new BaseOutput<bool>();
+            response.Response = true;
+
+            return response;
+        }
+
+        public async Task<bool> VerifyUser(int Id)
+        {
+            return await _vehicleRepository.ExistsAsync(x => x.Id == Id);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace TechChallenge.Infra.Data.Repositories
 {
     public class RoleRepository : BaseRepository<Role>, IRoleRepository
     {
-        public RoleRepository(ApplicationContext contexto) : base(contexto)
+        public RoleRepository(ApplicationContext context) : base(context)
         {
         }
     }

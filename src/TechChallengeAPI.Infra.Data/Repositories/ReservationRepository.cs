@@ -6,7 +6,7 @@ namespace TechChallenge.Infra.Data.Repositories
 {
     public class ReservationRepository : BaseRepository<Reservation>, IReservationRepository
     {
-        public ReservationRepository(ApplicationContext contexto) : base(contexto)
+        public ReservationRepository(ApplicationContext context) : base(context)
         {
         }
     }

@@ -6,7 +6,7 @@ namespace TechChallenge.Infra.Data.Repositories
 {
     public class CustomerRepository : BaseRepository<Customer>, ICustomerRepository
     {
-        public CustomerRepository(ApplicationContext contexto) : base(contexto)
+        public CustomerRepository(ApplicationContext context) : base(context)
         {
         }
     }
