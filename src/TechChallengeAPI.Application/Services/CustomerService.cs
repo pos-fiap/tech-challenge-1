@@ -108,12 +108,12 @@ namespace TechChallenge.Application.Services
 
             ValidationUtil.ValidateClass(customer, _validator, response);
 
-            IList<Person> person = _personRepository.GetPersonByDocument(customer.PersonalInformations.Document);
+            //IList<Person> person = _personRepository.GetPersonByDocument(customer.PersonalInformations.Document);
 
-            if (person.Any())
-            {
-                response.AddError($"There is an active person with the document provided (Name: {person.First().Name}), please reuse it to register.");
-            }
+            //if (person.Any())
+            //{
+            //    response.AddError($"There is an active person with the document provided (Name: {person.First().Name}), please reuse it to register.");
+            //}
 
             Customer CustomerMapped = _mapper.Map<Customer>(customer);
 

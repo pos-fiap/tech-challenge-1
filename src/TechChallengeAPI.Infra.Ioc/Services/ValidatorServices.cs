@@ -10,6 +10,7 @@ namespace TechChallenge.Infra.Ioc.Services
         public static void RegisterValidatorServices(IServiceCollection services)
         {
             services.AddScoped<IValidator<UserDto>, UserValidator>();
+            services.AddScoped<IValidator<UserUpdateDto>, UserUpdateValidator>();
             services.AddScoped<IValidator<VehicleDto>, VehicleValidator>();
             services.AddScoped<IValidator<CustomerDto>, CustomerValidator>();
             services.AddScoped<IValidator<ParkingSpotDto>, ParkingSpotValidator>();

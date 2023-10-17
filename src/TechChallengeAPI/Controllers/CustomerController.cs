@@ -64,21 +64,6 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpPut]
-        [ProducesResponseType(typeof(BaseOutput<Customer>), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(BaseOutput<Customer>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> UpdateCustomer([FromBody] CustomerDto customerDto)
-        {
-            try
-            {
-                return ModelState.IsValid ? CustomResponse(await _customerService.Update(customerDto)) : CustomResponse(ModelState);
-            }
-            catch (Exception ex)
-            {
-                return InternalErrorResponse(ex);
-            }
-        }
-
         [HttpDelete]
         [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.InternalServerError)]

@@ -8,7 +8,7 @@ namespace TechChallenge.Application.Interfaces
     public interface IUserService
     {
         Task<BaseOutput<int>> Create(UserDto userDto);
-        Task<BaseOutput<User>> Update(UserDto userDto);
+        Task<BaseOutput<User>> Update(UserUpdateDto userDto);
         Task<bool> Verify(string username);
         Task<bool> Verify(int Id);
         Task<BaseOutput<bool>> Delete(int Id);
