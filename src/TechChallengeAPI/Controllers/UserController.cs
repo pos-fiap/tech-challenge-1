@@ -54,7 +54,7 @@ namespace TechChallenge.Api.Controllers
         //[HttpDelete("delete"), Authorize]
         [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> DeleteUser([FromBody] UserDto userDto)
+        public async Task<IActionResult> UpdateUser([FromBody] UserDto userDto)
         {
             try
             {
