@@ -83,9 +83,14 @@ namespace TechChallenge.Application.Services
                 response.AddError("Parking spot already occupied!");
             }
 
-            var valet = await _valetRepository.GetAsync(x=> x.Id == reservation.ValetId && x.CNHExpiration > DateTime.UtcNow.AddDays(30), true);
+            var valet = await _valetRepository.GetSingleAsync(x=> x.Id == reservation.ValetId, true);
 
-            if (valet.Any())
+            if (valet == null)
+            {
+                response.AddError("Valet do not exist!");
+            }
+
+            if (valet != null && valet.CNHExpiration < DateTime.UtcNow.AddDays(30))
             {
                 response.AddError("Valet document has expired!");
             }
@@ -100,7 +105,16 @@ namespace TechChallenge.Application.Services
 
             await _reservationRepository.AddAsync(reservationMapped);
 
-            await _unitOfWork.CommitAsync();
+            try
+            {
+                await _unitOfWork.CommitAsync();
+
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
 
             response.Response = reservation.Id;
 
