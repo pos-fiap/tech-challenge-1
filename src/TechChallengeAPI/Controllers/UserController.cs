@@ -38,7 +38,7 @@ namespace TechChallenge.Api.Controllers
         //[HttpPost("register"), Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> RegisterUser([FromBody] UserDto userDto)
+        public async Task<IActionResult> Post([FromBody] UserDto userDto)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace TechChallenge.Api.Controllers
         //[HttpDelete("delete"), Authorize]
         [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> UpdateUser([FromBody] UserUpdateDto userDto)
+        public async Task<IActionResult> Put([FromBody] UserUpdateDto userDto)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace TechChallenge.Api.Controllers
         //[HttpDelete("delete"), Authorize]
         [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> DeleteUser([NotNull, Range(0, int.MaxValue)] int Id)
+        public async Task<IActionResult> Delete([NotNull, Range(0, int.MaxValue)] int Id)
         {
             try
             {

@@ -8,7 +8,7 @@ namespace TechChallenge.Application.Interfaces
     public interface IPersonService
     {
         Task<BaseOutput<int>> Create(PersonDTO personDto);
-        Task<BaseOutput<Person>> Update(PersonDTO personDto);
+        Task<BaseOutput<Person>> Update(PersonUpdateDTO personDto);
         Task<bool> Verify(string name);
         Task<bool> Verify(int Id);
         Task<BaseOutput<bool>> Delete(int Id);
