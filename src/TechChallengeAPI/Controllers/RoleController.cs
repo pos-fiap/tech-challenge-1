@@ -67,7 +67,7 @@ namespace TechChallenge.Api.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> RegisterRole([FromBody] RoleDto roleDto)
+        public async Task<IActionResult> Post([FromBody] RoleDto roleDto)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace TechChallenge.Api.Controllers
         [HttpPut]
         [ProducesResponseType(typeof(BaseOutput<Role>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<Role>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> UpdateRole([FromBody] RoleDto roleDto)
+        public async Task<IActionResult> Put([FromBody] RoleDto roleDto)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace TechChallenge.Api.Controllers
         [HttpDelete]
         [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> DeleteRole([NotNull, Range(0, int.MaxValue)] int Id)
+        public async Task<IActionResult> Delete([NotNull, Range(0, int.MaxValue)] int Id)
         {
             try
             {

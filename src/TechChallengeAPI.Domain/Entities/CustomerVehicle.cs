@@ -6,5 +6,7 @@
         public int PersonId { get; set; }
         public int VehicleId { get; set; }
         public int CustomerId { get; set; }
+
+        public virtual ICollection<Reservation> Reservations { get; set; }
     }
 }

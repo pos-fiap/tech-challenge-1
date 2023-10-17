@@ -77,13 +77,14 @@ namespace TechChallenge.Application.Services
 
             ValidationUtil.ValidateClass(reservation, _validator, response);
 
-            var reservationsFound = await _reservationRepository.GetAsync(x=> x.ParkingSpotId == reservation.ParkingSpotId, true);
+            var reservationsFound = await _reservationRepository.GetAsync(x => x.ParkingSpotId == reservation.ParkingSpotId, true);
 
-            if (reservationsFound.Any()) {
+            if (reservationsFound.Any())
+            {
                 response.AddError("Parking spot already occupied!");
             }
 
-            var valet = await _valetRepository.GetSingleAsync(x=> x.Id == reservation.ValetId, true);
+            var valet = await _valetRepository.GetSingleAsync(x => x.Id == reservation.ValetId, true);
 
             if (valet == null)
             {
@@ -104,17 +105,7 @@ namespace TechChallenge.Application.Services
             reservationMapped.Entrance = DateTime.UtcNow;
 
             await _reservationRepository.AddAsync(reservationMapped);
-
-            try
-            {
-                await _unitOfWork.CommitAsync();
-
-            }
-            catch (Exception e)
-            {
-
-                throw;
-            }
+            await _unitOfWork.CommitAsync();
 
             response.Response = reservation.Id;
 
