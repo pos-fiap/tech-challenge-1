@@ -10,6 +10,7 @@ namespace TechChallenge.Infra.Data.EntitiesConfiguration
         public void Configure(EntityTypeBuilder<ParkingSpot> builder)
         {
             builder.ToTable("ParkingSpot");
+            builder.HasMany(x => x.Reservations);
         }
     }
 }
