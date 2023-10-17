@@ -177,7 +177,7 @@ namespace TechChallenge.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Role");
+                    b.ToTable("Role", (string)null);
                 });
 
             modelBuilder.Entity("TechChallenge.Domain.Entities.User", b =>
