@@ -67,7 +67,7 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("CheckoutReservation")]
         public async Task<IActionResult> CheckoutReservation(ReservationDto reservation)
         {
             try
