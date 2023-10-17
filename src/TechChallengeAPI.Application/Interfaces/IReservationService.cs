@@ -11,5 +11,6 @@ namespace TechChallenge.Application.Interfaces
         Task<BaseOutput<Reservation>> Get(int id);
         Task<BaseOutput<int>> Post(ReservationDto reservation);
         Task<BaseOutput<bool>> Update(ReservationDto reservation);
+        Task<BaseOutput<bool>> CheckoutReservation(ReservationDto reservation);
     }
 }

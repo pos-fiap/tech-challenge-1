@@ -126,5 +126,15 @@ namespace TechChallenge.Application.Services
 
             return response;
         }
+
+        public async Task<BaseOutput<bool>> CheckoutReservation(ReservationDto reservation)
+        {
+            reservation.Exit = DateTime.UtcNow;
+            reservation.Finished = true;
+            reservation.Paid = true;
+            reservation.TimeParked = reservation.Exit.Subtract(reservation.Entrance).Minutes;
+
+            return await Update(reservation);
+        }
     }
 }
