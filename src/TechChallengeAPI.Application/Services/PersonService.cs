@@ -16,6 +16,7 @@ namespace TechChallenge.Application.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;        
         private readonly IValidator<PersonDTO> _personDtoValidator;
+        private readonly IValidator<PersonUpdateDTO> _personUpdateDtoValidator;
 
         public PersonService(IPersonRepository personRepository,
                            IUnitOfWork unitOfWork,
@@ -96,11 +97,11 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<Person>> Update(PersonDTO personDto)
+        public async Task<BaseOutput<Person>> Update(PersonUpdateDTO personDto)
         {
             BaseOutput<Person> response = new();
 
-            ValidationUtil.ValidateClass(personDto, _personDtoValidator, response);
+            ValidationUtil.ValidateClass(personDto, _personUpdateDtoValidator, response);
 
             Person personMapped = _mapper.Map<Person>(personDto);
 

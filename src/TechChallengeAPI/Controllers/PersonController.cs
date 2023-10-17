@@ -36,7 +36,7 @@ namespace TechChallenge.Api.Controllers
         [HttpPut]        
         [ProducesResponseType(typeof(BaseOutput<Person>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<Person>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> Put([FromBody] PersonDTO personDto)
+        public async Task<IActionResult> Put([FromBody] PersonUpdateDTO personDto)
         {
             try
             {

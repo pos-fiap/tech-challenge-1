@@ -9,6 +9,7 @@ namespace TechChallenge.Application.Mappings
         public PersonProfile()
         {
             CreateMap<Person, PersonDTO>().ReverseMap();
+            CreateMap<Person, PersonUpdateDTO>().ReverseMap();
         }
     }
 }
