@@ -10,7 +10,6 @@ namespace TechChallenge.Application.Interfaces
         Task<BaseOutput<Customer>> GetById(int id);
         Task<BaseOutput<int>> Create(CustomerDto vehicle);
         Task<BaseOutput<bool>> Update(CustomerDto vehicle);
-        Task<BaseOutput<bool>> Delete(int id);
         Task<bool> VerifyUser(int Id);
     }
 }

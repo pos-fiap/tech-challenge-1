@@ -11,8 +11,6 @@ namespace TechChallenge.Application.Interfaces
         Task<BaseOutput<Person>> Update(PersonUpdateDTO personDto);
         Task<bool> Verify(string name);
         Task<bool> Verify(int Id);
-        Task<BaseOutput<bool>> Delete(int Id);
-
         Task<BaseOutput<List<Person>>> Get();
         Task<BaseOutput<Person>> Get(int Id);
         Task<BaseOutput<Person>> Get(PersonDTO personDto);

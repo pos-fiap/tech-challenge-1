@@ -22,6 +22,7 @@ namespace TechChallenge.Infra.Ioc.Services
             services.AddScoped<IValidator<CustomerVehicleDto>, CustomerVehicleValidator>();
             services.AddScoped<IValidator<ReservationDto>, ReservationValidator>();
             services.AddScoped<IValidator<PersonDTO>, PersonValidator>();
+            services.AddScoped<IValidator<PersonUpdateDTO>, PersonUpdateValidator>();
         }
     }
 }

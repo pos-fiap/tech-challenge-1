@@ -21,12 +21,14 @@ namespace TechChallenge.Application.Services
         public PersonService(IPersonRepository personRepository,
                            IUnitOfWork unitOfWork,
                            IMapper mapper,
+                           IValidator<PersonUpdateDTO> personUpdateDtoValidator,
                            IValidator<PersonDTO> personDtoValidator)
         {          
             _personRepository = personRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _personDtoValidator = personDtoValidator;            
+            _personDtoValidator = personDtoValidator;
+            _personUpdateDtoValidator = personUpdateDtoValidator;
         }
 
         public async Task<BaseOutput<List<Person>>> Get()
@@ -119,25 +121,6 @@ namespace TechChallenge.Application.Services
             await _unitOfWork.CommitAsync();
 
             response.Response = personMapped;
-
-            return response;
-        }
-
-        public async Task<BaseOutput<bool>> Delete(int Id)
-        {
-            BaseOutput<bool> response = new();
-
-            Person person = new() { Id = Id };
-
-            if (!await Verify(person.Id))
-            {
-                response.AddError("Not Found");
-            }
-
-            _personRepository.Delete(person);
-            await _unitOfWork.CommitAsync();
-
-            response.Response = true;
 
             return response;
         }

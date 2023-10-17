@@ -31,33 +31,6 @@ namespace TechChallenge.Application.Services
         }
 
 
-        public async Task<BaseOutput<bool>> Delete(int id)
-        {
-            BaseOutput<bool> response = new();
-
-            Customer customer = await _customerRepository.GetSingleAsync(exp => exp.Id == id, true);
-
-            if (customer is null)
-            {
-                response.AddError("Costumer not found!");
-            }
-
-            if (response.Errors.Any())
-            {
-                return response;
-            }
-
-            Customer CustomerMapped = _mapper.Map<Customer>(customer);
-
-            _customerRepository.Delete(CustomerMapped);
-
-            await _unitOfWork.CommitAsync();
-
-            response.Response = true;
-
-            return response;
-        }
-
         public async Task<BaseOutput<IList<Customer>>> Get()
         {
             return new BaseOutput<IList<Customer>>((await _customerRepository.GetAsync()).ToList());

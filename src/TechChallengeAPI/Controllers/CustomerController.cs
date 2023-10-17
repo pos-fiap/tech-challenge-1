@@ -64,19 +64,5 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpDelete]
-        [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> Delete([NotNull, Range(0, int.MaxValue)] int Id)
-        {
-            try
-            {
-                return ModelState.IsValid ? CustomResponse(await _customerService.Delete(Id)) : CustomResponse(ModelState);
-            }
-            catch (Exception ex)
-            {
-                return InternalErrorResponse(ex);
-            }
-        }
     }
 }
