@@ -24,7 +24,7 @@ namespace TechChallenge.Application.Services
             _roleDtoValidator = roleDtoValidator;
         }
 
-        public async Task<BaseOutput<List<Role>>> GetAll()
+        public async Task<BaseOutput<List<Role>>> Get()
         {
             BaseOutput<List<Role>> response = new();
 

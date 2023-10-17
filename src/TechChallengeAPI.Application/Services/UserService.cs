@@ -37,7 +37,7 @@ namespace TechChallenge.Application.Services
             _userUpdateDtoValidator = userUpdateDtoValidator;
         }
 
-        public async Task<BaseOutput<List<User>>> GetAll()
+        public async Task<BaseOutput<List<User>>> Get()
         {
             BaseOutput<List<User>> response = new();
 

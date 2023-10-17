@@ -22,11 +22,11 @@ namespace TechChallenge.Api.Controllers
         [HttpGet("all")]
         [ProducesResponseType(typeof(BaseOutput<List<Person>>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<List<Person>>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> Get()
         {
             try
             {
-                return CustomResponse(await _personService.GetAll());
+                return CustomResponse(await _personService.Get());
             }
             catch (Exception ex)
             {
@@ -34,25 +34,10 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        //[HttpPost]      
-        //[ProducesResponseType(typeof(BaseOutput<Person>), (int)HttpStatusCode.OK)]
-        //[ProducesResponseType(typeof(BaseOutput<Person>), (int)HttpStatusCode.InternalServerError)]
-        //public async Task<IActionResult> RegisterPerson([FromBody] PersonDTO personDto)
-        //{
-        //    try
-        //    {
-        //        return ModelState.IsValid ? CustomResponse(await _personService.RegisterPerson(personDto)) : CustomResponse(ModelState);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return InternalErrorResponse(ex);
-        //    }
-        //}
-
         [HttpPut]        
         [ProducesResponseType(typeof(BaseOutput<Person>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<Person>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> DeleteUser([FromBody] PersonDTO personDto)
+        public async Task<IActionResult> Put([FromBody] PersonDTO personDto)
         {
             try
             {
@@ -67,7 +52,7 @@ namespace TechChallenge.Api.Controllers
         [HttpDelete]       
         [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> DeletePerson([NotNull, Range(0, int.MaxValue)] int Id)
+        public async Task<IActionResult> Delete([NotNull, Range(0, int.MaxValue)] int Id)
         {
             try
             {

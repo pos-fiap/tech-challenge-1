@@ -22,7 +22,7 @@ namespace TechChallenge.Api.Controllers
         [HttpGet("all")]
         [ProducesResponseType(typeof(BaseOutput<List<Customer>>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<List<Customer>>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> Get()
         {
             try
             {
@@ -52,7 +52,7 @@ namespace TechChallenge.Api.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(BaseOutput<Customer>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<Customer>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> RegisterCustomer([FromBody] CustomerDto customerDto)
+        public async Task<IActionResult> Post([FromBody] CustomerDto customerDto)
         {
             try
             {
@@ -67,7 +67,7 @@ namespace TechChallenge.Api.Controllers
         [HttpDelete]
         [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> DeleteCustomer([NotNull, Range(0, int.MaxValue)] int Id)
+        public async Task<IActionResult> Delete([NotNull, Range(0, int.MaxValue)] int Id)
         {
             try
             {

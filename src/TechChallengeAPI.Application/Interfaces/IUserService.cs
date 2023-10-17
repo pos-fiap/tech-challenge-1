@@ -13,7 +13,7 @@ namespace TechChallenge.Application.Interfaces
         Task<bool> Verify(int Id);
         Task<BaseOutput<bool>> Delete(int Id);
 
-        Task<BaseOutput<List<User>>> GetAll();
+        Task<BaseOutput<List<User>>> Get();
         Task<BaseOutput<User>> Get(int Id);
         Task<BaseOutput<User>> Get(UserDto userDto);
         Task<User> Get(string username);

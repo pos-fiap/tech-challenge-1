@@ -28,7 +28,7 @@ namespace TechChallenge.Application.Services
             _personDtoValidator = personDtoValidator;            
         }
 
-        public async Task<BaseOutput<List<Person>>> GetAll()
+        public async Task<BaseOutput<List<Person>>> Get()
         {
             BaseOutput<List<Person>> response = new();
 

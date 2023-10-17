@@ -15,7 +15,7 @@ namespace TechChallenge.Api.Controllers
         }
 
         [HttpGet("all")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> Get()
         {
             try
             {

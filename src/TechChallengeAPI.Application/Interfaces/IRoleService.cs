@@ -6,7 +6,7 @@ namespace TechChallenge.Application.Interfaces
 {
     public interface IRoleService
     {
-        Task<BaseOutput<List<Role>>> GetAll();
+        Task<BaseOutput<List<Role>>> Get();
         Task<BaseOutput<Role>> Get(int Id);
         Task<BaseOutput<Role>> Get(RoleDto roleDto);
         Task<BaseOutput<int>> Create(RoleDto roleDto);

@@ -22,11 +22,11 @@ namespace TechChallenge.Api.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(BaseOutput<List<User>>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<List<User>>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> Get()
         {
             try
             {
-                return CustomResponse(await _userService.GetAll());
+                return CustomResponse(await _userService.Get());
             }
             catch (Exception ex)
             {
