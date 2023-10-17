@@ -18,13 +18,15 @@ namespace TechChallenge.Application.Services
         private readonly IMapper _mapper;
         private readonly IValidator<LoginDto> _loginDtoValidator;
         private readonly IValidator<UserDto> _userDtoValidator;
+        private readonly IValidator<UserUpdateDto> _userUpdateDtoValidator;
 
         public UserService(IUserRepository userRepository,
                            IPersonRepository personRepository,
                            IUnitOfWork unitOfWork,
                            IMapper mapper,
                            IValidator<UserDto> userDtoValidator,
-                           IValidator<LoginDto> loginDtoValidator)
+                           IValidator<LoginDto> loginDtoValidator,
+                           IValidator<UserUpdateDto> userUpdateDtoValidator)
         {
             _userRepository = userRepository;
             _personRepository = personRepository;
@@ -32,6 +34,7 @@ namespace TechChallenge.Application.Services
             _mapper = mapper;
             _userDtoValidator = userDtoValidator;
             _loginDtoValidator = loginDtoValidator;
+            _userUpdateDtoValidator = userUpdateDtoValidator;
         }
 
         public async Task<BaseOutput<List<User>>> GetAll()
@@ -118,20 +121,11 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<User>> Update(UserDto userDto)
+        public async Task<BaseOutput<User>> Update(UserUpdateDto userDto)
         {
             BaseOutput<User> response = new();
 
-            ValidationUtil.ValidateClass(userDto, _userDtoValidator, response);
-
-            //TODO: Criar verificação para a alteração de documento
-
-            IList<Person> person = _personRepository.GetPersonByDocument(userDto.PersonalInformations.Document);
-
-            if (person.Any())
-            {
-                response.AddError($"There is an active person with the document provided (Name: {person.First().Name}), please reuse it to register.");
-            }
+            ValidationUtil.ValidateClass(userDto, _userUpdateDtoValidator, response);
 
             User userMapped = _mapper.Map<User>(userDto);
 
