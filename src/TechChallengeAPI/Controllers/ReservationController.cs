@@ -67,12 +67,12 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpPut("CheckoutReservation")]
-        public async Task<IActionResult> CheckoutReservation(ReservationDto reservation)
+        [HttpPut("CheckoutReservation/{id}")]
+        public async Task<IActionResult> CheckoutReservation(int id)
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _reservationService.CheckoutReservation(reservation)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _reservationService.CheckoutReservation(id)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
