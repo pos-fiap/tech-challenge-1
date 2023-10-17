@@ -1,4 +1,4 @@
-# tech-challenge-1# Manobra Fácil API
+Manobra Fácil API
 
 A API Manobra Fácil foi desenvolvida para o controle de vagas de estacionamento. Este projeto foi criado como para o Tech Challenge FIAP e foi modelado seguindo os princípios de DDD (Domain Driven Design) e Clean Architecture.
 
