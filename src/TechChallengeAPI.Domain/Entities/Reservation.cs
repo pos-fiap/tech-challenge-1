@@ -19,8 +19,7 @@ namespace TechChallenge.Domain.Entities
         public bool Finished { get; set; }
         public int ParkingSpotId { get; set; }
 
-
         public virtual Valet Valet { get; set; }
-        public virtual Vehicle Vehicle { get; set; }
+        public virtual CustomerVehicle CustomerVehicle { get; set; }
     }
 }
