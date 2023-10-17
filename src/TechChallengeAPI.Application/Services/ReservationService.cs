@@ -129,12 +129,27 @@ namespace TechChallenge.Application.Services
 
         public async Task<BaseOutput<bool>> CheckoutReservation(ReservationDto reservation)
         {
-            reservation.Exit = DateTime.UtcNow;
-            reservation.Finished = true;
-            reservation.Paid = true;
-            reservation.TimeParked = reservation.Exit.Subtract(reservation.Entrance).Minutes;
+            BaseOutput<bool> response = new();
 
-            return await Update(reservation);
+            ValidationUtil.ValidateClass(reservation, _validator, response);
+
+            if (response.Errors.Any())
+            {
+                return response;
+            }
+
+            Reservation reservationMapped = _mapper.Map<Reservation>(reservation);
+
+            reservationMapped.Exit = DateTime.UtcNow;
+            reservationMapped.Finished = true;
+            reservationMapped.Paid = true;
+            reservationMapped.TimeParked = reservationMapped.Exit.Value.Subtract(reservationMapped.Entrance).Minutes;
+
+            _reservationRepository.Update(reservationMapped);
+
+            await _unitOfWork.CommitAsync();
+
+            return response;
         }
     }
 }
