@@ -126,5 +126,30 @@ namespace TechChallenge.Application.Services
 
             return response;
         }
+
+        public async Task<BaseOutput<bool>> CheckoutReservation(ReservationDto reservation)
+        {
+            BaseOutput<bool> response = new();
+
+            ValidationUtil.ValidateClass(reservation, _validator, response);
+
+            if (response.Errors.Any())
+            {
+                return response;
+            }
+
+            Reservation reservationMapped = _mapper.Map<Reservation>(reservation);
+
+            reservationMapped.Exit = DateTime.UtcNow;
+            reservationMapped.Finished = true;
+            reservationMapped.Paid = true;
+            reservationMapped.TimeParked = reservationMapped.Exit.Value.Subtract(reservationMapped.Entrance).Minutes;
+
+            _reservationRepository.Update(reservationMapped);
+
+            await _unitOfWork.CommitAsync();
+
+            return response;
+        }
     }
 }

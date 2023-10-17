@@ -67,6 +67,19 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
+        [HttpPut("CheckoutReservation")]
+        public async Task<IActionResult> CheckoutReservation(ReservationDto reservation)
+        {
+            try
+            {
+                return ModelState.IsValid ? Ok(await _reservationService.CheckoutReservation(reservation)) : CustomResponse(ModelState);
+            }
+            catch (Exception ex)
+            {
+                return InternalErrorResponse(ex);
+            }
+        }
+
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
