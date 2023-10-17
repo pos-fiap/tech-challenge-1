@@ -8,8 +8,5 @@ namespace TechChallenge.Application.DTOs
         public int ParkingSpotId { get; set; }
         public int CustomerVehicleId { get; set; }
         public int ValetId { get; set; }
-        public int TimeParked { get; set; }
-        public bool Paid { get; set; }
-        public bool Finished { get; set; }
     }
 }

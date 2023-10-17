@@ -6,10 +6,11 @@ namespace TechChallenge.Application.Interfaces
 {
     public interface ICustomerService
     {
-        Task<BaseOutput<IList<Customer>>> GetCustomer();
-        Task<BaseOutput<Customer>> GetIdCustomerById(int id);
-        Task<BaseOutput<int>> Register(CustomerDto vehicle);
+        Task<BaseOutput<IList<Customer>>> Get();
+        Task<BaseOutput<Customer>> GetById(int id);
+        Task<BaseOutput<int>> Create(CustomerDto vehicle);
         Task<BaseOutput<bool>> Update(CustomerDto vehicle);
         Task<BaseOutput<bool>> Delete(int id);
+        Task<bool> VerifyUser(int Id);
     }
 }

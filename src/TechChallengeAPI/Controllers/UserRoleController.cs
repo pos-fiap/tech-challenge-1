@@ -40,7 +40,7 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _userRoleService.GetRolesByUser(id)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _userRoleService.GetByUser(id)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {

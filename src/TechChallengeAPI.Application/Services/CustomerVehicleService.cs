@@ -48,15 +48,17 @@ namespace TechChallenge.Application.Services
             _customerVehicleRepository.Delete(customerVehicleMapped);
             await _unitOfWork.CommitAsync();
 
+            response.Response = true;
+
             return response;
         }
 
-        public async Task<BaseOutput<IList<CustomerVehicle>>> GetCustomerVehicle()
+        public async Task<BaseOutput<IList<CustomerVehicle>>> Get()
         {
             return new BaseOutput<IList<CustomerVehicle>>((await _customerVehicleRepository.GetAsync()).ToList());
         }
 
-        public async Task<BaseOutput<CustomerVehicle>> GetCustomerVehicle(int id)
+        public async Task<BaseOutput<CustomerVehicle>> Get(int id)
         {
             BaseOutput<CustomerVehicle> response = new BaseOutput<CustomerVehicle>
             {
@@ -66,7 +68,7 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<int>> Register(CustomerVehicleDto customerVehicle)
+        public async Task<BaseOutput<int>> Create(CustomerVehicleDto customerVehicle)
         {
             BaseOutput<int> response = new();
 
@@ -89,7 +91,7 @@ namespace TechChallenge.Application.Services
             await _customerVehicleRepository.AddAsync(customerVehicleMapped);
             await _unitOfWork.CommitAsync();
 
-            response.Response = customerVehicle.Id;
+            response.Response = customerVehicleMapped.Id;
 
             return response;
         }

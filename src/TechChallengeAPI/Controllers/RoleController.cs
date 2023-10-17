@@ -19,14 +19,14 @@ namespace TechChallenge.Api.Controllers
             _roleService = roleService;
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         [ProducesResponseType(typeof(BaseOutput<List<Role>>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<List<Role>>), (int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetAll()
         {
             try
             {
-                return CustomResponse(await _roleService.GetAllRoles());
+                return CustomResponse(await _roleService.GetAll());
             }
             catch (Exception ex)
             {
@@ -34,14 +34,14 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         [ProducesResponseType(typeof(BaseOutput<Role>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<Role>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> Get([FromQuery, NotNull, Range(0, int.MaxValue)] int Id)
+        public async Task<IActionResult> Get([NotNull, Range(0, int.MaxValue)] int Id)
         {
             try
             {
-                return CustomResponse(await _roleService.GetRole(Id));
+                return CustomResponse(await _roleService.Get(Id));
             }
             catch (Exception ex)
             {
@@ -56,7 +56,7 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                return (IActionResult)await _roleService.VerifyListRole(Ids);
+                return (IActionResult)await _roleService.VerifyList(Ids);
             }
             catch (Exception ex)
             {
@@ -71,7 +71,7 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                return ModelState.IsValid ? CustomResponse(await _roleService.RegisterRole(roleDto)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? CustomResponse(await _roleService.Create(roleDto)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -86,7 +86,7 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                return ModelState.IsValid ? CustomResponse(await _roleService.UpdateRole(roleDto)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? CustomResponse(await _roleService.Update(roleDto)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -94,14 +94,14 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> DeleteRole([FromQuery, NotNull, Range(0, int.MaxValue)] int Id)
+        public async Task<IActionResult> DeleteRole([NotNull, Range(0, int.MaxValue)] int Id)
         {
             try
             {
-                return ModelState.IsValid ? CustomResponse(await _roleService.DeleteRole(Id)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? CustomResponse(await _roleService.Delete(Id)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {

@@ -52,10 +52,12 @@ namespace TechChallenge.Application.Services
             _parkingSpotRepository.Delete(parkingMapped);
             await _unitOfWork.CommitAsync();
 
+            response.Response = true;
+
             return response;
         }
 
-        public async Task<BaseOutput<IList<ParkingSpot>>> GetParking()
+        public async Task<BaseOutput<IList<ParkingSpot>>> Get()
         {
             return new BaseOutput<IList<ParkingSpot>>((await _parkingSpotRepository.GetAsync()).ToList());
 
@@ -63,12 +65,15 @@ namespace TechChallenge.Application.Services
 
         public async Task<BaseOutput<IList<ParkingSpot>>> GetAllFreeParkingSpots()
         {
-            var notFinishedReservations = await _reservationRepository.GetAsync(x=> x.Finished == false, true);
-            var parkingSpots = await _parkingSpotRepository.GetAsync();
-            return new BaseOutput<IList<ParkingSpot>>(parkingSpots.Where(x=> !notFinishedReservations.Any(y=> y.ParkingSpotId != x.Id)).ToList());
+            IEnumerable<Reservation> notFinishedReservations = await _reservationRepository.GetAsync(x => x.Finished == false, true);
+            IEnumerable<ParkingSpot> parkingSpots = await _parkingSpotRepository.GetAsync();
+
+            //parkingSpots.Where(x => !notFinishedReservations.Select(x => x.ParkingSpotId).Contains(x.Id));
+
+            return new BaseOutput<IList<ParkingSpot>>(parkingSpots.Where(x => !notFinishedReservations.Any(y => y.ParkingSpotId != x.Id)).ToList());
         }
 
-        public async Task<BaseOutput<ParkingSpot>> GetParking(int id)
+        public async Task<BaseOutput<ParkingSpot>> Get(int id)
         {
             BaseOutput<ParkingSpot> response = new()
             {
@@ -78,7 +83,7 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<int>> Register(ParkingSpotDto parking)
+        public async Task<BaseOutput<int>> Create(ParkingSpotDto parking)
         {
             BaseOutput<int> response = new();
 
@@ -94,7 +99,7 @@ namespace TechChallenge.Application.Services
             await _parkingSpotRepository.AddAsync(parkingMapped);
             await _unitOfWork.CommitAsync();
 
-            response.Response = parking.Id;
+            response.Response = parkingMapped.Id;
 
             return response;
         }

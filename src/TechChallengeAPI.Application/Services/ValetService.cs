@@ -51,16 +51,18 @@ namespace TechChallenge.Application.Services
             _valetRepository.Delete(valetMapped);
             await _unitOfWork.CommitAsync();
 
+            response.Response = true;
+
             return response;
         }
 
-        public async Task<BaseOutput<IList<Valet>>> GetValet()
+        public async Task<BaseOutput<IList<Valet>>> Get()
         {
             return new BaseOutput<IList<Valet>>((await _valetRepository.GetAsync()).ToList());
 
         }
 
-        public async Task<BaseOutput<Valet>> GetValet(int id)
+        public async Task<BaseOutput<Valet>> Get(int id)
         {
             BaseOutput<Valet> response = new()
             {
@@ -70,7 +72,7 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<int>> Register(ValetDto valet)
+        public async Task<BaseOutput<int>> Create(ValetDto valet)
         {
             BaseOutput<int> response = new();
 
@@ -100,7 +102,7 @@ namespace TechChallenge.Application.Services
             await _valetRepository.AddAsync(valetMapped);
             await _unitOfWork.CommitAsync();
 
-            response.Response = valet.Id;
+            response.Response = valetMapped.Id;
 
             return response;
         }

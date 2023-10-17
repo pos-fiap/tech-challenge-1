@@ -7,16 +7,16 @@ namespace TechChallenge.Application.Interfaces
 {
     public interface IPersonService
     {
-        Task<BaseOutput<int>> RegisterPerson(PersonDTO personDto);
-        Task<BaseOutput<Person>> UpdatePerson(PersonDTO personDto);
-        Task<bool> VerifyPerson(string name);
-        Task<bool> VerifyPerson(int Id);
-        Task<BaseOutput<bool>> DeletePerson(int Id);
+        Task<BaseOutput<int>> Create(PersonDTO personDto);
+        Task<BaseOutput<Person>> Update(PersonDTO personDto);
+        Task<bool> Verify(string name);
+        Task<bool> Verify(int Id);
+        Task<BaseOutput<bool>> Delete(int Id);
 
-        Task<BaseOutput<List<Person>>> GetAllPersons();
-        Task<BaseOutput<Person>> GetPerson(int Id);
-        Task<BaseOutput<Person>> GetPerson(PersonDTO personDto);
-        Task<Person> GetPerson(string name);
+        Task<BaseOutput<List<Person>>> GetAll();
+        Task<BaseOutput<Person>> Get(int Id);
+        Task<BaseOutput<Person>> Get(PersonDTO personDto);
+        Task<Person> Get(string name);
 
 
     }

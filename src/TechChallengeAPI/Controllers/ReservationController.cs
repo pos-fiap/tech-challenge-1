@@ -13,12 +13,12 @@ namespace TechChallenge.Api.Controllers
             _reservationService = reservationService;
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<IActionResult> Get()
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _reservationService.GetReservation()) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _reservationService.Get()) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -26,12 +26,12 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<IActionResult> Get(int id)
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _reservationService.GetReservation(id)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _reservationService.Get(id)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -45,7 +45,7 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _reservationService.Register(reservation)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _reservationService.Post(reservation)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -67,7 +67,7 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             try

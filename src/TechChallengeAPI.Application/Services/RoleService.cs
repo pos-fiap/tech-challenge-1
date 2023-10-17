@@ -24,7 +24,7 @@ namespace TechChallenge.Application.Services
             _roleDtoValidator = roleDtoValidator;
         }
 
-        public async Task<BaseOutput<List<Role>>> GetAllRoles()
+        public async Task<BaseOutput<List<Role>>> GetAll()
         {
             BaseOutput<List<Role>> response = new();
 
@@ -36,7 +36,7 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<Role>> GetRole(int Id)
+        public async Task<BaseOutput<Role>> Get(int Id)
         {
             Role role = await _roleRepository.GetAsync(Id);
 
@@ -49,12 +49,12 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<List<int>> VerifyListRole(List<int> ListId)
+        public async Task<List<int>> VerifyList(List<int> ListId)
         {
             List<int> listNoId = new();
             foreach (int Id in ListId)
             {
-                if (!await VerifyRole(Id))
+                if (!await Verify(Id))
                 {
                     listNoId.Add(Id);
                 }
@@ -62,7 +62,7 @@ namespace TechChallenge.Application.Services
             return listNoId;
         }
 
-        public async Task<BaseOutput<Role>> GetRole(RoleDto roleDto)
+        public async Task<BaseOutput<Role>> Get(RoleDto roleDto)
         {
             IEnumerable<Role> roles = await _roleRepository.GetAsync(x => x.Description == roleDto.Description, true);
 
@@ -75,7 +75,7 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<int>> RegisterRole(RoleDto roleDto)
+        public async Task<BaseOutput<int>> Create(RoleDto roleDto)
         {
             BaseOutput<int> response = new();
             DateTime now = DateTime.UtcNow;
@@ -100,7 +100,7 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<Role>> UpdateRole(RoleDto roleDto)
+        public async Task<BaseOutput<Role>> Update(RoleDto roleDto)
         {
             BaseOutput<Role> response = new();
 
@@ -114,7 +114,7 @@ namespace TechChallenge.Application.Services
             Role roleMapped = _mapper.Map<Role>(roleDto);
             roleMapped.AlterDate = DateTime.UtcNow;
 
-            if (!await VerifyRole(roleMapped.Id))
+            if (!await Verify(roleMapped.Id))
             {
                 response.AddError("Not Found");
             }
@@ -128,13 +128,13 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<bool>> DeleteRole(int Id)
+        public async Task<BaseOutput<bool>> Delete(int Id)
         {
             BaseOutput<bool> response = new();
 
             Role role = new() { Id = Id };
 
-            if (!await VerifyRole(role.Id))
+            if (!await Verify(role.Id))
             {
                 response.AddError("Not Found");
             }
@@ -149,11 +149,11 @@ namespace TechChallenge.Application.Services
         }
 
 
-        public async Task<bool> VerifyRole(string description)
+        public async Task<bool> Verify(string description)
         {
             return await _roleRepository.ExistsAsync(x => x.Description == description);
         }
-        public async Task<bool> VerifyRole(int Id)
+        public async Task<bool> Verify(int Id)
         {
             return await _roleRepository.ExistsAsync(x => x.Id == Id);
         }

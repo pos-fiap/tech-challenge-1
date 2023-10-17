@@ -13,12 +13,12 @@ namespace TechChallenge.Api.Controllers
             _parkingSpotService = parkingSpotService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAll()
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _parkingSpotService.GetParking()) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _parkingSpotService.Get()) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -26,7 +26,7 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("all-free")]
         public async Task<IActionResult> GetAllFreeParkingSpots()
         {
             try
@@ -39,12 +39,12 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<IActionResult> Get(int id)
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _parkingSpotService.GetParking(id)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _parkingSpotService.Get(id)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -58,7 +58,7 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _parkingSpotService.Register(parking)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _parkingSpotService.Create(parking)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -80,7 +80,7 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             try

@@ -13,12 +13,12 @@ namespace TechChallenge.Api.Controllers
             _valetService = valetService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAll()
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _valetService.GetValet()) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _valetService.Get()) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -26,12 +26,12 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<IActionResult> Get(int id)
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _valetService.GetValet(id)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _valetService.Get(id)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -45,7 +45,7 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _valetService.Register(valet)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _valetService.Create(valet)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -67,7 +67,7 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             try

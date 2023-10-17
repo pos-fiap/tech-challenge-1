@@ -34,7 +34,7 @@ namespace TechChallenge.Application.Services
             _loginDtoValidator = loginDtoValidator;
         }
 
-        public async Task<BaseOutput<List<User>>> GetAllUsers()
+        public async Task<BaseOutput<List<User>>> GetAll()
         {
             BaseOutput<List<User>> response = new();
 
@@ -44,7 +44,7 @@ namespace TechChallenge.Application.Services
 
             return response;
         }
-        public async Task<BaseOutput<User>> GetUser(int Id)
+        public async Task<BaseOutput<User>> Get(int Id)
         {
             User user = await _userRepository.GetAsync(Id);
 
@@ -56,7 +56,7 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<User>> GetUser(LoginDto loginDto)
+        public async Task<BaseOutput<User>> Get(LoginDto loginDto)
         {
             BaseOutput<User> response = new();
 
@@ -74,7 +74,7 @@ namespace TechChallenge.Application.Services
         }
 
 
-        public async Task<BaseOutput<User>> GetUser(UserDto userDto)
+        public async Task<BaseOutput<User>> Get(UserDto userDto)
         {
             IEnumerable<User> users = await _userRepository.GetAsync(x => x.Username == userDto.Username, true);
 
@@ -87,7 +87,7 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<int>> RegisterUser(UserDto userDto)
+        public async Task<BaseOutput<int>> Create(UserDto userDto)
         {
 
             BaseOutput<int> response = new();
@@ -118,7 +118,7 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<User>> UpdateUser(UserDto userDto)
+        public async Task<BaseOutput<User>> Update(UserDto userDto)
         {
             BaseOutput<User> response = new();
 
@@ -135,7 +135,7 @@ namespace TechChallenge.Application.Services
 
             User userMapped = _mapper.Map<User>(userDto);
 
-            if (!await VerifyUser(userMapped.Id))
+            if (!await Verify(userMapped.Id))
             {
                 response.AddError("Not Found!");
             }
@@ -153,13 +153,13 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<bool>> DeleteUser(int Id)
+        public async Task<BaseOutput<bool>> Delete(int Id)
         {
             BaseOutput<bool> response = new();
 
             User user = new() { Id = Id };
 
-            if (!await VerifyUser(user.Id))
+            if (!await Verify(user.Id))
             {
                 response.AddError("Not Found");
             }
@@ -172,12 +172,12 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<bool> VerifyUser(string username)
+        public async Task<bool> Verify(string username)
         {
             return await _userRepository.ExistsAsync(x => x.Username == username);
         }
 
-        public async Task<bool> VerifyUser(int Id)
+        public async Task<bool> Verify(int Id)
         {
             return await _userRepository.ExistsAsync(x => x.Id == Id);
         }
@@ -190,7 +190,7 @@ namespace TechChallenge.Application.Services
             await _unitOfWork.CommitAsync();
         }
 
-        public Task<User> GetUser(string username)
+        public Task<User> Get(string username)
         {
             return _userRepository.GetSingleAsync(x => x.Username == username, true);
         }

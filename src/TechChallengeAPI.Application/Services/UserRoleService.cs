@@ -68,7 +68,7 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<UserRole>> GetRolesByUser(int user)
+        public async Task<BaseOutput<UserRole>> GetByUser(int user)
         {
             BaseOutput<UserRole> response = new();
 

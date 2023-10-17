@@ -28,7 +28,7 @@ namespace TechChallenge.Application.Services
             _personDtoValidator = personDtoValidator;            
         }
 
-        public async Task<BaseOutput<List<Person>>> GetAllPersons()
+        public async Task<BaseOutput<List<Person>>> GetAll()
         {
             BaseOutput<List<Person>> response = new();
 
@@ -38,7 +38,7 @@ namespace TechChallenge.Application.Services
 
             return response;
         }
-        public async Task<BaseOutput<Person>> GetPerson(int Id)
+        public async Task<BaseOutput<Person>> Get(int Id)
         {
             Person person = await _personRepository.GetAsync(Id);
 
@@ -50,7 +50,7 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<Person>> GetPerson(PersonDTO personDto)
+        public async Task<BaseOutput<Person>> Get(PersonDTO personDto)
         {
             BaseOutput<Person> response = new();
 
@@ -68,9 +68,8 @@ namespace TechChallenge.Application.Services
         }
 
 
-        public async Task<BaseOutput<int>> RegisterPerson(PersonDTO personDto)
+        public async Task<BaseOutput<int>> Create(PersonDTO personDto)
         {
-
             BaseOutput<int> response = new();
 
             ValidationUtil.ValidateClass(personDto, _personDtoValidator, response);
@@ -86,7 +85,6 @@ namespace TechChallenge.Application.Services
             {
                 return response;
             }
-
          
             Person personMapped = _mapper.Map<Person>(personDto);
 
@@ -98,24 +96,15 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<Person>> UpdatePerson(PersonDTO personDto)
+        public async Task<BaseOutput<Person>> Update(PersonDTO personDto)
         {
             BaseOutput<Person> response = new();
 
             ValidationUtil.ValidateClass(personDto, _personDtoValidator, response);
 
-            //TODO: Criar verificação para a alteração de documento
-
-            IList<Person> person = _personRepository.GetPersonByDocument(personDto.Document);
-
-            if (person.Any())
-            {
-                response.AddError($"There is an active person with the document provided (Name: {person.First().Name}), please reuse it to register.");
-            }
-
             Person personMapped = _mapper.Map<Person>(personDto);
 
-            if (!await VerifyPerson(personMapped.Id))
+            if (!await Verify(personMapped.Id))
             {
                 response.AddError("Not Found!");
             }
@@ -133,13 +122,13 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<bool>> DeletePerson(int Id)
+        public async Task<BaseOutput<bool>> Delete(int Id)
         {
             BaseOutput<bool> response = new();
 
             Person person = new() { Id = Id };
 
-            if (!await VerifyPerson(person.Id))
+            if (!await Verify(person.Id))
             {
                 response.AddError("Not Found");
             }
@@ -152,19 +141,19 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<bool> VerifyPerson(string name)
+        public async Task<bool> Verify(string name)
         {
             return await _personRepository.ExistsAsync(x => x.Name == name);
         }
 
-        public async Task<bool> VerifyPerson(int Id)
+        public async Task<bool> Verify(int Id)
         {
             return await _personRepository.ExistsAsync(x => x.Id == Id);
         }
 
       
 
-        public Task<Person> GetPerson(string name)
+        public Task<Person> Get(string name)
         {
             return _personRepository.GetSingleAsync(x => x.Name == name, true);
         }

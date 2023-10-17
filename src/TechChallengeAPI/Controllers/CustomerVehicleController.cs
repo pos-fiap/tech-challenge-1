@@ -14,12 +14,12 @@ namespace TechChallenge.Api.Controllers
             _customerVehicleService = customerVehicleService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAll()
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _customerVehicleService.GetCustomerVehicle()) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _customerVehicleService.Get()) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -27,12 +27,12 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<IActionResult> Get(int id)
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _customerVehicleService.GetCustomerVehicle(id)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _customerVehicleService.Get(id)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -46,7 +46,7 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _customerVehicleService.Register(customerVehicle)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _customerVehicleService.Create(customerVehicle)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -68,7 +68,7 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             try

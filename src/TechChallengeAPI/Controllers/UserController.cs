@@ -26,7 +26,7 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                return CustomResponse(await _userService.GetAllUsers());
+                return CustomResponse(await _userService.GetAll());
             }
             catch (Exception ex)
             {
@@ -42,7 +42,7 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                return ModelState.IsValid ? CustomResponse(await _userService.RegisterUser(userDto)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? CustomResponse(await _userService.Create(userDto)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -58,7 +58,7 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                return ModelState.IsValid ? CustomResponse(await _userService.UpdateUser(userDto)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? CustomResponse(await _userService.Update(userDto)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {
@@ -70,11 +70,11 @@ namespace TechChallenge.Api.Controllers
         //[HttpDelete("delete"), Authorize]
         [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> DeleteUser([FromQuery, NotNull, Range(0, int.MaxValue)] int Id)
+        public async Task<IActionResult> DeleteUser([NotNull, Range(0, int.MaxValue)] int Id)
         {
             try
             {
-                return ModelState.IsValid ? CustomResponse(await _userService.DeleteUser(Id)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? CustomResponse(await _userService.Delete(Id)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {

@@ -18,11 +18,13 @@ namespace TechChallenge.Application.Services
         private readonly IValidator<CustomerDto> _validator;
 
         public CustomerService(ICustomerRepository customerRepository,
+                          IPersonRepository personRepository,
                           IValidator<CustomerDto> validator,
                           IUnitOfWork unitOfWork,
                           IMapper mapper)
         {
             _validator = validator;
+            _personRepository = personRepository;
             _customerRepository = customerRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -51,15 +53,17 @@ namespace TechChallenge.Application.Services
 
             await _unitOfWork.CommitAsync();
 
+            response.Response = true;
+
             return response;
         }
 
-        public async Task<BaseOutput<IList<Customer>>> GetCustomer()
+        public async Task<BaseOutput<IList<Customer>>> Get()
         {
             return new BaseOutput<IList<Customer>>((await _customerRepository.GetAsync()).ToList());
         }
 
-        public async Task<BaseOutput<Customer>> GetIdCustomerById(int id)
+        public async Task<BaseOutput<Customer>> GetById(int id)
         {
             BaseOutput<Customer> response = new()
             {
@@ -70,7 +74,7 @@ namespace TechChallenge.Application.Services
         }
 
 
-        public async Task<BaseOutput<int>> Register(CustomerDto customer)
+        public async Task<BaseOutput<int>> Create(CustomerDto customer)
         {
             BaseOutput<int> response = new();
 
@@ -93,7 +97,7 @@ namespace TechChallenge.Application.Services
             await _customerRepository.AddAsync(CustomerMapped);
             await _unitOfWork.CommitAsync();
 
-            response.Response = customer.Id;
+            response.Response = CustomerMapped.Id;
 
             return response;
         }

@@ -52,12 +52,12 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<IList<Vehicle>>> GetVehicle()
+        public async Task<BaseOutput<IList<Vehicle>>> Get()
         {
             return new BaseOutput<IList<Vehicle>>((await _vehicleRepository.GetAsync()).ToList());
         }
 
-        public async Task<BaseOutput<Vehicle>> GetVehicle(int id)
+        public async Task<BaseOutput<Vehicle>> Get(int id)
         {
             BaseOutput<Vehicle> response = new()
             {
@@ -67,7 +67,7 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<int>> Register(VehicleDto vehicle)
+        public async Task<BaseOutput<int>> Create(VehicleDto vehicle)
         {
             BaseOutput<int> response = new();
 

@@ -55,13 +55,13 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<IList<Reservation>>> GetReservation()
+        public async Task<BaseOutput<IList<Reservation>>> Get()
         {
             return new BaseOutput<IList<Reservation>>((await _reservationRepository.GetAsync()).ToList());
 
         }
 
-        public async Task<BaseOutput<Reservation>> GetReservation(int id)
+        public async Task<BaseOutput<Reservation>> Get(int id)
         {
             BaseOutput<Reservation> response = new()
             {
@@ -71,7 +71,7 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<int>> Register(ReservationDto reservation)
+        public async Task<BaseOutput<int>> Post(ReservationDto reservation)
         {
             BaseOutput<int> response = new();
 
@@ -83,7 +83,7 @@ namespace TechChallenge.Application.Services
                 response.AddError("Parking spot already occupied!");
             }
 
-            var valet = await _valetRepository.GetAsync(x=> x.Id == reservation.ValetId && x.CNHExpiration < DateTime.UtcNow.AddDays(30), true);
+            var valet = await _valetRepository.GetAsync(x=> x.Id == reservation.ValetId && x.CNHExpiration > DateTime.UtcNow.AddDays(30), true);
 
             if (valet.Any())
             {

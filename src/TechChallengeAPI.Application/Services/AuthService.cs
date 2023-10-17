@@ -76,7 +76,7 @@ namespace TechChallenge.Application.Services
 
             ClaimsPrincipal principal = GetPrincipalFromExpiredToken(accessToken);
             string username = principal.Identity?.Name ?? string.Empty;
-            User user = await _userService.GetUser(username);
+            User user = await _userService.Get(username);
 
             if (user == null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryDate >= DateTime.Now)
             {

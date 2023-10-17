@@ -28,7 +28,7 @@ namespace TechChallenge.Api.Controllers
         {
             try
             {
-                BaseOutput<User> userResponse = await _userService.GetUser(loginDto);
+                BaseOutput<User> userResponse = await _userService.Get(loginDto);
                 if (!userResponse.IsSuccessful)
                 {
                     return CustomResponse(userResponse);
