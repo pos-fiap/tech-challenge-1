@@ -11,5 +11,6 @@ namespace TechChallenge.Application.Interfaces
         Task<BaseOutput<int>> Register(ParkingSpotDto vehicle);
         Task<BaseOutput<bool>> Update(ParkingSpotDto vehicle);
         Task<BaseOutput<bool>> Delete(int id);
+        Task<BaseOutput<IList<ParkingSpot>>> GetAllFreeParkingSpots();
     }
 }

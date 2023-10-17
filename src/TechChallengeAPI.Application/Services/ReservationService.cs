@@ -12,17 +12,20 @@ namespace TechChallenge.Application.Services
     public class ReservationService : IReservationService
     {
         private readonly IReservationRepository _reservationRepository;
+        private readonly IValetRepository _valetRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IValidator<ReservationDto> _validator;
 
         public ReservationService(IReservationRepository reservationRepository,
+                            IValetRepository valetRepository,
                             IValidator<ReservationDto> validator,
                             IUnitOfWork unitOfWork,
                             IMapper mapper)
         {
             _validator = validator;
             _reservationRepository = reservationRepository;
+            _valetRepository = valetRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
@@ -74,12 +77,26 @@ namespace TechChallenge.Application.Services
 
             ValidationUtil.ValidateClass(reservation, _validator, response);
 
+            var reservationsFound = await _reservationRepository.GetAsync(x=> x.ParkingSpotId == reservation.ParkingSpotId, true);
+
+            if (reservationsFound.Any()) {
+                response.AddError("Parking spot already occupied!");
+            }
+
+            var valet = await _valetRepository.GetAsync(x=> x.Id == reservation.ValetId && x.CNHExpiration < DateTime.UtcNow.AddDays(30), true);
+
+            if (valet.Any())
+            {
+                response.AddError("Valet document has expired!");
+            }
+
             if (response.Errors.Any())
             {
                 return response;
             }
 
             var reservationMapped = _mapper.Map<Reservation>(reservation);
+            reservationMapped.Entrance = DateTime.UtcNow;
 
             await _reservationRepository.AddAsync(reservationMapped);
 

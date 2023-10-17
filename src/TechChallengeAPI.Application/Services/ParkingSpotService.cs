@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using System.Linq;
 using TechChallenge.Application.BaseResponse;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;
@@ -12,17 +13,20 @@ namespace TechChallenge.Application.Services
     public class ParkingSpotService : IParkingSpotService
     {
         private readonly IParkingSpotRepository _parkingSpotRepository;
+        private readonly IReservationRepository _reservationRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IValidator<ParkingSpotDto> _validator;
 
         public ParkingSpotService(IParkingSpotRepository parkingRepository,
+            IReservationRepository reservationRepository,
                               IValidator<ParkingSpotDto> validator,
                               IUnitOfWork unitOfWork,
                               IMapper mapper)
         {
             _validator = validator;
             _parkingSpotRepository = parkingRepository;
+            _reservationRepository = reservationRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
@@ -55,6 +59,13 @@ namespace TechChallenge.Application.Services
         {
             return new BaseOutput<IList<ParkingSpot>>((await _parkingSpotRepository.GetAsync()).ToList());
 
+        }
+
+        public async Task<BaseOutput<IList<ParkingSpot>>> GetAllFreeParkingSpots()
+        {
+            var notFinishedReservations = await _reservationRepository.GetAsync(x=> x.Finished == false, true);
+            var parkingSpots = await _parkingSpotRepository.GetAsync();
+            return new BaseOutput<IList<ParkingSpot>>(parkingSpots.Where(x=> !notFinishedReservations.Any(y=> y.ParkingSpotId != x.Id)).ToList());
         }
 
         public async Task<BaseOutput<ParkingSpot>> GetParking(int id)

@@ -26,6 +26,19 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllFreeParkingSpots()
+        {
+            try
+            {
+                return ModelState.IsValid ? Ok(await _parkingSpotService.GetAllFreeParkingSpots()) : CustomResponse(ModelState);
+            }
+            catch (Exception ex)
+            {
+                return InternalErrorResponse(ex);
+            }
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
