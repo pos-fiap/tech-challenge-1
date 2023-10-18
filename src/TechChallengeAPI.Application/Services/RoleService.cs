@@ -15,13 +15,15 @@ namespace TechChallenge.Application.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IValidator<RoleDto> _roleDtoValidator;
+        private readonly IValidator<RoleUpdateDto> _roleUpdateDtoValidator;
 
-        public RoleService(IRoleRepository roleRepository, IUnitOfWork unitOfWork, IMapper mapper, IValidator<RoleDto> roleDtoValidator)
+        public RoleService(IRoleRepository roleRepository, IUnitOfWork unitOfWork, IMapper mapper, IValidator<RoleDto> roleDtoValidator, IValidator<RoleUpdateDto> roleUpdateDtoValidator)
         {
             _roleRepository = roleRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _roleDtoValidator = roleDtoValidator;
+            _roleUpdateDtoValidator = roleUpdateDtoValidator;
         }
 
         public async Task<BaseOutput<List<Role>>> Get()
@@ -100,11 +102,11 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
-        public async Task<BaseOutput<Role>> Update(RoleDto roleDto)
+        public async Task<BaseOutput<Role>> Update(RoleUpdateDto roleDto)
         {
             BaseOutput<Role> response = new();
 
-            ValidationUtil.ValidateClass(roleDto, _roleDtoValidator, response);
+            ValidationUtil.ValidateClass(roleDto, _roleUpdateDtoValidator, response);
 
             if (response.Errors.Any())
             {

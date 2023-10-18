@@ -1,6 +1,4 @@
-﻿using TechChallenge.Domain.Enums;
-
-namespace TechChallenge.Application.DTOs
+﻿namespace TechChallenge.Application.DTOs
 {
     public class RoleDto
     {

@@ -49,20 +49,6 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpGet("verifyListId")]
-        [ProducesResponseType(typeof(BaseOutput<List<Role>>), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(BaseOutput<List<Role>>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> VerifyListRole(List<int> Ids)
-        {
-            try
-            {
-                return (IActionResult)await _roleService.VerifyList(Ids);
-            }
-            catch (Exception ex)
-            {
-                return InternalErrorResponse(ex);
-            }
-        }
 
         [HttpPost]
         [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.OK)]
@@ -82,7 +68,7 @@ namespace TechChallenge.Api.Controllers
         [HttpPut]
         [ProducesResponseType(typeof(BaseOutput<Role>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<Role>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> Put([FromBody] RoleDto roleDto)
+        public async Task<IActionResult> Put([FromBody] RoleUpdateDto roleDto)
         {
             try
             {

@@ -19,7 +19,7 @@ namespace TechChallenge.Api.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         [ProducesResponseType(typeof(BaseOutput<List<User>>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<List<User>>), (int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> Get()
@@ -27,6 +27,22 @@ namespace TechChallenge.Api.Controllers
             try
             {
                 return CustomResponse(await _userService.Get());
+            }
+            catch (Exception ex)
+            {
+                return InternalErrorResponse(ex);
+            }
+        }
+
+
+        [HttpGet]
+        [ProducesResponseType(typeof(BaseOutput<List<User>>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(BaseOutput<List<User>>), (int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> Get([NotNull, Range(0, int.MaxValue)] int Id)
+        {
+            try
+            {
+                return CustomResponse(await _userService.Get(Id));
             }
             catch (Exception ex)
             {

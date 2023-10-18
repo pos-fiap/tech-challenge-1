@@ -36,11 +36,11 @@ namespace TechChallenge.Api.Controllers
         }
 
         [HttpGet("GetRolesByUser")]
-        public async Task<IActionResult> GetRolesByUser(int id)
+        public async Task<IActionResult> GetRolesByUser(int userId)
         {
             try
             {
-                return ModelState.IsValid ? Ok(await _userRoleService.GetByUser(id)) : CustomResponse(ModelState);
+                return ModelState.IsValid ? Ok(await _userRoleService.GetByUser(userId)) : CustomResponse(ModelState);
             }
             catch (Exception ex)
             {

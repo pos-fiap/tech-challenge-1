@@ -51,11 +51,13 @@ namespace TechChallenge.Application.Services
 
             IEnumerable<UserRole> actualRole = await _userRoleRepository.GetAsync(x => x.UserId == userRoleDto.UserId, true);
 
-            List<UserRole> userRoleMapped = _mapper.Map<IEnumerable<UserRole>>(userRoleDto).ToList();
+            var userRoleMapped = _mapper.Map<IEnumerable<UserRole>>(userRoleDto);
 
             IEnumerable<UserRole> includedRoles = userRoleMapped.Where(x => !actualRole.Select(y => y.RoleId).Contains(x.RoleId));
 
             IEnumerable<UserRole> deletedRoles = actualRole.Where(x => !userRoleMapped.Select(y => y.RoleId).Contains(x.RoleId));
+
+            if (userRoleDto.Roles is null || !userRoleDto.Roles.Any()) { deletedRoles = actualRole; }
 
             if (deletedRoles.Any()) RemoveDeletedRoles(deletedRoles);
 
@@ -63,14 +65,14 @@ namespace TechChallenge.Application.Services
 
             await _unitOfWork.CommitAsync();
 
-            response.Response = userRoleMapped.First().Id;
+            response.Response = 0;
 
             return response;
         }
 
-        public async Task<BaseOutput<UserRole>> GetByUser(int user)
+        public async Task<BaseOutput<IList<UserRole>>> GetByUser(int user)
         {
-            BaseOutput<UserRole> response = new();
+            BaseOutput<IList<UserRole>> response = new();
 
             if (!await _userRepository.ExistsAsync(exp => exp.Id == user))
             {
@@ -78,7 +80,7 @@ namespace TechChallenge.Application.Services
                 return response;
             }
 
-            response.Response = await _userRoleRepository.GetAsync(user);
+            response.Response = (await _userRoleRepository.GetAsync(x => x.UserId == user, true)).ToList();
 
             return response;
         }

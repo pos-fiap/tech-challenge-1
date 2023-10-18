@@ -8,8 +8,12 @@ namespace TechChallenge.Application.Mappings
     {
         public UserRoleProfile()
         {
-            CreateMap<UserRoleDto, UserRole>().ForMember(d => d.UserId, opt => opt.MapFrom(s => s.UserId)).ForMember(d => d.UserId, opt => opt.MapFrom(s => s.UserId));
-            CreateMap<Role, UserRole>().ForMember(d => d.RoleId, opt => opt.MapFrom(s => s.Id)).ForMember(d => d.Id, opt => opt.Ignore());
+            CreateMap<UserRoleDto, UserRole>()
+                .ForMember(d => d.UserId, opt => opt.MapFrom(s => s.UserId))
+                .ForMember(d => d.UserId, opt => opt.MapFrom(s => s.UserId)).ReverseMap();
+
+            CreateMap<Role, UserRole>().ForMember(d => d.RoleId, opt => opt.MapFrom(s => s.Id)).ForMember(d => d.Id, opt => opt.Ignore()).ReverseMap();
+
 
             CreateMap<UserRoleDto, IEnumerable<UserRole>>().ConvertUsing<GetFromRoleIds>();
         }

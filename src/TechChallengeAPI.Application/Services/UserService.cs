@@ -125,11 +125,13 @@ namespace TechChallenge.Application.Services
         {
             BaseOutput<User> response = new();
 
+            User user = await _userRepository.GetSingleAsync(x => x.Id == userDto.Id, true);
+
             ValidationUtil.ValidateClass(userDto, _userUpdateDtoValidator, response);
 
-            User userMapped = _mapper.Map<User>(userDto);
+           
 
-            if (!await Verify(userMapped.Id))
+            if (user is null)
             {
                 response.AddError("Not Found!");
             }
@@ -138,6 +140,9 @@ namespace TechChallenge.Application.Services
             {
                 return response;
             }
+
+            User userMapped = _mapper.Map<User>(userDto);
+            userMapped.PersonId = user.PersonId;
 
             _userRepository.Update(userMapped);
             await _unitOfWork.CommitAsync();

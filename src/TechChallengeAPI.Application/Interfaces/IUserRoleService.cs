@@ -6,7 +6,7 @@ namespace TechChallenge.Application.Interfaces
 {
     public interface IUserRoleService
     {
-        Task<BaseOutput<UserRole>> GetByUser(int user);
+        Task<BaseOutput<IList<UserRole>>> GetByUser(int user);
         Task<BaseOutput<int>> AssignRoleToUser(UserRoleDto userRoleDto);
 
     }

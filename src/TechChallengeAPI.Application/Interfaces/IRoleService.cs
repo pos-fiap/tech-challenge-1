@@ -10,7 +10,7 @@ namespace TechChallenge.Application.Interfaces
         Task<BaseOutput<Role>> Get(int Id);
         Task<BaseOutput<Role>> Get(RoleDto roleDto);
         Task<BaseOutput<int>> Create(RoleDto roleDto);
-        Task<BaseOutput<Role>> Update(RoleDto roleDto);
+        Task<BaseOutput<Role>> Update(RoleUpdateDto roleDto);
         Task<List<int>> VerifyList(List<int> ListId);
         Task<bool> Verify(string rolename);
         Task<bool> Verify(int Id);
