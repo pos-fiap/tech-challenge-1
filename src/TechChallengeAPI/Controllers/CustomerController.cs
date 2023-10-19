@@ -11,6 +11,7 @@ using TechChallenge.Domain.Entities;
 
 namespace TechChallenge.Api.Controllers
 {
+    [CustomAuthorization]
     public class CustomerController : BaseController
     {
         private readonly ICustomerService _customerService;
@@ -23,7 +24,6 @@ namespace TechChallenge.Api.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(BaseOutput<List<Customer>>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<List<Customer>>), (int)HttpStatusCode.InternalServerError)]
-        [CustomAuthorization]
         public async Task<IActionResult> GetAll()
         {
             try

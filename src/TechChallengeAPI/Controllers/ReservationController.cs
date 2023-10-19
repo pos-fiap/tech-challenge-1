@@ -6,6 +6,7 @@ using TechChallenge.Application.Interfaces;
 
 namespace TechChallenge.Api.Controllers
 {
+    [CustomAuthorization]
     public class ReservationController : BaseController
     {
         private readonly IReservationService _reservationService;

@@ -62,7 +62,8 @@ namespace TechChallenge.Api.Controllers
 
 
         [HttpPost("refresh")]
-        public async Task<IActionResult> RefreshTokenAsync(TokenDto tokenDto)
+        [CustomAuthorization(CheckAction = true)]
+        public async Task<IActionResult> RefreshToken(TokenDto tokenDto)
         {
             try
             {

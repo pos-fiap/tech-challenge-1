@@ -12,7 +12,7 @@ namespace TechChallenge.Infra.Data.Repositories
 
         public bool HasAccess(int roleId, string route)
         {
-            return dbSet.Any(x => x.RoleId == roleId && x.Route == route);
+            return dbSet.Any(x => x.RoleId == roleId && x.Route.ToLower() == route.ToLower());
         }
     }
 }

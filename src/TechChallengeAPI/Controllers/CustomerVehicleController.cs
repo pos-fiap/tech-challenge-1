@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TechChallenge.Api.Authorize;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;
-using TechChallenge.Domain.Entities;
 
 namespace TechChallenge.Api.Controllers
 {
@@ -15,6 +15,7 @@ namespace TechChallenge.Api.Controllers
         }
 
         [HttpGet]
+        [CustomAuthorization(CheckAction = true)]
         public async Task<IActionResult> Get()
         {
             try

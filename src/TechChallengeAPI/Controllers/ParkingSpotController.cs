@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TechChallenge.Api.Authorize;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;
 
 namespace TechChallenge.Api.Controllers
 {
+    [CustomAuthorization]
     public class ParkingSpotController : BaseController
     {
         private readonly IParkingSpotService _parkingSpotService;

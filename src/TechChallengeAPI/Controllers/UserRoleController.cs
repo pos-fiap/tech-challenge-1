@@ -1,11 +1,13 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
+using TechChallenge.Api.Authorize;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;
 
 namespace TechChallenge.Api.Controllers
 {
+    [CustomAuthorization]
     public class UserRoleController : BaseController
     {
         private readonly IUserRoleService _userRoleService;
