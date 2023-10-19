@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TechChallenge.Api.Authorize;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;

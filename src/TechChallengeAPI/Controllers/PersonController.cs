@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using TechChallenge.Application.BaseResponse;
 using TechChallenge.Application.DTOs;
@@ -33,7 +31,7 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-        [HttpPut]        
+        [HttpPut]
         [ProducesResponseType(typeof(BaseOutput<Person>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<Person>), (int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> Put([FromBody] PersonUpdateDTO personDto)

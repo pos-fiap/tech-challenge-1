@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
-using TechChallenge.Api.Authorize;
 using TechChallenge.Application.BaseResponse;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;
@@ -11,7 +9,6 @@ using TechChallenge.Domain.Entities;
 
 namespace TechChallenge.Api.Controllers
 {
-    [CustomAuthorization]
     public class UserController : BaseController
     {
         private readonly IUserService _userService;
@@ -53,7 +50,6 @@ namespace TechChallenge.Api.Controllers
         }
 
         [HttpPost]
-        //[HttpPost("register"), Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> Post([FromBody] UserDto userDto)
@@ -69,7 +65,6 @@ namespace TechChallenge.Api.Controllers
         }
 
         [HttpPut]
-        //[HttpDelete("delete"), Authorize]
         [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<User>), (int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> Put([FromBody] UserUpdateDto userDto)
@@ -85,7 +80,6 @@ namespace TechChallenge.Api.Controllers
         }
 
         [HttpDelete]
-        //[HttpDelete("delete"), Authorize]
         [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<bool>), (int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> Delete([NotNull, Range(0, int.MaxValue)] int Id)

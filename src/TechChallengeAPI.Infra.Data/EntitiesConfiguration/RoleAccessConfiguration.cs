@@ -9,7 +9,7 @@ namespace TechChallenge.Infra.Data.EntitiesConfiguration
         public void Configure(EntityTypeBuilder<RoleAccess> builder)
         {
             builder.ToTable(nameof(RoleAccess));
-            
+
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.RoleId)

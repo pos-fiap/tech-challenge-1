@@ -100,6 +100,6 @@ namespace TechChallenge.Application.Services
             _userRoleRepository.Delete(userRoles.ToList());
         }
 
-        
+
     }
 }

@@ -23,7 +23,7 @@ namespace TechChallenge.Application.Mappings
         public IEnumerable<UserRole> Convert(UserRoleDto source, IEnumerable<UserRole> destination, ResolutionContext context)
         {
 
-            foreach (var model in source.Roles.Select (e => context.Mapper.Map<UserRole>(e)))
+            foreach (var model in source.Roles.Select(e => context.Mapper.Map<UserRole>(e)))
             {
                 context.Mapper.Map(source, model);
                 yield return model;

@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using TechChallenge.Api.Authorize;
 using TechChallenge.Application.BaseResponse;
@@ -16,7 +14,7 @@ namespace TechChallenge.Api.Controllers
         private readonly IUserService _userService;
         private readonly IAuthService _authService;
 
-        public AuthController(IConfiguration configuration, IUserService userService, IAuthService authService)
+        public AuthController(IUserService userService, IAuthService authService)
         {
             _userService = userService;
             _authService = authService;

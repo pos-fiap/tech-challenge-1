@@ -1,5 +1,4 @@
 ﻿using TechChallenge.Application.Interfaces;
-using TechChallenge.Domain.Entities;
 using TechChallenge.Domain.Interfaces;
 
 namespace TechChallenge.Application.Services
@@ -13,13 +12,13 @@ namespace TechChallenge.Application.Services
         {
             _roleAccessRepository = roleAccessRepository;
             _unitOfWork = unitOfWork;
-          
+
         }
 
         public bool HasAccess(int roleId, string route)
         {
             return _roleAccessRepository.HasAccess(roleId, route);
         }
-     
+
     }
 }

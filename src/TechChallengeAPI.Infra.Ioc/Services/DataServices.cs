@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TechChallenge.Application.Services;
 using TechChallenge.Domain.Interfaces;
 using TechChallenge.Infra.Data;
 using TechChallenge.Infra.Data.Repositories;

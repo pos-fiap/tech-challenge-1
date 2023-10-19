@@ -1,5 +1,4 @@
-﻿using AutoMapper.Configuration;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using TechChallenge.Application.Interfaces;
 
