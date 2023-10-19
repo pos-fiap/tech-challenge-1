@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
+using TechChallenge.Api.Authorize;
 using TechChallenge.Application.BaseResponse;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;
@@ -10,6 +11,7 @@ using TechChallenge.Domain.Entities;
 
 namespace TechChallenge.Api.Controllers
 {
+    [CustomAuthorization]
     public class RoleController : BaseController
     {
         private readonly IRoleService _roleService;

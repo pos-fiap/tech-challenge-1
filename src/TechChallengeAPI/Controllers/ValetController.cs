@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TechChallenge.Api.Authorize;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;
 
 namespace TechChallenge.Api.Controllers
 {
+    [CustomAuthorization]
     public class ValetController : BaseController
     {
         private readonly IValetService _valetService;

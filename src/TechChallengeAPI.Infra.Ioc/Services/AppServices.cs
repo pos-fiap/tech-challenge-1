@@ -17,6 +17,7 @@ namespace TechChallenge.Infra.Ioc.Services
             services.AddScoped<IUserRoleService, UserRoleService>();
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IRoleAccessService, RoleAccessService>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IAuthService, AuthService>();
         }

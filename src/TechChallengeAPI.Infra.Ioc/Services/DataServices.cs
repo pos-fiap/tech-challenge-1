@@ -20,6 +20,7 @@ namespace TechChallenge.Infra.Ioc.Services
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IRoleAccessRepository, RoleAccessRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }

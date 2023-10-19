@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TechChallenge.Api.Authorize;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;
-using TechChallenge.Domain.Entities;
 
 namespace TechChallenge.Api.Controllers
 {
+    [CustomAuthorization]
     public class CustomerVehicleController : BaseController
     {
         private readonly ICustomerVehicleService _customerVehicleService;

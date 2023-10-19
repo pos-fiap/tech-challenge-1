@@ -9,5 +9,6 @@ namespace TechChallenge.Application.Interfaces
         Task<BaseOutput<IList<UserRole>>> GetByUser(int user);
         Task<BaseOutput<int>> AssignRoleToUser(UserRoleDto userRoleDto);
 
+        Task<UserRole> GetRoleByUsername(string username);
     }
 }
