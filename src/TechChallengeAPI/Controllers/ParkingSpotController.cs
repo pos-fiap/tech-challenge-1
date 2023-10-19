@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;
 
@@ -39,7 +40,6 @@ namespace TechChallenge.Api.Controllers
             }
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Post(ParkingSpotDto parking)
         {
@@ -52,7 +52,6 @@ namespace TechChallenge.Api.Controllers
                 return InternalErrorResponse(ex);
             }
         }
-
 
         [HttpPut]
         public async Task<IActionResult> Put(ParkingSpotDto parking)

@@ -1,0 +1,63 @@
+﻿using AutoMapper.Configuration;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using TechChallenge.Application.Interfaces;
+
+namespace TechChallenge.Api.Authorize
+{
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    public class CustomAuthorization : Attribute, IAuthorizationFilter
+    {
+        private bool _checkAction { get; set; }
+
+        public CustomAuthorization()
+        {
+        }
+
+        public CustomAuthorization(bool CheckAction)
+        {
+            _checkAction = CheckAction;
+        }
+
+
+        public void OnAuthorization(AuthorizationFilterContext context)
+        {
+            context.HttpContext.Request.Headers.TryGetValue("Authorization", out Microsoft.Extensions.Primitives.StringValues token);
+
+            if (!token.Any())
+            {
+                context.Result = new UnauthorizedResult();
+                return;
+            }
+
+            var tokenString = token.ToString().Split(" ")[1];
+
+            var authService = (IAuthService)context.HttpContext.RequestServices.GetService(typeof(IAuthService));
+            if (!authService.ValidateToken(tokenString))
+            {
+                context.Result = new UnauthorizedResult();
+                return;
+            }
+
+            var username = authService.GetClaimsPrincipal(tokenString).Item1.Identity.Name ?? string.Empty;
+
+            var userRoleService = (IUserRoleService)context.HttpContext.RequestServices.GetService(typeof(IUserRoleService));
+            var role = userRoleService.GetRoleByUsername(username).Result;
+
+            var route = context.RouteData.Values["controller"].ToString();
+            if (_checkAction)
+            {
+                route += "/" + context.RouteData.Values["action"].ToString();
+            }
+
+            var roleAccessService = (IRoleAccessService)context.HttpContext.RequestServices.GetService(typeof(IRoleAccessService));
+            var hasAccess = roleAccessService.HasAccess(role.Id, route);
+
+            if (!hasAccess)
+            {
+                context.Result = new UnauthorizedResult();
+                return;
+            }
+        }
+    }
+}

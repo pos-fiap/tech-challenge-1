@@ -83,6 +83,11 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
+        public async Task<UserRole> GetRoleByUsername(string username)
+        {
+            return await _userRoleRepository.GetRoleByUsername(username);
+        }
+
         private async void AddIncludedRoles(IEnumerable<UserRole> userRoles)
         {
             await _userRoleRepository.AddAsync(userRoles.ToList());
@@ -92,5 +97,7 @@ namespace TechChallenge.Application.Services
         {
             _userRoleRepository.Delete(userRoles.ToList());
         }
+
+        
     }
 }

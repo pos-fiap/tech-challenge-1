@@ -17,6 +17,7 @@ namespace TechChallenge.Infra.Data.Context
         public DbSet<Vehicle> Vehicle { get; set; }
         public DbSet<Reservation> Reservation { get; set; }
         public DbSet<ParkingSpot> ParkingSpot { get; set; }
+        public DbSet<RoleAccess> RoleAccess { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

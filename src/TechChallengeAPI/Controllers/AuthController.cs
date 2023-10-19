@@ -2,6 +2,7 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using TechChallenge.Api.Authorize;
 using TechChallenge.Application.BaseResponse;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;

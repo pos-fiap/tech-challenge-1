@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
+using TechChallenge.Api.Authorize;
 using TechChallenge.Application.BaseResponse;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;
@@ -22,6 +23,7 @@ namespace TechChallenge.Api.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(BaseOutput<List<Customer>>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<List<Customer>>), (int)HttpStatusCode.InternalServerError)]
+        [CustomAuthorization]
         public async Task<IActionResult> GetAll()
         {
             try

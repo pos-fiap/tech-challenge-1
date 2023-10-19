@@ -99,6 +99,33 @@ namespace TechChallenge.Application.Services
             return response;
         }
 
+        public bool ValidateToken(string token)
+        {
+            try
+            {
+                GetClaimsPrincipal(token);
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public (ClaimsPrincipal, SecurityToken) GetClaimsPrincipal(string token)
+        {
+            TokenValidationParameters tokenValidationParameters = new()
+            {
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("Jwt:Key").Value!)),
+                ValidateLifetime = true
+            };
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            ClaimsPrincipal principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
+            return (principal, securityToken);
+        }
+
         public BaseOutput<string> ValidateLogin(User user, LoginDto loginDto)
         {
             BaseOutput<string> response = new()
@@ -118,26 +145,18 @@ namespace TechChallenge.Application.Services
 
         private ClaimsPrincipal GetPrincipalFromExpiredToken(string expiredToken)
         {
-            TokenValidationParameters tokenValidationParameters = new()
-            {
-                ValidateAudience = false,
-                ValidateIssuer = false,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("Jwt:Key").Value!)),
-                ValidateLifetime = false
-            };
+            var claimsPrincipal = GetClaimsPrincipal(expiredToken);
 
-            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            ClaimsPrincipal principal = claimsPrincipal.Item1;
+            SecurityToken securityToken = claimsPrincipal.Item2;
 
-            ClaimsPrincipal principal = tokenHandler.ValidateToken(expiredToken, tokenValidationParameters, out SecurityToken securityToken);
-
-            JwtSecurityToken? jwtSecurityToken = securityToken as JwtSecurityToken;
-
-            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+            if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
             {
                 throw new SecurityTokenException("Invalid token");
             }
 
             return principal;
         }
+
     }
 }
