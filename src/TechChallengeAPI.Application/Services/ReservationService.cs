@@ -94,15 +94,15 @@ namespace TechChallenge.Application.Services
             reservationMapped.Entrance = DateTime.UtcNow;
 
             await _reservationRepository.AddAsync(reservationMapped);
-           
-            await _unitOfWork.CommitAsync();          
+
+            await _unitOfWork.CommitAsync();
 
             response.Response = reservation.Id;
 
             return response;
         }
 
-        private async Task<BaseOutput<int>> ValidateReservationPost(BaseOutput<int>  response, ReservationDto reservation)
+        private async Task<BaseOutput<int>> ValidateReservationPost(BaseOutput<int> response, ReservationDto reservation)
         {
             var reservationsFound = await _reservationRepository.GetAsync(x => x.ParkingSpotId == reservation.ParkingSpotId, true);
 
@@ -158,7 +158,7 @@ namespace TechChallenge.Application.Services
 
             var reservationsFound = await _reservationRepository.GetSingleAsync(x => x.ParkingSpotId == reservation.ParkingSpotId, true);
 
-            if (reservationsFound!= null && reservationsFound.CustomerVehicleId != reservation.CustomerVehicleId)
+            if (reservationsFound != null && reservationsFound.CustomerVehicleId != reservation.CustomerVehicleId)
             {
                 response.AddError("Parking spot already occupied!");
             }
@@ -168,7 +168,7 @@ namespace TechChallenge.Application.Services
             if (valet == null)
             {
                 response.AddError("Valet do not exist!");
-            }           
+            }
 
             var customerVehicle = await _customerVehicleRepository.GetSingleAsync(x => x.Id == reservation.CustomerVehicleId, true);
 

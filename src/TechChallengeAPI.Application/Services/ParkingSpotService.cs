@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using System.Linq;
 using TechChallenge.Application.BaseResponse;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;

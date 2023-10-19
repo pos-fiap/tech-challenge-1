@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TechChallenge.Domain.Entities
+﻿namespace TechChallenge.Domain.Entities
 {
     public class Reservation : BaseModel
     {

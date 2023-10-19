@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TechChallenge.Domain.Entities;
+﻿using TechChallenge.Domain.Entities;
 using TechChallenge.Domain.Enums;
 using TechChallenge.Domain.Interfaces;
 using TechChallenge.Infra.Data.Context;

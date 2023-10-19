@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using TechChallenge.Domain.Entities;
+﻿using TechChallenge.Domain.Entities;
 using TechChallenge.Domain.Interfaces;
 using TechChallenge.Infra.Data.Context;
 

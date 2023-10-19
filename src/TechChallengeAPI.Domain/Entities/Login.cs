@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace TechChallenge.Domain.Entities
+﻿namespace TechChallenge.Domain.Entities
 {
     public class Login : BaseModel
     {

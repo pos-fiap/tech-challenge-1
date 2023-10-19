@@ -1,6 +1,5 @@
 ﻿using TechChallenge.Application.BaseResponse;
 using TechChallenge.Application.DTOs;
-using TechChallenge.Application.Models;
 using TechChallenge.Domain.Entities;
 
 namespace TechChallenge.Application.Interfaces

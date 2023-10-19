@@ -3,7 +3,6 @@ using FluentValidation;
 using TechChallenge.Application.BaseResponse;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;
-using TechChallenge.Application.Models;
 using TechChallenge.Application.Utils;
 using TechChallenge.Domain.Entities;
 using TechChallenge.Domain.Interfaces;
@@ -14,7 +13,7 @@ namespace TechChallenge.Application.Services
     {
         private readonly IPersonRepository _personRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;        
+        private readonly IMapper _mapper;
         private readonly IValidator<PersonDTO> _personDtoValidator;
         private readonly IValidator<PersonUpdateDTO> _personUpdateDtoValidator;
 
@@ -23,7 +22,7 @@ namespace TechChallenge.Application.Services
                            IMapper mapper,
                            IValidator<PersonUpdateDTO> personUpdateDtoValidator,
                            IValidator<PersonDTO> personDtoValidator)
-        {          
+        {
             _personRepository = personRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -88,7 +87,7 @@ namespace TechChallenge.Application.Services
             {
                 return response;
             }
-         
+
             Person personMapped = _mapper.Map<Person>(personDto);
 
             await _personRepository.AddAsync(personMapped);
@@ -135,7 +134,7 @@ namespace TechChallenge.Application.Services
             return await _personRepository.ExistsAsync(x => x.Id == Id);
         }
 
-      
+
 
         public Task<Person> Get(string name)
         {

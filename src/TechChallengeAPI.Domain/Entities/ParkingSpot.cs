@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace TechChallenge.Domain.Entities
+﻿namespace TechChallenge.Domain.Entities
 {
     public class ParkingSpot : BaseModel
     {

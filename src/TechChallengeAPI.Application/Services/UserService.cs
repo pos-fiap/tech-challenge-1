@@ -129,7 +129,7 @@ namespace TechChallenge.Application.Services
 
             ValidationUtil.ValidateClass(userDto, _userUpdateDtoValidator, response);
 
-           
+
 
             if (user is null)
             {
