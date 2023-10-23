@@ -1,126 +1,88 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using System.Security.Claims;
-using System.Text;
+using TechChallenge.Api.Authorize;
 using TechChallenge.Application.BaseResponse;
 using TechChallenge.Application.DTOs;
 using TechChallenge.Application.Interfaces;
+using TechChallenge.Application.Models;
 using TechChallenge.Domain.Entities;
 
 namespace TechChallenge.Api.Controllers
 {
     public class AuthController : BaseController
     {
-        private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
+        private readonly IAuthService _authService;
 
-        public AuthController(IConfiguration configuration, IUserService userService)
+        public AuthController(IUserService userService, IAuthService authService)
         {
-            _configuration = configuration;
             _userService = userService;
-        }
-
-        [HttpPost("register")]
-        [ProducesResponseType(typeof(BaseOutput<int>), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(BaseOutput<int>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> Register([FromBody] UserDto userDto, [FromServices] IValidator<UserDto> validator)
-        {
-            try
-            {
-                ValidationResult validationResult = validator.Validate(userDto);
-
-                if (!validationResult.IsValid)
-                {
-                    return ValidatorErrorResponse(validationResult.Errors);
-                }
-
-                var userExists = await _userService.VerifyUser(userDto.Username);
-
-                if (userExists)
-                {
-                    return BadRequestResponse("Erro ao cadastrar este e-mail!");
-                }
-
-                string passwordHash = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
-
-                userDto.Password = passwordHash;
-
-                BaseOutput<int> id = await _userService.RegisterUser(userDto);
-
-                return Ok(id);
-            }
-            catch (Exception ex)
-            {
-
-                return InternalErrorResponse(ex);
-            }
-
+            _authService = authService;
         }
 
         [HttpPost("login")]
-        [ProducesResponseType(typeof(BaseOutput<string>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(BaseOutput<TokenDto>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(BaseOutput<string>), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> Login([FromBody] UserDto userDto, [FromServices] IValidator<UserDto> validator)
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
             try
             {
-                ValidationResult validationResult = validator.Validate(userDto);
-
-                if (!validationResult.IsValid)
+                BaseOutput<User> userResponse = await _userService.Get(loginDto);
+                if (!userResponse.IsSuccessful)
                 {
-                    return ValidatorErrorResponse(validationResult.Errors);
+                    return CustomResponse(userResponse);
                 }
 
-                BaseOutput<User> user = await _userService.GetUser(userDto);
-
-                if (user.Response.Username != userDto.Username)
+                BaseOutput<string> validateResponse = _authService.ValidateLogin(userResponse.Response, loginDto);
+                if (!validateResponse.IsSuccessful)
                 {
-                    return BadRequestResponse("Incorrect User or Password");
+                    return CustomResponse(validateResponse);
                 }
 
-                if (!BCrypt.Net.BCrypt.Verify(userDto.Password, user.Response.PasswordHash))
+                string token = _authService.GenerateJwtToken(userResponse.Response);
+                RefreshTokenModel refreshToken = _authService.GenerateRefreshToken();
+
+                await _userService.UpdateUserRefreshToken(userResponse.Response, refreshToken);
+
+                TokenDto tokenDto = new()
                 {
-                    return BadRequestResponse("Incorrect User or Password");
-                }
+                    Token = token,
+                    RefreshToken = refreshToken.RefreshToken
+                };
 
-                string token = CreateToken(user.Response);
-
-                return Ok(token);
+                return Ok(new BaseOutput<TokenDto>(tokenDto));
             }
             catch (Exception ex)
             {
-
                 return InternalErrorResponse(ex);
             }
         }
 
-        private string CreateToken(User user)
+
+        [HttpPost("refresh")]
+        [CustomAuthorization(CheckAction = true)]
+        public async Task<IActionResult> RefreshToken(TokenDto tokenDto)
         {
-            List<Claim> claims = new()
+            try
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Role, user.Role.ToString())
-            };
+                BaseOutput<TokenDto> response = await _authService.RefreshExpiratedTokenAsync(tokenDto);
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                _configuration.GetSection("AppSettings:Token").Value!));
+                if (!response.IsSuccessful)
+                {
+                    return CustomResponse(response);
+                }
 
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+                return Ok(response.Response);
 
-            var token = new JwtSecurityToken(
-                    claims: claims,
-                    expires: DateTime.Now.AddDays(1),
-                    signingCredentials: creds
-                );
+            }
+            catch (Exception ex)
+            {
+                return InternalErrorResponse(ex);
+            }
 
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return jwt;
+
         }
+
     }
 }

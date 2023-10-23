@@ -1,15 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
+		<Nullable>disable</Nullable>
 	</PropertyGroup>
 
 	<ItemGroup>
 	  <Compile Remove="EntitiesConfiguration\CategoryMap\**" />
-	  <Compile Remove="EntitiesConfiguration\ClientMap\**" />
-	  <Compile Remove="EntitiesConfiguration\ClientTypeMap\**" />
 	  <Compile Remove="EntitiesConfiguration\LocalMap\**" />
 	  <Compile Remove="EntitiesConfiguration\LoginMap\**" />
 	  <Compile Remove="EntitiesConfiguration\OrderMap\**" />
@@ -18,8 +16,8 @@
 	  <Compile Remove="EntitiesConfiguration\ProductMap\**" />
 	  <Compile Remove="EntitiesConfiguration\StatusMap\**" />
 	  <EmbeddedResource Remove="EntitiesConfiguration\CategoryMap\**" />
-	  <EmbeddedResource Remove="EntitiesConfiguration\ClientMap\**" />
-	  <EmbeddedResource Remove="EntitiesConfiguration\ClientTypeMap\**" />
+	  <EmbeddedResource Remove="EntitiesConfiguration\CustomerMap\**" />
+	  <EmbeddedResource Remove="EntitiesConfiguration\CustomerTypeMap\**" />
 	  <EmbeddedResource Remove="EntitiesConfiguration\LocalMap\**" />
 	  <EmbeddedResource Remove="EntitiesConfiguration\LoginMap\**" />
 	  <EmbeddedResource Remove="EntitiesConfiguration\OrderMap\**" />
@@ -28,8 +26,8 @@
 	  <EmbeddedResource Remove="EntitiesConfiguration\ProductMap\**" />
 	  <EmbeddedResource Remove="EntitiesConfiguration\StatusMap\**" />
 	  <None Remove="EntitiesConfiguration\CategoryMap\**" />
-	  <None Remove="EntitiesConfiguration\ClientMap\**" />
-	  <None Remove="EntitiesConfiguration\ClientTypeMap\**" />
+	  <None Remove="EntitiesConfiguration\CustomerMap\**" />
+	  <None Remove="EntitiesConfiguration\CustomerTypeMap\**" />
 	  <None Remove="EntitiesConfiguration\LocalMap\**" />
 	  <None Remove="EntitiesConfiguration\LoginMap\**" />
 	  <None Remove="EntitiesConfiguration\OrderMap\**" />
@@ -40,24 +38,20 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.3">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.12">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.3" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.3">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.12" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.12">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.4" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.10" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\TechChallengeAPI.Domain\TechChallenge.Domain.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Migrations\" />
 	</ItemGroup>
 
 </Project>

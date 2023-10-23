@@ -1,20 +1,24 @@
 ﻿using TechChallenge.Application.BaseResponse;
 using TechChallenge.Application.DTOs;
+using TechChallenge.Application.Models;
 using TechChallenge.Domain.Entities;
 
 namespace TechChallenge.Application.Interfaces
 {
     public interface IUserService
     {
-        Task<BaseOutput<List<User>>> GetAllUsers();
-        Task<BaseOutput<User>> GetUser(int Id);
-        Task<BaseOutput<User>> GetUser(UserDto userDto);
-        Task<BaseOutput<int>> RegisterUser(UserDto userDto);
-        Task<BaseOutput<User>> UpdateUser(UserDto userDto);
-        Task<bool> VerifyUser(string username);
-        Task<bool> VerifyUser(int Id);
-        Task<BaseOutput<bool>> DeleteUser(int Id);
+        Task<BaseOutput<int>> Create(UserDto userDto);
+        Task<BaseOutput<User>> Update(UserUpdateDto userDto);
+        Task<bool> Verify(string username);
+        Task<bool> Verify(int Id);
+        Task<BaseOutput<bool>> Delete(int Id);
 
+        Task<BaseOutput<List<User>>> Get();
+        Task<BaseOutput<User>> Get(int Id);
+        Task<BaseOutput<User>> Get(UserDto userDto);
+        Task<User> Get(string username);
+        Task<BaseOutput<User>> Get(LoginDto userDto);
+        Task UpdateUserRefreshToken(User user, RefreshTokenModel tokenModel);
 
     }
 }
