@@ -30,35 +30,30 @@ Antes de rodar a API, certifique-se de que você tenha os seguintes pré-requisi
 2. Abra o arquivo `appsettings.json` na pasta raiz do projeto e configure a string de conexão com o SQL Server LocalDB de acordo com suas preferências:
 
 ```json
-   "ConnectionStrings": {
-       "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=ManobraFacilDb;Trusted_Connection=True;"
-   }  
+"ConnectionStrings": {
+   "Default": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=TechChallenge;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server             
+   Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False"
+}
 ```
 
-## Configuração do Banco de Dados
-Executando as Migrações do Banco de Dados
+### Executando as Migrações do Banco de Dados
 Para criar ou atualizar o banco de dados, você precisa executar as migrações. Siga as etapas abaixo:
 
-1 - Abra um terminal na pasta raiz do projeto.
-Certifique-se de que você tenha a ferramenta dotnet ef instalada globalmente. Se não estiver instalada, você pode instalá-la com o seguinte comando:
+1 - Abra o Visual Studio.
+
+2 - Abra o Console do Gerenciador de Pacotes do NuGet no Visual Studio. Você pode fazer isso indo em "Ferramentas" -> "Gerenciador de Pacotes do NuGet" -> "Console do Gerenciador de Pacotes".
+
+3- Para aplicar a última verssãop da migração ao banco de dados utilize o seguinte comando:
 
 ```
-dotnet tool install --global dotnet-ef
+Update-Database
 ```
-
-2 - Execute as migrações para criar ou atualizar o banco de dados:
-
-```
-dotnet ef database update
-```
-
-Isso aplicará todas as migrações pendentes e criará ou atualizará o banco de dados com base no modelo definido em seu aplicativo.
 
 ## Executando a API
-Abra um terminal na pasta raiz do projeto. Execute o seguinte comando para iniciar a API:
+Abra um terminal na pasta TechChallengeAPI do projeto. Execute o seguinte comando para iniciar a API:
 
 ```
 dotnet run
 ```
 
-A API estará disponível em https://localhost:7250. Você pode acessar os endpoints da API para realizar operações de controle de vagas de estacionamento.
+A API estará disponível em http://localhost:5023. Você pode acessar os endpoints da API para realizar operações de controle de vagas de estacionamento.
