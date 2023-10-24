@@ -57,3 +57,9 @@ dotnet run
 ```
 
 A API estará disponível em http://localhost:5023. Você pode acessar os endpoints da API para realizar operações de controle de vagas de estacionamento.
+
+Após executado, para o primeiro login e criação dos próximos usuários, utilize o seguinte login e senha:
+Login: admin
+Senha: admin
+
+Ao realizar o login, copie o token e cole-o no botão Authorize localizado no canto superior direito do swagger da aplicação, não esquecendo de adicionar a palavra bearer no começo.
